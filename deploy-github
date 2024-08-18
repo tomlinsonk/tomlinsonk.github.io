@@ -1,9 +1,0 @@
-#!/bin/bash
-
-rm -rf public
-hugo
-rsync -ahvz --exclude CNAME --exclude .git --delete public/ /Users/tomlinsonk/Sites/tomlinsonk.github.io
-git --git-dir=/Users/tomlinsonk/Sites/tomlinsonk.github.io/.git add .
-git --git-dir=/Users/tomlinsonk/Sites/tomlinsonk.github.io/.git commit -m 'update website'
-git --git-dir=/Users/tomlinsonk/Sites/tomlinsonk.github.io/.git push
-exit 0

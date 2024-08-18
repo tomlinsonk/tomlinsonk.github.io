@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="The KiT 1 gets a graphics card!" />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/6502-4/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/6502-4/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/post/6502-4/featured.jpg" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/6502-4/" />
+<meta property="og:title" content="Building a 6502 Computer, Part 4: Graphics | Kiran Tomlinson" />
+<meta property="og:description" content="The KiT 1 gets a graphics card!" /><meta property="og:image" content="https://www.kirantomlinson.com/post/6502-4/featured.jpg" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2022-09-28T22:53:57-04:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2022-09-28T22:53:57-04:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/6502-4/"
+  },
+  "headline": "Building a 6502 Computer, Part 4: Graphics",
+  
+  "image": [
+    "https://www.kirantomlinson.com/post/6502-4/featured.jpg"
+  ],
+  
+  "datePublished": "2022-09-28T22:53:57-04:00",
+  "dateModified": "2022-09-28T22:53:57-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "The KiT 1 gets a graphics card!"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Building a 6502 Computer, Part 4: Graphics | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="ef6a15d16e4171d42753a188bd5b2844" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>Building a 6502 Computer, Part 4: Graphics</h1>
+
+  
+  <p class="page-subtitle">Adding a graphics card</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 28, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/6502/">6502</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 255px;">
+  <div style="position: relative">
+    <img src="/post/6502-4/featured_hu7fba9da1679ce4a56c592454604cb9c1_223176_9455ae0d65e249e21e15f4214ba694bf.webp" width="720" height="255" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>So far in this project, I&rsquo;ve <a href="/post/6502-1/">built a simple computer</a>, <a href="/post/6502-2/">given it a keyboard</a>, and <a href="/post/6502-3/">written a machine language monitor for it</a>. However, only being able to see outputs on the small character LCD was not very fun, so it&rsquo;s time for a serious upgrade. I decided to add a graphics card! This is the first major departure from <a href="https://eater.net/6502" target="_blank" rel="noopener">Ben Eater&rsquo;s build</a> that I&rsquo;ve mainly been following so far.</p>
+<p>There are a number of options for adding graphics to an 8-bit computer. Some people have used <a href="https://www.skrasser.com/blog/2020/04/16/graphics-for-the-homebrew-6502-computer/" target="_blank" rel="noopener">custom FPGAs</a> or <a href="https://hackaday.io/project/174865-configurable-video-output-for-6502-computers" target="_blank" rel="noopener">custom TTL circuits</a>. Ben Eater actually has a <a href="https://eater.net/vga" target="_blank" rel="noopener">video series and kit</a> for a simple VGA card. If you&rsquo;re interested in seeing a full nuts-and-bolts VGA build, I would highly recommend <a href="https://youtu.be/K658R321f7I" target="_blank" rel="noopener">James Sharman&rsquo;s VGA series</a>.</p>
+<p>To keep things simple, I decided to go with an old <a href="https://en.wikipedia.org/wiki/Video_display_controller" target="_blank" rel="noopener">video display controller</a>, the <a href="https://en.wikipedia.org/wiki/Motorola_6847" target="_blank" rel="noopener">Motorola MC6847</a>, which was most notably used in the <a href="http://www.trs-80.org/color-computer-1/" target="_blank" rel="noopener">TRS-80 Color Computer</a> released in 1980. Other possible 8-bit video controllers include the <a href="https://en.wikipedia.org/wiki/Texas_Instruments_TMS9918" target="_blank" rel="noopener">Texas Instruments TMS9918</a> and its successors, the <a href="https://en.wikipedia.org/wiki/Yamaha_V9938" target="_blank" rel="noopener">Yamaha V9938</a> and <a href="https://en.wikipedia.org/wiki/Yamaha_V9958" target="_blank" rel="noopener">Yamaha V9958</a>; the <a href="https://en.wikipedia.org/wiki/MOS_Technology_VIC" target="_blank" rel="noopener">MOS VIC</a> used in the <a href="https://youtu.be/yg04GyhS3ss" target="_blank" rel="noopener">Commodore VIC-20</a>; the <a href="https://en.wikipedia.org/wiki/MOS_Technology_VIC-II" target="_blank" rel="noopener">MOS VIC-II</a> used in the <a href="https://youtu.be/BpXFB8ZEH30" target="_blank" rel="noopener">Commodore 64</a> and <a href="https://youtu.be/wzMsgnnDIRE" target="_blank" rel="noopener">128</a>; and many, many more.</p>
+<p>The problem with all of these vintage ICs is that they&rsquo;re no longer made, so you have to resort to buying them used (your mileage may vary). Some of these are also quite expensive ($25-$100 on eBay for a Yamaha V9938, Yamaha V9958, VIC, or VIC-II). By far the cheapest options are the MC6847 and TMS9918, both of which can be found for under $5. I was much more willing to spend $5 than $25 on a used chip from 1980 that might not work, so I got an <a href="MC6847-video.pdf">MC6847</a> and its companion chip, the <a href="MC1372-tv.pdf">MC1372</a>.</p>
+<p>The MC6847 generates a video signal by sweeping through memory addresses and interpreting the values stored there as characters (in text modes) or pixel groups (in graphics modes). Here&rsquo;s the chip&rsquo;s pinout:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_80c8f713beaca72502bd0f8a1557f43a.webp 400w,
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_e8a9e3453227b10cfbfeb9056a3a0bef.webp 760w,
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_80c8f713beaca72502bd0f8a1557f43a.webp"
+               width="362"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>DA0-DA12 are the address lines into video RAM and DD0-DD7 are the data lines where the video RAM responds with the data to display. The mode control lines (A/G, A/S, INT/EXT, INV, and GM0-GM2) are used to select the display mode, which determine how much memory is required, how bytes are interpreted, and what can be displayed. Here are the 14 modes of the MC6847:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_ae842a4b1863e4d1994f63353f7a7157.webp 400w,
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_c80139fa0a3f4fdf0b865ad3d11590c4.webp 760w,
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_ae842a4b1863e4d1994f63353f7a7157.webp"
+               width="760"
+               height="360"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The video signal is output as three signals, luminance (Y), red chrominance (ɸA), and blue chrominance (ɸB) (usually called <a href="https://en.wikipedia.org/wiki/YPbPr" target="_blank" rel="noopener">YPbPr</a>). These signals can be combined into a <a href="https://en.wikipedia.org/wiki/Composite_video" target="_blank" rel="noopener">composite video signal</a>, which is where the MC1372 comes in. Along with an external oscillator, the MC1372 provides a clock at the correct frequency for the MC6847 and can combine the outputs of the MC6847 into a color composite signal that many monitors and TVs can display (if they aren&rsquo;t too recent). It&rsquo;s also possible to <a href="https://youtu.be/rymjY1cT6DE" target="_blank" rel="noopener">directly amplify the YPbPr signals</a> and use <a href="https://en.wikipedia.org/wiki/Component_video" target="_blank" rel="noopener">component video</a>, but I haven&rsquo;t tried that yet.</p>
+<p>In addition to the MC6847 and MC1372, the final piece of the puzzle to add video to the breadboard computer is the video RAM (VRAM). The main challenge with VRAM is that both the CPU and the video display generator need to access it, and they run at different clock rates (3.579545 MHz for the video chip and 1 MHz for the CPU). One option would be to use the video clock for the CPU and figure out some way to share the address and data lines between the CPU and video chip (for instance, running the CPU at half the clock rate and alternating control between the two chips&ndash;this is more or less what the Commodore 64 did). For simplicity, Ben Eater&rsquo;s <a href="https://eater.net/vga" target="_blank" rel="noopener">VGA card</a> only allows the CPU to run during the blanking interval of the video signal, when the video chip doesn&rsquo;t need access to VRAM&ndash;but this wastes about 70% of CPU cycles.</p>
+<p>I decided to take a different approach: <a href="https://www.renesas.com/us/en/products/memory-logic/multi-port-memory/asynchronous-dual-port-rams" target="_blank" rel="noopener">asynchronous dual-port RAM</a>. These types of RAM chips have two independent sets of address and data lines and allow simultaneous access on both sets (with one caveat, explained below).The specific dual-port RAM I went with is the 2KB <a href="https://www.renesas.com/us/en/document/dst/713242-datasheet" target="_blank" rel="noopener">IDT7132</a>. One port is hooked up to the 6502 CPU and the other to the MC6847&ndash;you can see it in the top left:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_954d13f1678cb7beb4ce9e4d08746d9b.webp 400w,
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_096c9de79a8ee448e95789b428a24d33.webp 760w,
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_954d13f1678cb7beb4ce9e4d08746d9b.webp"
+               width="626"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The small caveat: simultaneous reads to the same address are fine, but a write can fail if the other port is accessing the same address. In this case, the writing port gets a busy flag. Since only the CPU writes to VRAM, I made the busy flag pause the CPU using its RDY pin until the video chip has moved on to reading another address&ndash;this has worked perfectly, and only rarely pauses the CPU for a few microseconds.</p>
+<p>After hooking up the VRAM and the MC1372 clock to the MC6847, I needed to amplify the video signal being generated by the MC6847. To begin with, I just amplified the luminance signal to get a black and white image. Since I know nothing about analog circuitry, I followed the amplifier schematic in <a href="https://pmig96.wordpress.com/2020/07/15/mc6847-test-circuit/" target="_blank" rel="noopener">this blog post</a>. The result was glorious:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_0cd1c0ec656b64a8e58d2e83e178ee53.webp 400w,
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_89034364c6a0b8ec626ec220af6faa32.webp 760w,
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_0cd1c0ec656b64a8e58d2e83e178ee53.webp"
+               width="760"
+               height="568"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>I have since wired up all of the color mixing circuitry and switched over to the color composite amplifier circuit in the <a href="MC6847-video.pdf">MC6847 datasheet</a>. Here&rsquo;s the text and semigraphics modes in all their 8-color beauty:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_0308461dd7c84b61b00c6059c3c51fac.webp 400w,
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_ec5d45020813fab28582e0ee817a51a1.webp 760w,
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_0308461dd7c84b61b00c6059c3c51fac.webp"
+               width="760"
+               height="466"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>After adding some DIP switches to let me switch between graphics modes, I&rsquo;ve also worked on some graphical programs, including a <a href="https://en.wikipedia.org/wiki/Mandelbrot_set" target="_blank" rel="noopener">Mandelbrot Set</a> visualization (in four-color 64x64 CG1 mode):</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_ae364705358c4a860f041e99b69d2559.webp 400w,
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_eff23dd92254512ee7e9f2c449c47d04.webp 760w,
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_ae364705358c4a860f041e99b69d2559.webp"
+               width="760"
+               height="501"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>And the game <a href="https://en.wikipedia.org/wiki/Snake_%28video_game_genre%29" target="_blank" rel="noopener">Snake</a>:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_912d104ec083ca03ab25b20b54d016fb.webp 400w,
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_9e44b15f044cdc31225f71c2a5006b2d.webp 760w,
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_912d104ec083ca03ab25b20b54d016fb.webp"
+               width="760"
+               height="510"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The most useful program I&rsquo;ve written using the graphics card is a more powerful machine language monitor in text mode:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_cd47cbaf6dc22bce023ffc441a8def6f.webp 400w,
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_81bfccaf96b63a303c0ea9d32358e2c0.webp 760w,
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_cd47cbaf6dc22bce023ffc441a8def6f.webp"
+               width="760"
+               height="507"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The new and improved monitor even allows loading programs into RAM over a serial port&ndash;more on that in the next post!</p>
+<hr>
+<h3 id="previous-post-part-3hahahugoshortcode19s3hbhb--span-stylefloatrightnext-post--part-5hahahugoshortcode19s4hbhbspan">Previous post: <a href="/post/6502-3/">Part 3</a>  <span style="float:right">Next post:  <a href="/post/6502-5/">Part 5</a></span></h3>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Computational Biology | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/category/computational-biology/</link>
+      <atom:link href="https://www.kirantomlinson.com/category/computational-biology/index.xml" rel="self" type="application/rss+xml" />
+    <description>Computational Biology</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Computational Biology</title>
+      <link>https://www.kirantomlinson.com/category/computational-biology/</link>
+    </image>
+    
+    <item>
+      <title>Distance Measures for Tumor Evolutionary Trees</title>
+      <link>https://www.kirantomlinson.com/publication/2020-dinardo-distance-measures/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-dinardo-distance-measures/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Parameter, Noise, and Tree Topology Effects in Tumor Phylogeny Inference</title>
+      <link>https://www.kirantomlinson.com/publication/2019-tomlinson-phylogeny-parameter-effects/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2019-tomlinson-phylogeny-parameter-effects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Examining Tumor Phylogeny Inference in Noisy Sequencing Data</title>
+      <link>https://www.kirantomlinson.com/publication/2018-tomlinson-examining-phylogeny-inference/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2018-tomlinson-examining-phylogeny-inference/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

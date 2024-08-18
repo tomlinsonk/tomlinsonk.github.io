@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="I really wanted to see the link graph of websites, but didn&#39;t find user-friendly tools for doing this. So, I wrote my own. In this post, I describe how the script works, how to run it, how to customize the visualizations, and what issues I ran into along the way. Most importantly, I have some pretty pictures and an embedded interactive graph of this very site." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/site-graph/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/site-graph/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/post/site-graph/featured.jpg" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/site-graph/" />
+<meta property="og:title" content="Site Graph | Kiran Tomlinson" />
+<meta property="og:description" content="I really wanted to see the link graph of websites, but didn&#39;t find user-friendly tools for doing this. So, I wrote my own. In this post, I describe how the script works, how to run it, how to customize the visualizations, and what issues I ran into along the way. Most importantly, I have some pretty pictures and an embedded interactive graph of this very site." /><meta property="og:image" content="https://www.kirantomlinson.com/post/site-graph/featured.jpg" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2020-03-15T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2020-03-15T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/site-graph/"
+  },
+  "headline": "Site Graph",
+  
+  "image": [
+    "https://www.kirantomlinson.com/post/site-graph/featured.jpg"
+  ],
+  
+  "datePublished": "2020-03-15T00:00:00Z",
+  "dateModified": "2020-03-15T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "I really wanted to see the link graph of websites, but didn't find user-friendly tools for doing this. So, I wrote my own. In this post, I describe how the script works, how to run it, how to customize the visualizations, and what issues I ran into along the way. Most importantly, I have some pretty pictures and an embedded interactive graph of this very site."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Site Graph | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="91ac5bd456b897277e7331cc1333e93e" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Site Graph</h1>
+
+  
+  <p class="page-subtitle">A script for generating interactive website visualizations.</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Mar 15, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 600px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+
+        /* position absolute is important and the container has to be relative or absolute as well. */
+        div.popup {
+            position:absolute;
+            top:0px;
+            left:0px;
+            display:none;
+            background-color:#f5f4ed;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #808074;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* hide the original tooltip */
+        .vis-network-tooltip {
+          display:none;
+        }
+        
+</style>
+<div id = "mynetwork"></div>
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/categories/computational-biology/\"\u003ehttps://www.cs.cornell.edu/~kt/categories/computational-biology/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/\"\u003ehttps://www.cs.cornell.edu/~kt/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/post/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/\"\u003ehttps://www.cs.cornell.edu/~kt/post/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://gohugo.io", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://gohugo.io\"\u003ehttps://gohugo.io\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://sourcethemes.com/academic/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://sourcethemes.com/academic/\"\u003ehttps://sourcethemes.com/academic/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://github.com/tomlinsonk", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://github.com/tomlinsonk\"\u003ehttps://github.com/tomlinsonk\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/discrete-choice-models/\"\u003ehttps://www.cs.cornell.edu/~kt/post/discrete-choice-models/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en\"\u003ehttps://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.bbc.com/news/uk-scotland-44494577", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.bbc.com/news/uk-scotland-44494577\"\u003ehttps://www.bbc.com/news/uk-scotland-44494577\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.formula1.com", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.formula1.com\"\u003ehttps://www.formula1.com\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www-cs.stanford.edu/people/jure/pubs/graphrepresentation-ieee17.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www-cs.stanford.edu/people/jure/pubs/graphrepresentation-ieee17.pdf\"\u003ehttps://www-cs.stanford.edu/people/jure/pubs/graphrepresentation-ieee17.pdf\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.pnas.org/content/105/12/4633", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.pnas.org/content/105/12/4633\"\u003ehttps://www.pnas.org/content/105/12/4633\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.ericegge.net", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.ericegge.net\"\u003ehttps://www.ericegge.net\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542783/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542783/\"\u003ehttps://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542783/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.nasa.gov/exploration/systems/orion/index.html", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.nasa.gov/exploration/systems/orion/index.html\"\u003ehttps://www.nasa.gov/exploration/systems/orion/index.html\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.premierleague.com", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.premierleague.com\"\u003ehttps://www.premierleague.com\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://twitter.com/kiran_tomlinson", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://twitter.com/kiran_tomlinson\"\u003ehttps://twitter.com/kiran_tomlinson\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://cs.carleton.edu/faculty/jondich/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://cs.carleton.edu/faculty/jondich/\"\u003ehttp://cs.carleton.edu/faculty/jondich/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://google.com/search?tbm=isch\u0026q=armattan+chameleon+build", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://google.com/search?tbm=isch\u0026q=armattan+chameleon+build\"\u003ehttps://google.com/search?tbm=isch\u0026q=armattan+chameleon+build\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://www.cs.carleton.edu/faculty/loesper/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://www.cs.carleton.edu/faculty/loesper/\"\u003ehttp://www.cs.carleton.edu/faculty/loesper/\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/files/cv.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/files/cv.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/files/cv.pdf\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.youtube.com/watch?v=mZZp76M4NGc", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.youtube.com/watch?v=mZZp76M4NGc\"\u003ehttps://www.youtube.com/watch?v=mZZp76M4NGc\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://cs.carleton.edu/faculty/dlibenno/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://cs.carleton.edu/faculty/dlibenno/\"\u003ehttp://cs.carleton.edu/faculty/dlibenno/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.cs.cornell.edu/~arb/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~arb/\"\u003ehttps://www.cs.cornell.edu/~arb/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://wpapool.com/rules-of-play/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://wpapool.com/rules-of-play/\"\u003ehttps://wpapool.com/rules-of-play/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://bookstore.ams.org/stml-91", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://bookstore.ams.org/stml-91\"\u003ehttps://bookstore.ams.org/stml-91\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://cs.carleton.edu/cs_comps/1819/jondich3/final-results/pages/home.html", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://cs.carleton.edu/cs_comps/1819/jondich3/final-results/pages/home.html\"\u003ehttp://cs.carleton.edu/cs_comps/1819/jondich3/final-results/pages/home.html\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.cs.cornell.edu", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu\"\u003ehttps://www.cs.cornell.edu\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/categories/discrete-choice/\"\u003ehttps://www.cs.cornell.edu/~kt/categories/discrete-choice/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/\"\u003ehttps://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-tomlinson-cyclic-cellular-automaton.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-tomlinson-cyclic-cellular-automaton.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-tomlinson-cyclic-cellular-automaton.pdf\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-CSC-slides.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-CSC-slides.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-CSC-slides.pdf\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-BIBM-slides.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-BIBM-slides.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-BIBM-slides.pdf\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/authors/layla-oesper/\"\u003ehttps://www.cs.cornell.edu/~kt/authors/layla-oesper/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://bitbucket.org/oesperlab/inference-effects-data", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://bitbucket.org/oesperlab/inference-effects-data\"\u003ehttps://bitbucket.org/oesperlab/inference-effects-data\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-RECOMB-CCB-slides.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-RECOMB-CCB-slides.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-RECOMB-CCB-slides.pdf\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://doi.org/10.1109/BIBM.2018.8621437", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://doi.org/10.1109/BIBM.2018.8621437\"\u003ehttps://doi.org/10.1109/BIBM.2018.8621437\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://arxiv.org/abs/2002.00421", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://arxiv.org/abs/2002.00421\"\u003ehttps://arxiv.org/abs/2002.00421\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/\"\u003ehttps://www.cs.cornell.edu/~kt/authors/austin-r.-benson/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/authors/anna-ritz/\"\u003ehttps://www.cs.cornell.edu/~kt/authors/anna-ritz/\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/authors/zach-dinardo/\"\u003ehttps://www.cs.cornell.edu/~kt/authors/zach-dinardo/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://doi.org/10.1093/bioinformatics/btz869", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://doi.org/10.1093/bioinformatics/btz869\"\u003ehttps://doi.org/10.1093/bioinformatics/btz869\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://github.com/tomlinsonk/choice-set-opt", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://github.com/tomlinsonk/choice-set-opt\"\u003ehttps://github.com/tomlinsonk/choice-set-opt\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-tomlinson-examining-phylogeny-inference.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-tomlinson-examining-phylogeny-inference.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-tomlinson-examining-phylogeny-inference.pdf\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://doi.org/10.1186/s12920-019-0626-0", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://doi.org/10.1186/s12920-019-0626-0\"\u003ehttps://doi.org/10.1186/s12920-019-0626-0\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://bitbucket.org/oesperlab/stereodist", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://bitbucket.org/oesperlab/stereodist\"\u003ehttps://bitbucket.org/oesperlab/stereodist\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/2019-tomlinson-phylogeny-parameter-effects.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/2019-tomlinson-phylogeny-parameter-effects.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/2019-tomlinson-phylogeny-parameter-effects.pdf\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-dinardo-distance-measures.pdf", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-dinardo-distance-measures.pdf\"\u003ehttps://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-dinardo-distance-measures.pdf\u003c/a\u003e"}, {"color": "#0072BB", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.crummy.com/software/BeautifulSoup/bs4/doc/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.crummy.com/software/BeautifulSoup/bs4/doc/\"\u003ehttps://www.crummy.com/software/BeautifulSoup/bs4/doc/\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://www.google.com/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://www.google.com/\"\u003ehttp://www.google.com/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://sitebulb.com", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://sitebulb.com\"\u003ehttps://sitebulb.com\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://pyvis.readthedocs.io/en/latest/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://pyvis.readthedocs.io/en/latest/\"\u003ehttps://pyvis.readthedocs.io/en/latest/\u003c/a\u003e"}, {"color": "#F45B69", "id": "http://www.google.com", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"http://www.google.com\"\u003ehttp://www.google.com\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.link-assistant.com/website-auditor/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.link-assistant.com/website-auditor/\"\u003ehttps://www.link-assistant.com/website-auditor/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.google.com/search?q=query+string", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.google.com/search?q=query+string\"\u003ehttps://www.google.com/search?q=query+string\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://google.com", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://google.com\"\u003ehttps://google.com\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.github.com/tomlinsonk/site-graph", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.github.com/tomlinsonk/site-graph\"\u003ehttps://www.github.com/tomlinsonk/site-graph\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example4.png", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/images/example4.png\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/images/example4.png\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types\"\u003ehttps://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://visjs.org", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://visjs.org\"\u003ehttps://visjs.org\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://gephi.org", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://gephi.org\"\u003ehttps://gephi.org\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://searchengineland.com/easy-visualizations-pagerank-page-groups-gephi-265716", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://searchengineland.com/easy-visualizations-pagerank-page-groups-gephi-265716\"\u003ehttps://searchengineland.com/easy-visualizations-pagerank-page-groups-gephi-265716\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://requests.readthedocs.io/en/master/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://requests.readthedocs.io/en/master/\"\u003ehttps://requests.readthedocs.io/en/master/\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example2.png", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/images/example2.png\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/images/example2.png\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example1.png", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/images/example1.png\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/images/example1.png\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://github.com/tomlinsonk/site-graph/issues", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://github.com/tomlinsonk/site-graph/issues\"\u003ehttps://github.com/tomlinsonk/site-graph/issues\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example5.png", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/images/example5.png\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/images/example5.png\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.carleton.edu/math/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.carleton.edu/math/\"\u003ehttps://www.carleton.edu/math/\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://www.screamingfrog.co.uk/seo-spider/", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.screamingfrog.co.uk/seo-spider/\"\u003ehttps://www.screamingfrog.co.uk/seo-spider/\u003c/a\u003e"}, {"color": "#2ECC71", "id": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example3.png", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://www.cs.cornell.edu/~kt/post/site-graph/images/example3.png\"\u003ehttps://www.cs.cornell.edu/~kt/post/site-graph/images/example3.png\u003c/a\u003e"}, {"color": "#F45B69", "id": "https://en.wikipedia.org/wiki/Fragment_identifier#Examples", "label": "", "shape": "dot", "size": 15, "title": "\u003ca href=\"https://en.wikipedia.org/wiki/Fragment_identifier#Examples\"\u003ehttps://en.wikipedia.org/wiki/Fragment_identifier#Examples\u003c/a\u003e"}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/categories/computational-biology/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/computational-biology/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://github.com/tomlinsonk"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.bbc.com/news/uk-scotland-44494577"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.formula1.com"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www-cs.stanford.edu/people/jure/pubs/graphrepresentation-ieee17.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.pnas.org/content/105/12/4633"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.ericegge.net"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542783/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.nasa.gov/exploration/systems/orion/index.html"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.premierleague.com"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://twitter.com/kiran_tomlinson"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "http://cs.carleton.edu/faculty/jondich/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://google.com/search?tbm=isch\u0026q=armattan+chameleon+build"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "http://www.cs.carleton.edu/faculty/loesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~kt/files/cv.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.youtube.com/watch?v=mZZp76M4NGc"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "http://cs.carleton.edu/faculty/dlibenno/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~arb/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://wpapool.com/rules-of-play/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://bookstore.ams.org/stml-91"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "http://cs.carleton.edu/cs_comps/1819/jondich3/final-results/pages/home.html"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/", "to": "https://www.cs.cornell.edu"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/files/cv.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~arb/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://github.com/tomlinsonk"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://twitter.com/kiran_tomlinson"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-tomlinson-cyclic-cellular-automaton.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-CSC-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-BIBM-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/categories/computational-biology/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://bitbucket.org/oesperlab/inference-effects-data"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-CSC-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-RECOMB-CCB-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/2019-tomlinson-cyclic-cellular-automaton.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-cyclic-cellular-automaton/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://doi.org/10.1109/BIBM.2018.8621437"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://arxiv.org/abs/2002.00421"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://doi.org/10.1093/bioinformatics/btz869"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://github.com/tomlinsonk/choice-set-opt"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-tomlinson-examining-phylogeny-inference.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://doi.org/10.1186/s12920-019-0626-0"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://bitbucket.org/oesperlab/stereodist"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/2019-tomlinson-phylogeny-parameter-effects.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-dinardo-distance-measures.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.crummy.com/software/BeautifulSoup/bs4/doc/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://scholar.google.com/citations?user=7faaZ1cAAAAJ\u0026hl=en"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "http://www.google.com/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://sitebulb.com"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://pyvis.readthedocs.io/en/latest/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "http://www.google.com"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://github.com/tomlinsonk"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.link-assistant.com/website-auditor/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.google.com/search?q=query+string"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://twitter.com/kiran_tomlinson"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://google.com"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.github.com/tomlinsonk/site-graph"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example4.png"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/files/cv.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://visjs.org"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://gephi.org"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://searchengineland.com/easy-visualizations-pagerank-page-groups-gephi-265716"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://requests.readthedocs.io/en/master/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example2.png"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example1.png"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://github.com/tomlinsonk/site-graph/issues"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example5.png"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.carleton.edu/math/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.screamingfrog.co.uk/seo-spider/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~arb/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/images/example3.png"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/site-graph/", "to": "https://en.wikipedia.org/wiki/Fragment_identifier#Examples"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://arxiv.org/abs/2002.00421"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/authors/austin-r.-benson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://github.com/tomlinsonk/choice-set-opt"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/", "to": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/categories/computational-biology/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://doi.org/10.1186/s12920-019-0626-0"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/2019-tomlinson-phylogeny-parameter-effects.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/", "to": "https://bitbucket.org/oesperlab/inference-effects-data"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-tomlinson-phylogeny-parameter-effects/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/publication/2020-tomlinson-optimizing-choice-sets/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/post/discrete-choice-models/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/post/site-graph/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/categories/discrete-choice/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/post/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/categories/computational-biology/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-BIBM-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/2018-tomlinson-examining-phylogeny-inference.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2018-tomlinson-examining-phylogeny-inference/", "to": "https://doi.org/10.1109/BIBM.2018.8621437"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/authors/zach-dinardo/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-RECOMB-CCB-slides.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/authors/layla-oesper/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://doi.org/10.1093/bioinformatics/btz869"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://bitbucket.org/oesperlab/stereodist"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/2019-dinardo-distance-measures.pdf"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/categories/computational-biology/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/", "to": "https://www.cs.cornell.edu/~kt/authors/kiran-tomlinson/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://www.cs.cornell.edu/~kt/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://www.cs.cornell.edu/~kt/post/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://sourcethemes.com/academic/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://gohugo.io"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://www.cs.cornell.edu/~kt/publication/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/"}, {"arrows": "to", "from": "https://www.cs.cornell.edu/~kt/authors/anna-ritz/", "to": "https://www.cs.cornell.edu/~kt/publication/2019-dinardo-distance-measures/"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": {"inherit": true}, "smooth": false}, "physics": {"barnesHut": {"gravitationalConstant": -4750, "springLength": 120, "springConstant": 0.015}, "minVelocity": 0.75}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+        // make a custom popup
+        var popup = document.createElement("div");
+        popup.className = 'popup';
+        popupTimeout = null;
+        popup.addEventListener('mouseover', function () {
+            console.log(popup)
+            if (popupTimeout !== null) {
+                clearTimeout(popupTimeout);
+                popupTimeout = null;
+            }
+        });
+        popup.addEventListener('mouseout', function () {
+            if (popupTimeout === null) {
+                hidePopup();
+            }
+        });
+        container.appendChild(popup);
+
+
+        // use the popup event to show
+        network.on("showPopup", function (params) {
+            showPopup(params);
+        });
+
+        // use the hide event to hide it
+        network.on("hidePopup", function (params) {
+            hidePopup();
+        });
+
+
+        // hiding the popup through css
+        function hidePopup() {
+            popupTimeout = setTimeout(function () { popup.style.display = 'none'; }, 500);
+        }
+
+        // showing the popup
+        function showPopup(nodeId) {
+            // get the data from the vis.DataSet
+            var nodeData = nodes.get([nodeId]);
+            popup.innerHTML = nodeData[0].title;
+
+            // get the position of the node
+            var posCanvas = network.getPositions([nodeId])[nodeId];
+
+            // get the bounding box of the node
+            var boundingBox = network.getBoundingBox(nodeId);
+
+            //position tooltip:
+            posCanvas.x = posCanvas.x + 0.5 * (boundingBox.right - boundingBox.left);
+
+            // convert coordinates to the DOM space
+            var posDOM = network.canvasToDOM(posCanvas);
+
+            // Give it an offset
+            posDOM.x += 10;
+            posDOM.y -= 20;
+
+            // show and place the tooltip.
+            popup.style.display = 'block';
+            popup.style.top = posDOM.y + 'px';
+            popup.style.left = posDOM.x + 'px';
+        }
+    
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+<p>This is my website! (At the time of writing; for an up-to-date version, see the <a href="/graph/">Site Graph</a> page.)</p>
+<p>Each node is a page and edges represent links between pages. Blue nodes are internal HTML pages, green nodes are internal resources (anything not HTML, like PDFs), and red nodes are external pages. Any pages with errors would show up yellow (phew, none yet). Hover over a node to see its URL and try dragging nodes around to see the physics-based visualization. Fun fact, <em>this page itself is in the graph</em>. (Can you spot it?)</p>
+<p>This visualization was made by a script I&rsquo;ve been working on in my spare time, available at <a href="https://www.github.com/tomlinsonk/site-graph" target="_blank" rel="noopener">https://www.github.com/tomlinsonk/site-graph</a>. In this post, I&rsquo;ll outline how it works, how you can use it (and customize it) to visualize your own website, and the issues I ran into developing it (which hopefully are both interesting and useful to anyone else making a web crawler for the first time).</p>
+<p>Here are some screenshots of other websites I&rsquo;ve mapped.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="gallery-grid">
+
+  
+  
+  
+    
+    
+    
+    
+    
+  
+  
+  <div class="gallery-item gallery-item--medium">
+    <a data-fancybox="gallery-site-graph" href="/media/albums/site-graph/example1.png" >
+      <img src="/media/albums/site-graph/example1_hu8924d56540b16659d4ffcf61c59f67d4_724681_750x750_fit_q75_h2_lanczos_3.webp" loading="lazy" alt="example1.png" width="703" height="750">
+    </a>
+  </div>
+  
+    
+    
+    
+    
+    
+  
+  
+  <div class="gallery-item gallery-item--medium">
+    <a data-fancybox="gallery-site-graph" href="/media/albums/site-graph/example2.png" >
+      <img src="/media/albums/site-graph/example2_huc195dd1bab9ea1cc7e8ba94392fd642e_913283_750x750_fit_q75_h2_lanczos_3.webp" loading="lazy" alt="example2.png" width="750" height="720">
+    </a>
+  </div>
+  
+    
+    
+    
+    
+    
+  
+  
+  <div class="gallery-item gallery-item--medium">
+    <a data-fancybox="gallery-site-graph" href="/media/albums/site-graph/example3.png" >
+      <img src="/media/albums/site-graph/example3_hue233d5fc5af5a7d84f8e56eb9b232328_900132_750x750_fit_q75_h2_lanczos_3.webp" loading="lazy" alt="example3.png" width="649" height="750">
+    </a>
+  </div>
+  
+    
+    
+    
+    
+    
+  
+  
+  <div class="gallery-item gallery-item--medium">
+    <a data-fancybox="gallery-site-graph" href="/media/albums/site-graph/example4.png" >
+      <img src="/media/albums/site-graph/example4_hubef81e2ed2fd218175bce31a6b1baad7_1335714_750x750_fit_q75_h2_lanczos_3.webp" loading="lazy" alt="example4.png" width="750" height="625">
+    </a>
+  </div>
+  
+    
+    
+    
+    
+    
+  
+  
+  <div class="gallery-item gallery-item--medium">
+    <a data-fancybox="gallery-site-graph" href="/media/albums/site-graph/example5.png" >
+      <img src="/media/albums/site-graph/example5_hu19b5f3cc1da70c96315fa59b10b3e965_1353701_750x750_fit_q75_h2_lanczos_3.webp" loading="lazy" alt="example5.png" width="750" height="711">
+    </a>
+  </div>
+  
+
+</div>
+
+The last one is the <a href="https://www.carleton.edu/math/" target="_blank" rel="noopener">Carleton College Math Department website</a> and the first four are the homepages of CS professors at a few different institutions. (No prizes for quessing which two professors hosted course webpages on their personal sites.)</p>
+<p>Of course, there are existing tools for visualizing site graphs. <a href="https://searchengineland.com/easy-visualizations-pagerank-page-groups-gephi-265716" target="_blank" rel="noopener">Here&rsquo;s</a> an article that describes how to visualize websites with <a href="https://www.screamingfrog.co.uk/seo-spider/" target="_blank" rel="noopener">ScreamingFrog</a> and <a href="https://gephi.org" target="_blank" rel="noopener">Gephi</a>. <a href="https://sitebulb.com" target="_blank" rel="noopener">Sitebulb</a> will probably do this too (and much more), but it&rsquo;s a huge download and only has a 14-day free trial. <a href="https://www.link-assistant.com/website-auditor/" target="_blank" rel="noopener">WebSite Auditor</a> can also make interactive site graphs, but again it&rsquo;s a big proprietary tool. There are probably a million more. So why make yet another site visualization tool? Well, <em>this script is small, easy to understand and run, open-source, hackable, and generates customizable and HTML-embeddable interactive visualizations.</em> Plus it was fun to work on.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>The idea is pretty simple: the crawler starts at the base URL of a site and performs a depth-first search of the site, following links to reach new pages. It only follows outgoing links from internal pages, as the goal is to map a single website (and its outgoing links to external sites). The main body of the script looks roughly like this (many details omitted).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">site_url</span> <span class="o">=</span> <span class="n">url</span>
+</span></span><span class="line"><span class="cl">    <span class="n">visited</span> <span class="o">=</span> <span class="p">{</span><span class="n">url</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="n">to_visit</span> <span class="o">=</span> <span class="n">stack</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">to_visit</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="ow">not</span> <span class="n">to_visit</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span> <span class="o">=</span> <span class="n">to_visit</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">page</span> <span class="o">=</span> <span class="c1"># Fetch page</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">page</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">link_url</span> <span class="o">=</span> <span class="c1"># Parse link URL</span>
+</span></span><span class="line"><span class="cl">            <span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">url</span><span class="p">,</span> <span class="n">link_url</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">link_url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span> <span class="ow">and</span> <span class="n">link_url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">site_url</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">to_visit</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">link_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">edges</span>
+</span></span></code></pre></div><p>The visualization uses a great library called <a href="https://pyvis.readthedocs.io/en/latest/" target="_blank" rel="noopener">pyvis</a>, which in turn uses <a href="https://visjs.org" target="_blank" rel="noopener">vis.js</a> to draw and animate the graph. I&rsquo;m using <a href="https://requests.readthedocs.io/en/master/" target="_blank" rel="noopener">requests</a> to fetch webpages and <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank" rel="noopener">Beautiful Soup</a> to parse them.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Download the script from the <a href="https://www.github.com/tomlinsonk/site-graph" target="_blank" rel="noopener">GitHub page</a>, install the required python packages listed on the GitHub readme, and (replacing the URL with yours) run</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py https://www.cs.cornell.edu/~kt/
+</span></span></code></pre></div><p>Make sure you use the full URL, including <code>https://www.</code> and a trailing slash (e.g. <a href="https://www.cs.cornell.edu/~kt/" target="_blank" rel="noopener">https://www.cs.cornell.edu/~kt/</a> ). If you don&rsquo;t use https or omit the trailing slash, you&rsquo;ll get warnings. You can override them with <code>--force</code> if you&rsquo;re sure you want to. The larger the site, the longer the crawl will take (I wouldn&rsquo;t run it on Wikipedia, for instance).</p>
+<p>To see all available options, run</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py -h
+</span></span></code></pre></div><p>To change the visualization output file, use the <code>--vis-file</code> argument (by default, the visualization is saved in <code>site.html</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py https://www.cs.cornell.edu/~kt/ --vis-file kt-site.html
+</span></span></code></pre></div><p>To change the graph data file, use the <code>--data-file</code> argument (by default, this is saved in <code>crawl.pickle</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py https://www.cs.cornell.edu/~kt/ --data-file kt-crawl.pickle
+</span></span></code></pre></div><p>This data file is useful for customizing the visualization without performing a new crawl. See section below.</p>
+<p>To change the dimensions of the saved visualization in pixels, use the <code>--width</code> and <code>--height</code> arguments (defaults are 1000, 800):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py https://www.cs.cornell.edu/~kt/ --width <span class="m">1500</span> --height <span class="m">1000</span>
+</span></span></code></pre></div><p>To also check links leaving the site for errors (e.g 404), use the <code>--visit-external</code> flag (this is slower).</p>
+<p>The last three options, <code>--show-buttons</code>, <code>--options</code>, and <code>--from-data-file</code> are for tweaking the visualization and are described below.</p>
+<h2 id="customizing-the-visualization">Customizing the visualization</h2>
+<p>The default physics settings can make larger site graphs oscillate wildly. Plus, you may want to adjust the sizes of your nodes, whether the edges are curved, or a number of other settings. Luckily, pyvis makes it easy to adjust all of these things. To do this, first run the crawler with the <code>--show-buttons</code> flag:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py https://www.cs.cornell.edu/~kt/ --show-buttons
+</span></span></code></pre></div><p>This will add a user interface to the visualization with which you can adjust every parameter. To make large graphs behave, I&rsquo;ve found that reducing the gravitational constant helps (you can also try adding some overlap avoidance, increasing the spring length, adding damping, and reducing the maximum velocity). I&rsquo;ve included a <code>options.txt</code> file in the repo that I&rsquo;ve found works pretty well.</p>
+<p>Once you&rsquo;ve found settings you like, you can click the &ldquo;generate options&rdquo; button at the bottom of the page. Copy the generated text into a file, say <code>my-options.txt</code>, and then re-run the script with the <code>--options</code> argument to generate a visualization with no UI that uses the new options. To avoid performing another crawl, take advantage of the saved data file using the <code>--from-data-file</code> argument:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 site_graph.py --from-data-file crawl.pickle --options my-options.txt
+</span></span></code></pre></div><p>If you want to change the node colors, you can modify the constants at the top of the <code>site_graph.py</code> script.</p>
+<h2 id="challenges-of-web-crawling">Challenges of web crawling</h2>
+<p>The core of the script is very straightforward, but the web is messy. Here are some of the things I had to deal with.</p>
+<ol>
+<li><strong>Resolving links.</strong> Some links on a website are <em>absolute</em> (they contain the whole path of a webpage), while others are <em>relative</em> (they have a path relative to the current page). Easy enough to handle using <code>urljoin(base_url, link_url)</code> from Python&rsquo;s <code>urllib.parse</code> module. That&rsquo;s not enough, however: some pages specify a different base URL than their own using the HTML <code>&lt;base&gt;</code> tag. Moreover, the base tag itself often uses a path relative to the site&rsquo;s root! So you really need to do <code>urljoin(site_url, urljoin(base_url, link_url))</code>. That was a strange one to debug; before fixing it, my crawler kept trying to reach nonexistent pages like <code>website.com/about/about/about/.../about/</code> in an infinite loop.</li>
+<li><strong>Standardizing URLs.</strong> Even the same page may be referenced under several names. For instance, the links <a href="https://google.com" target="_blank" rel="noopener">https://google.com</a>, <a href="https://www.google.com" target="_blank" rel="noopener">www.google.com</a>, and <a href="https://www.google.com/" target="_blank" rel="noopener">www.google.com/</a> all bring you to the same site. To avoid having this create different nodes in the graph, I ask <em>the page itself</em> what it thinks its URL is. Before adding a URL to the <code>to_visit</code> stack, I make a <code>HEAD</code> request to the link URL using <code>requests.head(url)</code>. This returns metadata about the page, including the final URL after any redirects. I can then use the URL returned by the <code>HEAD</code> request as the canonical version of the link&rsquo;s URL and translate future instances of the link URL into the canonical version.</li>
+<li><strong>Handling errors.</strong> Many things can go wrong when trying to fetch a webpage. The URL may not be pointing to a real location (a 404 error), the page may be password-protected (a 401 error), the server may have serious issues (a 500 error), or the connection may simply hang for one network reason or another. One important measure is to set a timeout, so that if a certain amount of time passes without hearing back from the server (I use 10 seconds), you can move on. The <code>requests</code> library handles this quite nicely with <code>requests.get(url, timeout=10)</code>. <code>requests.get()</code> also provides the HTTP status code and throws useful exceptions (like <code>Timeout</code>) that I catch and handle.</li>
+<li><strong>Minimizing downloaded data.</strong> I designed this script for computer science academic sites, which tend to include PDFs of papers, large downloadable datasets, and other such bandwith-clogging (but valuable and important) artifacts. This is where the <code>HEAD</code> request comess in handy again. In addition to the pages&rsquo;s resolved URL, it also returns the page&rsquo;s <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types" target="_blank" rel="noopener">MIME type</a>, which indicates what type of thing the page is. I only add it to the stack (and thus ready it do be fully downloaded) if it&rsquo;s an HTML page that could reveal more sweet, sweet links.</li>
+<li><strong>Query strings and fragment identifiers.</strong> URLs sometimes contain <em>query strings</em>, like <a href="https://www.google.com/search?q=query&#43;string" target="_blank" rel="noopener">https://www.google.com/search?q=query+string</a> (everything after the <code>?</code>), which pass parameters to the server. They can also point to subsections of a page using <em>fragment identifiers</em>, like <a href="https://en.wikipedia.org/wiki/Fragment_identifier#Examples" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Fragment_identifier#Examples</a> (everything after the <code>#</code>). I decided to remove both of these from internal links, using more <code>urllib.parse</code> methods: <code>urljoin(link_url, urlparse(link_url).path)</code>, but I keep them in external links.</li>
+</ol>
+<p>Hope you find this amusing or perhaps even useful (e.g. for finding broken links). If you have any issues running the script or find bugs in it, either open up an <a href="https://github.com/tomlinsonk/site-graph/issues" target="_blank" rel="noopener">issue on GitHub</a> or send me an email. Happy crawling!</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous"></script>
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="The Town Hall Project makes it easy to find local town halls with your state and federal representatives. To get this information, volunteers spend time searching through politicians&#39; Twitter feeds for town hall announcements. I wrote a script to help do this faster and less painfully." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/townhall-alerts/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/townhall-alerts/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/townhall-alerts/" />
+<meta property="og:title" content="Town Hall Alerts | Kiran Tomlinson" />
+<meta property="og:description" content="The Town Hall Project makes it easy to find local town halls with your state and federal representatives. To get this information, volunteers spend time searching through politicians&#39; Twitter feeds for town hall announcements. I wrote a script to help do this faster and less painfully." /><meta property="og:image" content="https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2020-09-02T20:55:44-04:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2020-09-02T20:55:44-04:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/townhall-alerts/"
+  },
+  "headline": "Town Hall Alerts",
+  
+  "datePublished": "2020-09-02T20:55:44-04:00",
+  "dateModified": "2020-09-02T20:55:44-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "The Town Hall Project makes it easy to find local town halls with your state and federal representatives. To get this information, volunteers spend time searching through politicians' Twitter feeds for town hall announcements. I wrote a script to help do this faster and less painfully."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Town Hall Alerts | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="b35cf4a3631223e1b514d1c14852383f" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Town Hall Alerts</h1>
+
+  
+  <p class="page-subtitle">A small contribution to streamlining civic engagement volunteering.</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 2, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><em>Update: I&rsquo;m sure this no longer works given the changes to the Twitter API, not to mention the <a href="https://www.theverge.com/2023/3/30/23662832/twitter-api-tiers-free-bot-novelty-accounts-basic-enterprice-monthly-price" target="_blank" rel="noopener">absurd cost</a>. <a href="https://www.vox.com/culture/2022/11/22/23466381/leaving-twitter-x-saying-goodbye-social-media" target="_blank" rel="noopener">Sad</a>.</em></p>
+<p>I recently revisited a project from last year and thought it would be fun to write about my experience with it. My girlfriend Sophia volunteers for the <a href="https://townhallproject.com" target="_blank" rel="noopener">Town Hall Project</a>, a non-partisan organization that helps connect engaged citizens with their representatives by making it easy to find information on town halls and office hours. Many legislators hold meetings with their constituents, but it can be difficult to hear about them (maybe the meeting times are posted on a website or perhaps just announced on Twitter). Volunteers for the Town Hall Project spend time searching through individual Facebook pages and Twitter feeds for mentions of town halls.</p>
+<p>To cut down on the time she was spending looking up 40 state senators&rsquo; Twitters, Sophia asked if there was a way to get automatic Twitter notifications when one of her assigned legislators tweeted about a town hall. I thought there must be some existing way of doing this&ndash;of course, there are a million services that offer Twitter alerts. Here&rsquo;s a small sample: <a href="https://warble.co" target="_blank" rel="noopener">Warble</a>, <a href="https://www.mytweetalerts.com" target="_blank" rel="noopener">MyTweetAlerts</a>, <a href="https://twilert.com" target="_blank" rel="noopener">Twilert</a>. However, many of these existing tools are paid services or didn&rsquo;t do quite what we wanted. In particular, she wanted a daily digest including every relevant tweet from any of her monitored accounts since the last digest. Here&rsquo;s a sample alert email my script sent from a few days ago:</p>
+<blockquote>
+<p>There were 2 flagged tweets:</p>
+<p>Wayne D. Fontana (2020-09-02 17:47:52)<br>
+Join me Sept. 29 at 6pm for a Tele-Town Hall on voting. I&rsquo;ll be joined by PA Secretary of State Kathy Boockvar &amp; @ACE_Fitzgerald to answer questions related to the voting process in PA &amp; Allegheny County leading up to the Nov. 3 general election. <a href="https://t.co/ojYLaf9skP" target="_blank" rel="noopener">https://t.co/ojYLaf9skP</a><br>
+<a href="https://twitter.com/WayneDFontana/status/1301215280585150466" target="_blank" rel="noopener">https://twitter.com/WayneDFontana/status/1301215280585150466</a></p>
+<p>Senator John DiSanto (2020-09-01 21:37:03)<br>
+Consider joining my live Telephone Town Hall, Wed, Sept. 2,  6-7 p.m. to hear about &amp; discuss state issues impacting you &amp; your family from the comfort &amp; safety of your own home. Sign up at <a href="https://t.co/N6yUl4SksL" target="_blank" rel="noopener">https://t.co/N6yUl4SksL</a> so you receive a call, or listen to the livestream.<br>
+<a href="https://twitter.com/SenatorDiSanto/status/1300910567536971786" target="_blank" rel="noopener">https://twitter.com/SenatorDiSanto/status/1300910567536971786</a></p>
+</blockquote>
+<p>Here&rsquo;s the entry on the Town Hall Project website (submitted by Sophia after receiving the alert) for the first one:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /post/townhall-alerts/thp_hu42fb9fd2ec3aba77c4ad31cd0b768409_82198_713a88616124b69ae957ebfbc20d449e.webp 400w,
+               /post/townhall-alerts/thp_hu42fb9fd2ec3aba77c4ad31cd0b768409_82198_ceaad19482f83c082722e0f37ce85e7d.webp 760w,
+               /post/townhall-alerts/thp_hu42fb9fd2ec3aba77c4ad31cd0b768409_82198_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/townhall-alerts/thp_hu42fb9fd2ec3aba77c4ad31cd0b768409_82198_713a88616124b69ae957ebfbc20d449e.webp"
+               width="760"
+               height="200"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>As someone who had no previous experience working with the the Twitter API or sending emails through a Python script, it was an interesting project. The first step was figuring out how to fetch all tweets from an account since the previous day. The Twitter API handle for fetching tweets from an account is <a href="https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline" target="_blank" rel="noopener">GET statuses/user_timeline</a>, which can be easily done in Python using <a href="http://docs.tweepy.org/en/v3.5.0/api.html#API.user_timeline" target="_blank" rel="noopener">this Tweepy function</a>. However, this GET request returns a maximum of 200 tweets, and I wanted the script to be robust as possible (even to Twitter-fiend senators). So, I store the ID of the last processed tweet for each tracked user in a file and make requests in chunks of 200 until reaching the last processed tweet. Here&rsquo;s a code snippet:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_tweets</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">last_tweet_ids</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">CONSUMER_KEY</span><span class="p">,</span> <span class="n">CONSUMER_SECRET</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">ACCESS_TOKEN</span><span class="p">,</span> <span class="n">ACCESS_TOKEN_SECRET</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">new_tweets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">account</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                   <span class="n">tweet_mode</span><span class="o">=</span><span class="s1">&#39;extended&#39;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">all_tweets</span> <span class="o">=</span> <span class="p">[</span><span class="n">tweet</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">new_tweets</span> 
+</span></span><span class="line"><span class="cl">                  <span class="k">if</span> <span class="ow">not</span> <span class="n">tweet</span><span class="o">.</span><span class="n">retweeted</span> <span class="ow">and</span> <span class="n">tweet</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="n">last_tweet_ids</span><span class="p">[</span><span class="n">account</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">oldest_id</span> <span class="o">=</span> <span class="n">tweets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">oldest_id</span> <span class="o">&gt;</span> <span class="n">last_tweet_ids</span><span class="p">[</span><span class="n">account</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tweets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">older_tweets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">account</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                         <span class="n">max_id</span><span class="o">=</span><span class="n">oldest_id</span><span class="p">,</span> <span class="n">tweet_mode</span><span class="o">=</span><span class="s1">&#39;extended&#39;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">all_tweets</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">tweet</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">older_tweets</span>
+</span></span><span class="line"><span class="cl">                           <span class="k">if</span> <span class="ow">not</span> <span class="n">tweet</span><span class="o">.</span><span class="n">retweeted</span> 
+</span></span><span class="line"><span class="cl">                              <span class="ow">and</span> <span class="n">tweet</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="n">last_tweet_ids</span><span class="p">[</span><span class="n">account</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">oldest_id</span> <span class="o">=</span> <span class="n">tweets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">all_tweets</span>
+</span></span></code></pre></div><p>(It was very easy to <a href="https://developer.twitter.com/en/apply-for-access" target="_blank" rel="noopener">apply for API access</a> and get the necessary credentials: <code>CONSUMER_KEY</code>, <code>CONSUMER_SECRET</code>, <code>ACCESS_TOKEN</code>, <code>ACCESS_TOKEN_SECRET</code>.)</p>
+<p>Then, it&rsquo;s a simple matter of picking out which tweets to flag. Once that&rsquo;s done, sending an email can be done with <a href="https://docs.python.org/3/library/smtplib.html" target="_blank" rel="noopener">smtplib</a> and <a href="https://docs.python.org/3/library/email.examples.html" target="_blank" rel="noopener">email</a>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">send_alert</span><span class="p">(</span><span class="n">flagged_tweets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;There were </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">flagged_tweets</span><span class="p">)</span><span class="si">}</span><span class="s1"> flagged tweets:</span><span class="se">\n</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">flagged_tweets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span><span class="si">}</span><span class="s1">)</span><span class="se">\n</span><span class="si">{</span><span class="n">tweet</span><span class="o">.</span><span class="n">full_text</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span> \
+</span></span><span class="line"><span class="cl">            <span class="sa">f</span><span class="s1">&#39;https://twitter.com/</span><span class="si">{</span><span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="si">}</span><span class="s1">/status/</span><span class="si">{</span><span class="n">tweet</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">mime</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MIMEText</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">_charset</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">SUBJECT_LINE</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP_SSL</span><span class="p">(</span><span class="s1">&#39;smtp.gmail.com&#39;</span><span class="p">,</span> <span class="mi">465</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">ALERT_FROM_EMAIL</span><span class="p">,</span> <span class="n">ALERT_FROM_PASSWORD</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">ALERT_FROM_EMAIL</span><span class="p">,</span> <span class="n">ALERT_TO_EMAIL</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span></span></code></pre></div><p>We made a Gmail account dedicated to sending these emails (<code>ALERT_FROM_EMAIL</code>). I added a couple of error-handling measures (for instance, you get a <code>tweepy.error.TweepError</code> if the <code>screen_name</code> does not exist&ndash;this error actually happened to me in the last year when a <a href="https://en.wikipedia.org/wiki/Mike_Folmer" target="_blank" rel="noopener">state senator</a> was arrested and his Twitter account was deleted).</p>
+<p>The last step was getting the script to run every day, which is easy with <a href="https://help.ubuntu.com/community/CronHowto" target="_blank" rel="noopener">cron</a>. Here&rsquo;s a <a href="townhall_alerts.txt" download>download link</a> for the full script (with passwords and keys removed; annoyingly, this server doesn&rsquo;t want to allow .py file downloads, so I&rsquo;ve renamed it .txt).</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

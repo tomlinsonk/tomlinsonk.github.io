@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Voting | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/category/voting/</link>
+      <atom:link href="https://www.kirantomlinson.com/category/voting/index.xml" rel="self" type="application/rss+xml" />
+    <description>Voting</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 20 Feb 2024 10:20:34 -0500</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Voting</title>
+      <link>https://www.kirantomlinson.com/category/voting/</link>
+    </image>
+    
+    <item>
+      <title>The Moderating Effect of Instant Runoff Voting</title>
+      <link>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</link>
+      <pubDate>Tue, 20 Feb 2024 10:20:34 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ballot Length in Instant Runoff Voting</title>
+      <link>https://www.kirantomlinson.com/publication/2023-tomlinson-ballot-length/</link>
+      <pubDate>Tue, 07 Feb 2023 00:00:00 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-ballot-length/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

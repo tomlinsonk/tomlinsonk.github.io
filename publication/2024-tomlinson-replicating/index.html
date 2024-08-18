@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="A core tension in the study of plurality elections is the clash between the classic Hotelling-Downs model, which predicts that two office-seeking candidates should position themselves at the median voter&#39;s policy, and the empirical observation that real-world democracies often have two major parties with divergent policies. Motivated by this tension and drawing from bounded rationality, we introduce a dynamic model of candidate positioning based on a simple behavioral heuristic: candidates imitate the policy of previous winners. The resulting model is closely connected to evolutionary replicator dynamics and exhibits complex behavior, despite its simplicity. For uniformly-distributed voters, we prove that when there are k = 2, 3, or 4 candidates per election, any symmetric candidate distribution converges over time to a concentration of candidates at the center. With k ≥ 5, however, we prove that the candidate distribution does not converge to the center. For initial distributions without any extreme candidates, we prove a stronger statement than non-convergence, showing that the density in an interval around the center goes to zero when k ≥ 5. As a matter of robustness, our conclusions are qualitatively unchanged if a small fraction of candidates are not winner-copiers and are instead positioned uniformly at random. Beyond our theoretical analysis, we illustrate our results in simulation; for five or more candidates, we find a tendency towards the emergence of two clusters, a mechanism suggestive of Duverger&#39;s Law, the empirical finding that plurality leads to two-party systems. Our simulations also explore several variations of the model, including non-uniform voter distributions and other forms of noise, which exhibit similar convergence patterns. Finally, we discuss the relationship between our model and prior work on strategic equilibria of candidate positioning games." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/featured.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/" />
+<meta property="og:title" content="Replicating Electoral Success | Kiran Tomlinson" />
+<meta property="og:description" content="A core tension in the study of plurality elections is the clash between the classic Hotelling-Downs model, which predicts that two office-seeking candidates should position themselves at the median voter&#39;s policy, and the empirical observation that real-world democracies often have two major parties with divergent policies. Motivated by this tension and drawing from bounded rationality, we introduce a dynamic model of candidate positioning based on a simple behavioral heuristic: candidates imitate the policy of previous winners. The resulting model is closely connected to evolutionary replicator dynamics and exhibits complex behavior, despite its simplicity. For uniformly-distributed voters, we prove that when there are k = 2, 3, or 4 candidates per election, any symmetric candidate distribution converges over time to a concentration of candidates at the center. With k ≥ 5, however, we prove that the candidate distribution does not converge to the center. For initial distributions without any extreme candidates, we prove a stronger statement than non-convergence, showing that the density in an interval around the center goes to zero when k ≥ 5. As a matter of robustness, our conclusions are qualitatively unchanged if a small fraction of candidates are not winner-copiers and are instead positioned uniformly at random. Beyond our theoretical analysis, we illustrate our results in simulation; for five or more candidates, we find a tendency towards the emergence of two clusters, a mechanism suggestive of Duverger&#39;s Law, the empirical finding that plurality leads to two-party systems. Our simulations also explore several variations of the model, including non-uniform voter distributions and other forms of noise, which exhibit similar convergence patterns. Finally, we discuss the relationship between our model and prior work on strategic equilibria of candidate positioning games." /><meta property="og:image" content="https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2024-05-14T17:51:31-04:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2024-05-14T17:51:31-04:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/"
+  },
+  "headline": "Replicating Electoral Success",
+  
+  "image": [
+    "https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/featured.png"
+  ],
+  
+  "datePublished": "2024-05-14T17:51:31-04:00",
+  "dateModified": "2024-05-14T17:51:31-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "A core tension in the study of plurality elections is the clash between the classic Hotelling-Downs model, which predicts that two office-seeking candidates should position themselves at the median voter's policy, and the empirical observation that real-world democracies often have two major parties with divergent policies. Motivated by this tension and drawing from bounded rationality, we introduce a dynamic model of candidate positioning based on a simple behavioral heuristic: candidates imitate the policy of previous winners. The resulting model is closely connected to evolutionary replicator dynamics and exhibits complex behavior, despite its simplicity. For uniformly-distributed voters, we prove that when there are k = 2, 3, or 4 candidates per election, any symmetric candidate distribution converges over time to a concentration of candidates at the center. With k ≥ 5, however, we prove that the candidate distribution does not converge to the center. For initial distributions without any extreme candidates, we prove a stronger statement than non-convergence, showing that the density in an interval around the center goes to zero when k ≥ 5. As a matter of robustness, our conclusions are qualitatively unchanged if a small fraction of candidates are not winner-copiers and are instead positioned uniformly at random. Beyond our theoretical analysis, we illustrate our results in simulation; for five or more candidates, we find a tendency towards the emergence of two clusters, a mechanism suggestive of Duverger's Law, the empirical finding that plurality leads to two-party systems. Our simulations also explore several variations of the model, including non-uniform voter distributions and other forms of noise, which exhibit similar convergence patterns. Finally, we discuss the relationship between our model and prior work on strategic equilibria of candidate positioning games."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Replicating Electoral Success | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="17efef067ce2d1ada7be3ffc537ab297" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+  
+    
+    
+  
+
+
+<div class="pub">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>Replicating Electoral Success</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span class="author-highlighted">
+      Kiran Tomlinson</span>, <span >
+      Tanvi Namjoshi</span>, <span >
+      Johan Ugander</span>, <span >
+      Jon Kleinberg</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    May, 2024
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+<a class="btn btn-outline-primary btn-page-header" href="https://arxiv.org/abs/2402.17109" target="_blank" rel="noopener">
+  PDF
+</a>
+
+
+
+<a href="#" class="btn btn-outline-primary btn-page-header js-cite-modal"
+        data-filename="/publication/2024-tomlinson-replicating/cite.bib">
+  Cite
+</a>
+
+
+  
+  
+    
+  
+<a class="btn btn-outline-primary btn-page-header" href="https://github.com/tomlinsonk/plurality-replicator-dynamics" target="_blank" rel="noopener">
+  Code
+</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 140px;">
+  <div style="position: relative">
+    <img src="/publication/2024-tomlinson-replicating/featured_hu76ab79d4da31785f19ee33b6674bf323_269109_9e0b8002c28b59bc88f3395075bdd112.webp" width="720" height="140" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    
+    <h3>Abstract</h3>
+    <p class="pub-abstract">A core tension in the study of plurality elections is the clash between the classic Hotelling-Downs model, which predicts that two office-seeking candidates should position themselves at the median voter&rsquo;s policy, and the empirical observation that real-world democracies often have two major parties with divergent policies. Motivated by this tension and drawing from bounded rationality, we introduce a dynamic model of candidate positioning based on a simple behavioral heuristic: candidates imitate the policy of previous winners. The resulting model is closely connected to evolutionary replicator dynamics and exhibits complex behavior, despite its simplicity. For uniformly-distributed voters, we prove that when there are k = 2, 3, or 4 candidates per election, any symmetric candidate distribution converges over time to a concentration of candidates at the center. With k ≥ 5, however, we prove that the candidate distribution does not converge to the center. For initial distributions without any extreme candidates, we prove a stronger statement than non-convergence, showing that the density in an interval around the center goes to zero when k ≥ 5. As a matter of robustness, our conclusions are qualitatively unchanged if a small fraction of candidates are not winner-copiers and are instead positioned uniformly at random. Beyond our theoretical analysis, we illustrate our results in simulation; for five or more candidates, we find a tendency towards the emergence of two clusters, a mechanism suggestive of Duverger&rsquo;s Law, the empirical finding that plurality leads to two-party systems. Our simulations also explore several variations of the model, including non-uniform voter distributions and other forms of noise, which exhibit similar convergence patterns. Finally, we discuss the relationship between our model and prior work on strategic equilibria of candidate positioning games.</p>
+    
+
+    
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Type</div>
+          <div class="col-12 col-md-9">
+            <a href="/publication/#preprint">
+              Preprint
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-12 col-md-3 pub-row-heading">Publication</div>
+          <div class="col-12 col-md-9">arXiv</div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="d-md-none space-below"></div>
+    
+
+    <div class="space-below"></div>
+
+    <div class="article-style"></div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/voting/">Voting</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

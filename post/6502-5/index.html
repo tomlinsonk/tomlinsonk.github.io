@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="The KiT 1 gets a UART so it can send and receive data from my laptop!" />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/6502-5/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/6502-5/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/post/6502-5/featured.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/6502-5/" />
+<meta property="og:title" content="Building a 6502 Computer, Part 5: UART | Kiran Tomlinson" />
+<meta property="og:description" content="The KiT 1 gets a UART so it can send and receive data from my laptop!" /><meta property="og:image" content="https://www.kirantomlinson.com/post/6502-5/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2023-04-05T22:57:56-05:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2023-04-05T22:57:56-05:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/6502-5/"
+  },
+  "headline": "Building a 6502 Computer, Part 5: UART",
+  
+  "image": [
+    "https://www.kirantomlinson.com/post/6502-5/featured.png"
+  ],
+  
+  "datePublished": "2023-04-05T22:57:56-05:00",
+  "dateModified": "2023-04-05T22:57:56-05:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "The KiT 1 gets a UART so it can send and receive data from my laptop!"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Building a 6502 Computer, Part 5: UART | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="5d1420a587bd02b9724da13ef5b92d62" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>Building a 6502 Computer, Part 5: UART</h1>
+
+  
+  <p class="page-subtitle">Adding a serial I/O port</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Apr 5, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/6502/">6502</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 137px;">
+  <div style="position: relative">
+    <img src="/post/6502-5/featured_hu7ccf012c52bd7ff389fda5d016a3087e_974303_81d5e34fafc27c04fbedf19285a54786.webp" width="720" height="137" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>After adding a <a href="/post/6502-4/">graphics card</a> to my 6502-based computer, the next step was to make programming it easier. Up to this point in the build, I had to remove the ROM chip and manually flash it with my <a href="https://www.jameco.com/z/TL866II-Plus-Jameco-ValuePro-USB-High-Performance-Programmer_2297823.html" target="_blank" rel="noopener">TL866II Plus Programmer</a> each time I wanted to run a new program. This made debugging quite tedious. The solution: a serial input/output port that would allow me to connect my laptop to the 6502 and send data back and forth. That way, the 6502 could load a program over the serial port directly into RAM and execute it. I already had a USB to UART adapter, so I did some research and selected the <a href="https://www.ti.com/lit/ds/symlink/tl16c550c.pdf?ts=1680754339129&amp;ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FTL16C550C" target="_blank" rel="noopener">16C550</a> as a good option for a <a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter" target="_blank" rel="noopener">UART</a> chip available in DIP form.</p>
+<p>Just recently, Ben Eater actually released a <a href="https://youtu.be/oLYLnb7kpLg" target="_blank" rel="noopener">few</a> <a href="https://youtu.be/zsERDRM1oy8" target="_blank" rel="noopener">videos</a> and a <a href="https://eater.net/6502" target="_blank" rel="noopener">kit</a> for adding an RS-232 serial port to his 6502 kit. I might have gone this route had it been released 6 months earlier, but it&rsquo;s probably good that I got the experience designing and testing my own approach. Ben&rsquo;s version uses the <a href="https://www.westerndesigncenter.com/wdc/documentation/w65c51s.pdf" target="_blank" rel="noopener">W65C51 ACIA</a> chip, which  unfortunately has a <a href="http://forum.6502.org/viewtopic.php?f=4&amp;t=2543&amp;start=30" target="_blank" rel="noopener">known bug</a>. It&rsquo;s possible to work around it, but this dissuaded me from the 65C51.</p>
+<p>The 16C550 has a bunch of neat features, including a software-selectable baud rate and 16-byte receive and transmit queues. It can either generate interrupts when data arrives or operate in polled mode where the CPU repeatedly checks whether data is available.</p>
+<p>Here&rsquo;s how the chip fits in with my build:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Schematic" srcset="
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_71c29b7fc14e067723363d42def24726.webp 400w,
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_a5b4f88fa02dd4fb9830a84408a8b689.webp 760w,
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_71c29b7fc14e067723363d42def24726.webp"
+               width="760"
+               height="586"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The data and address lines are driven directly by the data and address bus. I allocated addresses 7820-782F for the UART and added address decode logic to send the !UART signal low when any of these addresses are accessed. This allows reads and writes<sup><a href="#footnote-1">1</a></sup> to the UART registers (including mode configuration registers and the receive/transmit buffers). Using the 1MHz system clock (signal PHI2 in the diagram above), I found a way to get a standard baud rate, 4800 (480 bytes/s with the serial port in <a href="https://en.wikipedia.org/wiki/Serial_port#Conventional_notation" target="_blank" rel="noopener">8N1</a> mode): the 16C550 allows you to set a divisor of the clock rate to set 16 times the desired baud rate. So, with 1,000,000 clock cycles per second, a divisor of 13 gives a baud rate of 1,000,000 / (13 * 16) = 4808&ndash;definitely close enough to 4800 to work! 480 bytes/s is incredibly slow by today&rsquo;s standards, but good enough for uploading programs to the breadboard computer!</p>
+<p>I wrote a Python script to transmit a program from my laptop to the UART, which starts out by sending the file size, a <a href="https://en.wikipedia.org/wiki/Fletcher%27s_checksum" target="_blank" rel="noopener">simple checksum</a>, and the start address of the program. It then sends the actual program bytes, which a loading program on the breadboard computer copies into RAM starting at the start address. It can then verify that the checksum matches and run the program in RAM after it has received the declared number of bytes! Here&rsquo;s some of the 6502-side code that reads in the program into <code>target_addr</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">  </span><span class="n">stz</span><span class="w"> </span><span class="n">checksum_addr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">stz</span><span class="w"> </span><span class="n">checksum_addr</span><span class="o">+</span><span class="n">1</span><span class="w">        </span><span class="c1">// initialize checksum</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">ldx</span><span class="w"> </span><span class="err">#</span><span class="n">0</span><span class="w">                     </span><span class="c1">// store num bytes copied low byte in X</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">stz</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">B</span><span class="w">                   </span><span class="c1">// store num pages copied in zp.B</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">ldy</span><span class="w"> </span><span class="err">#</span><span class="n">0</span><span class="w">                     </span><span class="c1">// store 0 in y for indirect addressing               </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">mov2</span><span class="w"> </span><span class="n">target_addr</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">C</span><span class="w">    </span><span class="c1">// store the target address in zp.C,D</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">loop</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">jsr</span><span class="w"> </span><span class="n">uart</span><span class="p">.</span><span class="na">read_byte</span><span class="w">         </span><span class="c1">// get a byte</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">sta</span><span class="w"> </span><span class="p">(</span><span class="n">zp</span><span class="p">.</span><span class="na">C</span><span class="p">),</span><span class="n">y</span><span class="w">               </span><span class="c1">// store the byte in the pointer in zp.C,D</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">clc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">adc</span><span class="w"> </span><span class="n">checksum_addr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">sta</span><span class="w"> </span><span class="n">checksum_addr</span><span class="w">          </span><span class="c1">// update the first checksum byte</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">clc</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">adc</span><span class="w"> </span><span class="n">checksum_addr</span><span class="o">+</span><span class="n">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">sta</span><span class="w"> </span><span class="n">checksum_addr</span><span class="o">+</span><span class="n">1</span><span class="w">        </span><span class="c1">// update the second checksum byte</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">inc</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">C</span><span class="w">                   </span><span class="c1">// increment the pointer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">bne</span><span class="w"> </span><span class="n">no_carry</span><span class="w">               </span><span class="c1">// if it doesn&#39;t become 0, no need to carry</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">inc</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">C</span><span class="o">+</span><span class="n">1</span><span class="w">                 </span><span class="c1">// if it does become 0, carry to high byte</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">no_carry</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">inx</span><span class="w">                        </span><span class="c1">// increment num bytes copied</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">bne</span><span class="w"> </span><span class="n">no_x_carry</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">inc</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">B</span><span class="w">                   </span><span class="c1">// if carrying, increment num pages copied</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">no_x_carry</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">cpx</span><span class="w"> </span><span class="n">n_addr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">bne</span><span class="w"> </span><span class="n">loop</span><span class="w">                   </span><span class="c1">// if x doesn&#39;t match file size low bytes, still copying</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">lda</span><span class="w"> </span><span class="n">zp</span><span class="p">.</span><span class="na">B</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">cmp</span><span class="w"> </span><span class="n">n_addr</span><span class="o">+</span><span class="n">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">bcc</span><span class="w"> </span><span class="n">loop</span><span class="w">                   </span><span class="c1">// if pages copied &lt; filesize high byte, still copying</span><span class="w">
+</span></span></span></code></pre></div><p>I added a load command (<code>L</code>) to the monitor program that also prints out A, B, C (address, bytes, checksum) in hex:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Load" srcset="
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_180f9e1b2177802b8566cf312b1b52dc.webp 400w,
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_3ee1e0f136ffbe98827445c682f4bd30.webp 760w,
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_180f9e1b2177802b8566cf312b1b52dc.webp"
+               width="760"
+               height="282"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>This indicates a 0x77 (119) byte  program was loaded to address 0x1000 with checksum 0xA53 (which agrees with the transmitted checksum). Pressing R will run the program. (See a future post for why there&rsquo;s a &ldquo;Save&rdquo; option&ndash;this image is from a very recent version of the 6502 computer with some extra upgrades.) Here&rsquo;s what the breadboard computer looks like with the 16C550 chip at the very top left:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Load" srcset="
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_5ac460cce8b69a3439784c788bfc06bb.webp 400w,
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_e62ad4979b6fb53a0a0bf6bed7158820.webp 760w,
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_5ac460cce8b69a3439784c788bfc06bb.webp"
+               width="570"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Notice the three green address lines and eight blue data lines brought up from the VRAM chip right below. The four wires heading off the top left of the breadboard go to my USB-to-UART adapter and then into my MacBook! Adding the ability to quickly load programs without flashing the ROM chip has enabled a much faster build-test-debug development cycle, making software development way more enjoyable.</p>
+<p>I&rsquo;ll be writing soon about a very exciting step in the project: going from breadboard to PCB!</p>
+<hr>
+<h3 id="previous-post-part-4hahahugoshortcode20s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode20s2hbhbspan">Previous post: <a href="/post/6502-4/">Part 4</a>  <span style="float:right">Next post: <a href="/post/6502-6/">Part 6</a></span></h3>
+</br>
+<small><sup id="footnote-1">1</sup>Unfortunately there's a subtle bug in my design that makes writes to the somewhat unreliable, caused by the fact that writes to the 16C550 are triggered only by the rising edge of the !WR1 signal. In contrast, writes to my HM62256 RAM chip can be triggered either by the rising edge of R/!W or by the rising edge of the active low chip enable signal, whichever comes first. The 65C02's R/!W signal during a write cycle goes high at roughly the same time as the address and data lines stop being valid. In order to properly clock a write, you need to make sure the write occurs at the falling edge of the PHI2 clock, which happens before R/W! goes high and while the address and data lines are both valid. The RAM works by having the RAM chip enable signal be disabled whenever PHI2 is low, so the write gets triggered at the right time. For the 16C550, you therefore shouldn't just use the CPU's R/!W signal to control a write. Instead, you need a signal that is low when R/W! is low <em>and</em> PHI2 is high to plug into the 16C550's !WR1. My current version is still buggy: writes sometimes succeed, but it depends on what the address lines do after the write to the 16C550. I've managed to get the small number of writes I need to load programs working consistently, but I need to fix this issue in a future version.</small>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

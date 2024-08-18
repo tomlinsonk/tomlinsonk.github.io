@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Voting | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/tag/voting/</link>
+      <atom:link href="https://www.kirantomlinson.com/tag/voting/index.xml" rel="self" type="application/rss+xml" />
+    <description>Voting</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 14 May 2024 17:51:31 -0400</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Voting</title>
+      <link>https://www.kirantomlinson.com/tag/voting/</link>
+    </image>
+    
+    <item>
+      <title>Replicating Electoral Success</title>
+      <link>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</link>
+      <pubDate>Tue, 14 May 2024 17:51:31 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

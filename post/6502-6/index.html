@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="After much design, soldering, and debugging, the breadboard KiT 1 has been succeeded by an improved KiT 2 on PCB!" />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/6502-6/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/6502-6/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/post/6502-6/featured.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/6502-6/" />
+<meta property="og:title" content="Building a 6502 Computer, Part 6: KiT 2 | Kiran Tomlinson" />
+<meta property="og:description" content="After much design, soldering, and debugging, the breadboard KiT 1 has been succeeded by an improved KiT 2 on PCB!" /><meta property="og:image" content="https://www.kirantomlinson.com/post/6502-6/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2023-05-31T10:43:17-05:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2023-05-31T10:43:17-05:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/6502-6/"
+  },
+  "headline": "Building a 6502 Computer, Part 6: KiT 2",
+  
+  "image": [
+    "https://www.kirantomlinson.com/post/6502-6/featured.png"
+  ],
+  
+  "datePublished": "2023-05-31T10:43:17-05:00",
+  "dateModified": "2023-05-31T10:43:17-05:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "After much design, soldering, and debugging, the breadboard KiT 1 has been succeeded by an improved KiT 2 on PCB!"
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Building a 6502 Computer, Part 6: KiT 2 | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="2e9491e1bd3eb5b2a9988e6a5c409b39" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>Building a 6502 Computer, Part 6: KiT 2</h1>
+
+  
+  <p class="page-subtitle">From breadboard to PCB!</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    May 31, 2023
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/6502/">6502</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 168px;">
+  <div style="position: relative">
+    <img src="/post/6502-6/featured_hu57c904c2c7710ade43cf240b3b06b711_2554042_3f06c93ab068233f99ae381216c18798.webp" width="720" height="168" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>In the <a href="/post/6502-5/">last post</a>, I described adding serial I/O to the KiT 1; that was the last major hardware addition I made to the breadboard-based version. The next step was a big one: going from breadboard to printed circuit board (PCB). After seeing <a href="https://www.youtube.com/channel/UCeRXQ_B5WZD3yjPly45myvg" target="_blank" rel="noopener">James Sharman</a>&rsquo;s incredible success with his pipelined 8-bit CPU, I decided to use <a href="https://easyeda.com" target="_blank" rel="noopener">EasyEDA</a> as my PCB design tool. I settled on a modular design, where the core functionality would be included in the main board (CPU, RAM, ROM, UART, VIAs) and additional features would be provided trough 5 expansion slots (graphics, sound, storage, etc). After a lot of time spent fiddling around with positioning and tons of manual wiring, here&rsquo;s what my main board design ended up looking like:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Main PCB" srcset="
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_ad431696c144bd0836e6db6d356f3b51.webp 400w,
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_25a2140758b1568c7d92648e1a1f0029.webp 760w,
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_ad431696c144bd0836e6db6d356f3b51.webp"
+               width="760"
+               height="757"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The main board of the new KiT 2 is overall quite similar to the breadboard KiT 1, with few exceptions:</p>
+<ul>
+<li>I removed the LCD and graphics card, since these would be handled by expansion cards (in fact, I haven&rsquo;t bothered with an LCD now that I have a good graphics card).</li>
+<li>There is one more VIA on the KiT 2 (I call the extra two ports C and D). On the KiT 1, VIA port A was used for keyboard input and port B was used for the LCD. On the KiT 2, port A is still used for keyboard input, but port B is simply exposed with a pin header for versatility (like GPIO pins on a Raspberry Pi). Ports C and D are tied into the expansion slots: C is wired to slot 1, while D wired to slots 2-5. The idea is to use slot 1 for cards that need continuous access to a dedicated port, while slots 2-5 can share a single port for intermittent use. I&rsquo;m using slot 1 for the graphics card, where port C controls the graphics mode. It would be possible to just use port D for this, but that would require some additional latching and dedicated address space. This solution makes controlling graphics modes very simple!</li>
+<li>I replaced the address control logic chips with two programmable <a href="https://en.wikipedia.org/wiki/Generic_Array_Logic" target="_blank" rel="noopener">GAL</a> chips (nice blog post about GALs <a href="https://justanotherelectronicsblog.com/?p=458" target="_blank" rel="noopener">here</a>), one to control all of the chip select lines for the main board (the Main GAL) and one to control the slot select lines (the Slot GAL). The really nice feature of GALs is that I can reprogram them using my EEPROM programmer to rearrange the address space on the fly. You just specify the pin logic in a <code>.pld</code> file, assemble it into a <code>.jed</code> file using <a href="https://github.com/simon-frankau/galette" target="_blank" rel="noopener">Galette</a>, and flash that to the GAL chip using <a href="https://gitlab.com/DavidGriffith/minipro/" target="_blank" rel="noopener">minipro</a>. Here&rsquo;s a snippet of my Main GAL <code>.pld</code> file showing the syntax for specifying I/O logic (note: <code>*</code> is <code>and</code>, <code>+</code> is <code>or</code>, and <code>/</code> is <code>not</code>; the <code>.pld</code> file also lets you name the pins, which I&rsquo;ve done here):
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ROM  = a15 * a14 + a15 * a13 + a15 * a12
+</span></span><span class="line"><span class="cl">RAM  = PHI2 * /a15 * /a14 + PHI2 * /a15 * /a13
+</span></span><span class="line"><span class="cl">VIA1 = /a15 * a14 * a13 * a12 * a11 * /a10 * /a9 * /a8
+</span></span><span class="line"><span class="cl">VIA2 = /a15 * a14 * a13 * a12 * a11 * /a10 * /a9 * a8
+</span></span><span class="line"><span class="cl">UART = /a15 * a14 * a13 * a12 * a11 * /a10 * a9 * /a8
+</span></span></code></pre></div></li>
+<li>I decided to use surface-mount components (except the main chips, which are all DIP). Since I was expecting to hand-solder everything, I picked one of the larger standard component sizes: 1206. This ended up working out well enough&ndash;they were small enough to make layout possible, but also big enough to hand-solder without too much hassle.</li>
+</ul>
+<p>The board layout itself was pretty challenging, especially the routing (which is <a href="https://dl.acm.org/doi/abs/10.1145/800139.804562" target="_blank" rel="noopener">NP-hard</a>, after all). Since I knew nothing about PCB design, I did a bunch of internet digging and tried to follow these basic guidelines:</p>
+<ul>
+<li>four layers: power and ground planes in the middle and two signal layers on the outside</li>
+<li>thin signal traces, thick power traces</li>
+<li>minimize number of vias</li>
+<li>only 45-degree angles for traces (no right angles)</li>
+<li>top layer has mostly horizontal traces, bottom layer has mostly vertical traces.</li>
+</ul>
+<p>I&rsquo;m not sure exactly how long all the routing took, but it was definitely many hours. In parallel, I was also working on the graphics card, since that would be my primary output from the KiT 2. I used the same basic design as the KiT 1&rsquo;s graphics card, but designed it to fit into expansion slot 1, added two more DPRAM chips (6K total!) so I&rsquo;d be able to use all video modes supported by the MC6847, and tied in the video mode lines into port C in the expansion slot so that I could control video modes programmatically rather than with DIP switches as in the KiT 1. Here&rsquo;s the final PCB layout for the graphics card:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Graphics Card PCB" srcset="
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_164b17acbb874e0969fb086330754008.webp 400w,
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_9ad4a34beef4823e4277b1db71d79173.webp 760w,
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_164b17acbb874e0969fb086330754008.webp"
+               width="726"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Finally, I made a prototyping card that would let me develop other expansion cards without needing to get a new PCB manufactured each time:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Prototyping Card PCB" srcset="
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_58265c4c228f42e3298104806931ceb9.webp 400w,
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_3549c0e30549b6cf4594d956cd3d282a.webp 760w,
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_58265c4c228f42e3298104806931ceb9.webp"
+               width="743"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Once the designs were done, I placed an order with <a href="https://jlcpcb.com" target="_blank" rel="noopener">JLCPCB</a> and ordered all the components (mostly from <a href="https://www.mouser.com" target="_blank" rel="noopener">Mouser</a> and <a href="https://www.jameco.com" target="_blank" rel="noopener">Jameco</a>), although I got some of the obsolete components from random sellers on eBay (like the GALs). The boards turned out looking great! Here are some pictures at various stages of soldering and fit-testing:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Blank Main PCB" srcset="
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_e931e2953b96dd476923173a5c8ecdf7.webp 400w,
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_7bdbc368d240b225ecffdf74c8c2ec06.webp 760w,
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_e931e2953b96dd476923173a5c8ecdf7.webp"
+               width="760"
+               height="642"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Populated Main PCB" srcset="
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_54e0423ac920c45c51312a8c9852d605.webp 400w,
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_5dde7e1b840531f84fa97ff44c810652.webp 760w,
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_54e0423ac920c45c51312a8c9852d605.webp"
+               width="742"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Fit Test" srcset="
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_34d510ba115c21d5c75b23ec69d7742d.webp 400w,
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_1db0adb559493120ad1ab73118b206a9.webp 760w,
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_34d510ba115c21d5c75b23ec69d7742d.webp"
+               width="650"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>After installing of the chips, I wrote a simple program to blink an LED hooked up to port B. It was alive!</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Signs of Life" srcset="
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_beeb2792d1243c37a6df2e3b3f9cdb2f.webp 400w,
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_80447482949c9e4d944fb44d97d4d903.webp 760w,
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_beeb2792d1243c37a6df2e3b3f9cdb2f.webp"
+               width="580"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>I eventually got around to soldering up the graphics card too:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="KiT 2 with Graphics" srcset="
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_6ef8c361afbba368b644ec1acf45b7cc.webp 400w,
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_ac87543020c58f074bd5910a7576dc84.webp 760w,
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_6ef8c361afbba368b644ec1acf45b7cc.webp"
+               width="661"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>After debugging a bunch of issues listed below, I was able to get it working and take advantage of the newly available 6K graphics modes:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Neil B/W" srcset="
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_9179b3b6ef9159f7bcce77e79b910518.webp 400w,
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_776637ee797e1e25f9b46c7f305347af.webp 760w,
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_9179b3b6ef9159f7bcce77e79b910518.webp"
+               width="760"
+               height="470"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Of course, my first-try designs had a bunch of issues, although I&rsquo;ve been able to work around them reasonably well. Here are the hardware bugs I know of in the KiT 2:</p>
+<table>
+<thead>
+<tr>
+<th>Known bugs</th>
+<th>Current patch</th>
+<th>Eventual fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RX and TX are the wrong way around for the UART header</td>
+<td>Made an adapter</td>
+<td>Swap RX and TX</td>
+</tr>
+<tr>
+<td>UART LEDs are on when they should be off</td>
+<td>Ignore the LEDs</td>
+<td>Remove UART LEDs</td>
+</tr>
+<tr>
+<td>The PS/2 connector is wired backwards/upside-down</td>
+<td>Made an adapter</td>
+<td>Fix the wiring</td>
+</tr>
+<tr>
+<td>The power jack ground is wired wrong</td>
+<td>Soldered a jumper</td>
+<td>Fix the wiring</td>
+</tr>
+<tr>
+<td>The UART write signal is wrong  (some writes fail; see <a href="/post/6502-5/#footnote-1">this footnote</a>)</td>
+<td>Avoid UART writes</td>
+<td>Add R/!W as an input to Main GAL and gate the UART write signal based on it</td>
+</tr>
+<tr>
+<td>Graphics card: !BUSY pins on all 3 DPRAMs are missing pull-up resistors</td>
+<td>Soldered resistors to the pins of chip U9</td>
+<td>Add SMD pull-up resistors</td>
+</tr>
+</tbody>
+</table>
+<p>If you want to check out the full schematic for the main board, <a href="kit-2-schematic.svg">here it is</a>, but beware that it includes the bugs listed above.</p>
+<p>Since getting the KiT 2 working, I&rsquo;ve made two more expansion cards: a 256KB flash drive for persistent storage and a sound card using an <a href="https://retrocomp.cz/produkt?id=2" target="_blank" rel="noopener">ARMSID</a>. I&rsquo;ve also written an emulator for the KiT 2! More on these developments in future posts.</p>
+<hr>
+<h3 id="previous-post-part-5hahahugoshortcode21s2hbhb-span-stylefloatrightnext-post-part-7hahahugoshortcode21s3hbhbspan">Previous post: <a href="/post/6502-5/">Part 5</a> <span style="float:right">Next post: <a href="/post/6502-7/">Part 7</a></span></h3>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

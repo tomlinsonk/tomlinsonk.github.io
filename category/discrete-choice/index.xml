@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Discrete Choice | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/category/discrete-choice/</link>
+      <atom:link href="https://www.kirantomlinson.com/category/discrete-choice/index.xml" rel="self" type="application/rss+xml" />
+    <description>Discrete Choice</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Fri, 19 Jan 2024 15:58:48 -0500</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/category/discrete-choice/</link>
+    </image>
+    
+    <item>
+      <title>Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models</title>
+      <link>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</link>
+      <pubDate>Fri, 19 Jan 2024 15:58:48 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graph-based Methods for Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/publication/2022-tomlinson-graph-choice/</link>
+      <pubDate>Thu, 17 Aug 2023 08:00:00 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2022-tomlinson-graph-choice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Learning Interpretable Feature Context Effects in Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/publication/2020-tomlinson-feature-context-effects/</link>
+      <pubDate>Sat, 14 Aug 2021 06:00:00 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-tomlinson-feature-context-effects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Choice Set Confounding in Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/publication/2021-tomlinson-choice-set-confounding/</link>
+      <pubDate>Wed, 26 May 2021 00:44:36 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2021-tomlinson-choice-set-confounding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Choice Set Optimization Under Discrete Choice Models of Group Decisions</title>
+      <link>https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/</link>
+      <pubDate>Sun, 12 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Discrete Choice Models</title>
+      <link>https://www.kirantomlinson.com/post/discrete-choice-models/</link>
+      <pubDate>Fri, 06 Mar 2020 17:34:01 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/post/discrete-choice-models/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Choosing&lt;/em&gt; is one of the most common and important actions people take: we choose where to work, how to get there, who to vote for, and what to have for lunch. These scenarios are studied in economics, psychology, and (recently) computer science under the umbrella of &amp;ldquo;discrete choice&amp;rdquo; (as opposed to continuous choices, like how much milk to put in your coffee). In a discrete choice setting, we&amp;rsquo;re presented with a set of options (the &lt;em&gt;choice set&lt;/em&gt;) and we make a selection from the available items. Models describing how people make discrete choices have been studied since the &amp;rsquo;70s (by McFadden&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; and Tversky&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, most notably). Here, I&amp;rsquo;ll grive a brief introduction to discrete choice models and lead up into my recent work with Austin Benson (edit: now accepted at ICML 2020).&lt;/p&gt;
+&lt;h3 id=&#34;iia-and-plackett-luce&#34;&gt;IIA and Plackett-Luce&lt;/h3&gt;
+&lt;p&gt;The most basic choice model is the Plackett-Luce model, under which the probability that someone picks an item $x$ from the choice set $C$ is proportional to the &lt;em&gt;utility&lt;/em&gt; $u_x$ of $x$ (some quantity describing its value to the chooser):&lt;/p&gt;
+&lt;p&gt;$$\Pr(x \mid C) = \frac{u_x}{\sum_{y \in C} u_y}.$$&lt;/p&gt;
+&lt;p&gt;This model can be derived from a seemingly reasonable assumption about choice, &lt;em&gt;the independence from irrelevant alternatives&lt;/em&gt; (IIA), also called Luce&amp;rsquo;s choice axiom&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;. IIA states that the relative probabilities of picking items do not depend on the other items in the choice set. Formally, IIA holds if for all items $x, y$ that appear in both the choice sets $C$ and $C&amp;rsquo;$,&lt;/p&gt;
+&lt;p&gt;$$\frac{\Pr(x \mid C)}{\Pr(y \mid C)} = \frac{\Pr(x \mid C&amp;rsquo;)}{\Pr(y \mid C&amp;rsquo;)}.$$&lt;/p&gt;
+&lt;p&gt;For instance, if I prefer pizza to hot dogs, then I should still prefer pizza to hot dogs when you tell me that hamburgers are also available.&lt;/p&gt;
+&lt;h3 id=&#34;multinomial-logit&#34;&gt;Multinomial logit&lt;/h3&gt;
+&lt;p&gt;A slight variant of the Plackett-Luce model is the &lt;em&gt;multinomial logit model&lt;/em&gt; (MNL), in which choice probabilities are proportional to the exponentials of item utilities:&lt;/p&gt;
+&lt;p&gt;$$\Pr(x \mid C) = \frac{e^{u_x}}{\sum_{y \in C} e^{u_y}}.$$&lt;/p&gt;
+&lt;p&gt;In machine learning, this would be called a &lt;em&gt;softmax&lt;/em&gt; over item utilities. From an economic perspective, the MNL model has a nice property: if people draw random utilities from Gumbel distributions with means $u_x$ before picking the item with maximum observed utility, then the induced choice probabilities are exactly the MNL model. In other words, MNL is consistent with the economic principle that people are utility-maximizers. From a computer science persepctive, however, the more important thing is that we can learn maximum-likelihood utilities from observed choices since the log-likelihood function is convex.&lt;/p&gt;
+&lt;h3 id=&#34;context-effects&#34;&gt;Context effects&lt;/h3&gt;
+&lt;p&gt;While IIA is intuitively satisfying and leads to simple models, it often doesn&amp;rsquo;t hold in practice (see, e.g., seminal work by Tversky and Kahneman&lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt; and Tversky and Simonson&lt;sup id=&#34;fnref:6&#34;&gt;&lt;a href=&#34;#fn:6&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;). For instance, similar items sometimes &lt;em&gt;cannibalize&lt;/em&gt; each other. Every presidential election cycle, we are reminded of the unfortunate phenomenon of vote-splitting (this motivates voting systems better than first-past-the-post, but that&amp;rsquo;s for another post). This is an example of an IIA violation: if 50% of people vote liberal and 50% vote moderate, then one candidate from each category would tie against each other. However, introduce one more liberal and the votes may look like 25%, 25%, 50%. These phenomena are termed &lt;em&gt;context effects&lt;/em&gt;. Another common context effect is the &lt;em&gt;compromise effect&lt;/em&gt;, which describes the tendency for people to choose intermediate options from the choice set (the classic example is that people tend to buy the middle-priced bottle of wine given three options).&lt;/p&gt;
+&lt;h3 id=&#34;nested-logit&#34;&gt;Nested logit&lt;/h3&gt;
+&lt;p&gt;Many alternative discrete choice models have been introduced to account for context effects. One is the &lt;em&gt;nested logit&lt;/em&gt; (NL) model, which is designed to account for the type of cannibalization described above. In a nested logit model, the items are the leaves of a tree whose internal nodes represent categories of items. Every node in the tree has an associated utility. For example:&lt;/p&gt;
+&lt;div class=&#34;mermaid&#34;&gt;graph TD
+	A(Start) --&gt; R(Moderate, 2)
+	A --&gt; L(Liberal, 3)
+	R --&gt; C(Arthur, 1)
+ 	R --&gt; D(Tricia, 5)
+ 	L --&gt; E(Zaphod, 10)
+ 	L --&gt; F(Ford, 3)
+&lt;/div&gt;
+&lt;p&gt;To choose in the NL model, you start at the root and repeatedly choose from the children of the current node according to an MNL model until reaching a leaf. In the NL instance above, the probability that I would vote for Zaphod is $$\frac{e^3}{e^2 + e^3} \cdot \frac{e^{10}}{e^{10} + e^3} \approx 73\%.$$ Like MNL, nested logit utilities can be efficiently inferred from choice data (inferring the correct tree structure is an open problem&amp;mdash;people typically design possible trees by hand and use hypothesis testing).&lt;/p&gt;
+&lt;h3 id=&#34;cdm&#34;&gt;CDM&lt;/h3&gt;
+&lt;p&gt;Another interesting discrete choice model is the &lt;em&gt;context-dependent random utility model&lt;/em&gt; (CDM) recently introduced by Seshadri, Peysakhovich, and Ugander&lt;sup id=&#34;fnref:7&#34;&gt;&lt;a href=&#34;#fn:7&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;7&lt;/a&gt;&lt;/sup&gt;. This model is based on the idea that context effects can be approximated by pairwise interactions. That is, the utility of item $x$ in choice set $C$ depends on an intrinsic value term plus the effect of every other item in $C$ on $x$. In principle, the context effects exerted by the pair of items $\{w, y\}$ could be unrelated to the effects of $w$ and $y$ individually, but this approximation seems to be pretty good in practice.&lt;/p&gt;
+&lt;p&gt;In the CDM, each item still has a utility $u_x$. In addition, every pair of distinct items $x, y$ has an associated &lt;em&gt;pull&lt;/em&gt; $p_{xy}$, which decribes the pull of $x$ on $y$&amp;rsquo;s utility (this notation differs slightly from the CDM paper). The choice probabilities are then:&lt;/p&gt;
+&lt;p&gt;$$\Pr(x \mid C) = \frac{\exp\left(u_x + \sum_{z\in C \setminus x} p_{zx}\right)}{\sum_{y \in C} \exp \left(u_y + \sum_{z\in C \setminus x} p_{zy}\right)}$$&lt;/p&gt;
+&lt;p&gt;Although it is considerably more complex, the CDM can still be efficiently learned from data! It also outperforms the MNL model in describing real-world choice datasets. I&amp;rsquo;ve found it very applicable as a powerful general choice model accounting for context effects that can be learned from data.&lt;/p&gt;
+&lt;h3 id=&#34;vector-parametrization&#34;&gt;Vector parametrization&lt;/h3&gt;
+&lt;p&gt;All of these choice models can be augmented by replacing fixed utilities with (possibly latent) feature and preference vectors. This has several advatanges, including learning relationships between similar items and between people with similar preferences. Suppose we want to model the choices of many individuals. We&amp;rsquo;ll denote the probability that person $a$ picks item $x$ given choice set $C$ using $\Pr(a \gets x \mid C)$. For MNL, suppose we have embedding vectors $\alpha_a$ for each person and vectors $\beta_x$ for each item. Then we can say the utility of an item to an agent is the inner product of their vectors:&lt;/p&gt;
+&lt;p&gt;$$\Pr(a\gets x \mid C) = \frac{e^{\alpha_a^T \beta_x}}{\sum_{y\in C} e^{ \alpha_a^T\beta_y }}.$$&lt;/p&gt;
+&lt;p&gt;Learning parameters from choice data then gives us low-dimensional embeddings of people and items. For the CDM, even the single-individual case is interesting. If you think about the placing the parameters $p_{zx}$ in a utility-adjusted matrix $P_{zx} = p_{zx}-u_x$ (with zeros on the diagonal), then we can find a low-rank approximation where each entry $P_{zx}$ is approximated by the inner product of two low-dimensional vectors $c_z$ and $t_z$. This is exactly the low-rank CDM:&lt;/p&gt;
+&lt;p&gt;$$\Pr(x \mid C) = \frac{\exp\left(\left(\sum_{z \in C \setminus x} c_z\right)^T t_x \right)}{\sum_{y \in C}\exp\left(\left(\sum_{z \in C \setminus y} c_z\right)^T t_y \right)}.$$&lt;/p&gt;
+&lt;h3 id=&#34;my-recent-work&#34;&gt;My recent work&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;ll now give a quick teaser for my &lt;a href=&#34;https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/&#34;&gt;recent paper with Austin&lt;/a&gt;. If a group of people are choosing between a set of options, one natural quantity is the amount of &lt;em&gt;disagreement&lt;/em&gt; in the group, or the sum of differences in choice probabilities:&lt;/p&gt;
+&lt;p&gt;$$\sum_{a, b} \sum_{x \in C} \left| \Pr(a\gets x \mid C) - \Pr(b\gets x \mid C) \right|.$$&lt;/p&gt;
+&lt;p&gt;One simple intervention we can make is to introduce additional items to the choice set, and we might wish to shrink the initial disagreement (to encourage consensus or to help the group reach a final decision). Thus, one of the problems we study is finding the set of items $Z$ that minimizes&lt;/p&gt;
+&lt;p&gt;$$D(Z) = \sum_{a, b} \sum_{x \in C} \left| \Pr(a\gets x \mid C \cup Z) - \Pr(b\gets x \mid C \cup Z) \right|.$$&lt;/p&gt;
+&lt;p&gt;This problem turns out to be quite hard: NP-hard, in fact, under all of the choice models discussed above. Another problem we consider is optimizing for the number of individuals whose favorite item is some target $x^*.$ This also turns out to be NP-hard when context effects are present, but it appears to be an easier problem than minimmizing disagreement in the sense that restricting these choice models can make promotion easy while leaving agreement hard.&lt;/p&gt;
+&lt;p&gt;In addition to showing these problems hard, our paper also provides a general-purpose approximation algorithm for choice set optimization problems in the MNL model (with extensions for the CDM and NL models). If you&amp;rsquo;re interested, more details are available in the paper linked above.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;McFadden, D. Conditional logit analysis of qualitative choice behavior. In Zarembka, P. (ed.), &lt;em&gt;Frontiers in Econometrics&lt;/em&gt;, pp. 105–142. Academic Press, 1974.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;McFadden, D. Modeling the choice of residential location. &lt;em&gt;Transportation Research Record&lt;/em&gt;, (673), 1978.&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;Tversky, A. Elimination by aspects: A theory of choice. &lt;em&gt;Psychological Review&lt;/em&gt;, 79(4):281, 1972.&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;Luce, R. D. Individual choice behavior. 1959.&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;
+&lt;p&gt;Tversky, A. and Kahneman, D. The framing of decisions and the psychology of choice. &lt;em&gt;Science&lt;/em&gt;, 211(4481):453– 458, 1981.&amp;#160;&lt;a href=&#34;#fnref:5&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:6&#34;&gt;
+&lt;p&gt;Tversky, A. and Simonson, I. Context-dependent preferences. Management Science, 39(10):1179–1189, 1993.&amp;#160;&lt;a href=&#34;#fnref:6&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:7&#34;&gt;
+&lt;p&gt;Seshadri, A., Peysakhovich, A., and Ugander, J. Discovering context effects from raw choice data. In &lt;em&gt;International Conference on Machine Learning&lt;/em&gt;, pp. 5660–5669, 2019.&amp;#160;&lt;a href=&#34;#fnref:7&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

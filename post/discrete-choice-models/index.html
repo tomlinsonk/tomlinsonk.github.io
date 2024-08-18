@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 18, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="Choosing is one of the most common and important actions people take: we choose where to work, how to get there, who to vote for, and what to have for lunch." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/discrete-choice-models/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/discrete-choice-models/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/discrete-choice-models/" />
+<meta property="og:title" content="Discrete Choice Models | Kiran Tomlinson" />
+<meta property="og:description" content="Choosing is one of the most common and important actions people take: we choose where to work, how to get there, who to vote for, and what to have for lunch." /><meta property="og:image" content="https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2020-03-06T17:34:01-05:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2020-03-06T17:34:01-05:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/discrete-choice-models/"
+  },
+  "headline": "Discrete Choice Models",
+  
+  "datePublished": "2020-03-06T17:34:01-05:00",
+  "dateModified": "2020-03-06T17:34:01-05:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "Choosing is one of the most common and important actions people take: we choose where to work, how to get there, who to vote for, and what to have for lunch."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Discrete Choice Models | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="4e7e7943f82555bb32b49637a51a1198" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Discrete Choice Models</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Mar 6, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/discrete-choice/">Discrete Choice</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><em>Choosing</em> is one of the most common and important actions people take: we choose where to work, how to get there, who to vote for, and what to have for lunch. These scenarios are studied in economics, psychology, and (recently) computer science under the umbrella of &ldquo;discrete choice&rdquo; (as opposed to continuous choices, like how much milk to put in your coffee). In a discrete choice setting, we&rsquo;re presented with a set of options (the <em>choice set</em>) and we make a selection from the available items. Models describing how people make discrete choices have been studied since the &rsquo;70s (by McFadden<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and Tversky<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, most notably). Here, I&rsquo;ll grive a brief introduction to discrete choice models and lead up into my recent work with Austin Benson (edit: now accepted at ICML 2020).</p>
+<h3 id="iia-and-plackett-luce">IIA and Plackett-Luce</h3>
+<p>The most basic choice model is the Plackett-Luce model, under which the probability that someone picks an item $x$ from the choice set $C$ is proportional to the <em>utility</em> $u_x$ of $x$ (some quantity describing its value to the chooser):</p>
+<p>$$\Pr(x \mid C) = \frac{u_x}{\sum_{y \in C} u_y}.$$</p>
+<p>This model can be derived from a seemingly reasonable assumption about choice, <em>the independence from irrelevant alternatives</em> (IIA), also called Luce&rsquo;s choice axiom<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. IIA states that the relative probabilities of picking items do not depend on the other items in the choice set. Formally, IIA holds if for all items $x, y$ that appear in both the choice sets $C$ and $C&rsquo;$,</p>
+<p>$$\frac{\Pr(x \mid C)}{\Pr(y \mid C)} = \frac{\Pr(x \mid C&rsquo;)}{\Pr(y \mid C&rsquo;)}.$$</p>
+<p>For instance, if I prefer pizza to hot dogs, then I should still prefer pizza to hot dogs when you tell me that hamburgers are also available.</p>
+<h3 id="multinomial-logit">Multinomial logit</h3>
+<p>A slight variant of the Plackett-Luce model is the <em>multinomial logit model</em> (MNL), in which choice probabilities are proportional to the exponentials of item utilities:</p>
+<p>$$\Pr(x \mid C) = \frac{e^{u_x}}{\sum_{y \in C} e^{u_y}}.$$</p>
+<p>In machine learning, this would be called a <em>softmax</em> over item utilities. From an economic perspective, the MNL model has a nice property: if people draw random utilities from Gumbel distributions with means $u_x$ before picking the item with maximum observed utility, then the induced choice probabilities are exactly the MNL model. In other words, MNL is consistent with the economic principle that people are utility-maximizers. From a computer science persepctive, however, the more important thing is that we can learn maximum-likelihood utilities from observed choices since the log-likelihood function is convex.</p>
+<h3 id="context-effects">Context effects</h3>
+<p>While IIA is intuitively satisfying and leads to simple models, it often doesn&rsquo;t hold in practice (see, e.g., seminal work by Tversky and Kahneman<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> and Tversky and Simonson<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>). For instance, similar items sometimes <em>cannibalize</em> each other. Every presidential election cycle, we are reminded of the unfortunate phenomenon of vote-splitting (this motivates voting systems better than first-past-the-post, but that&rsquo;s for another post). This is an example of an IIA violation: if 50% of people vote liberal and 50% vote moderate, then one candidate from each category would tie against each other. However, introduce one more liberal and the votes may look like 25%, 25%, 50%. These phenomena are termed <em>context effects</em>. Another common context effect is the <em>compromise effect</em>, which describes the tendency for people to choose intermediate options from the choice set (the classic example is that people tend to buy the middle-priced bottle of wine given three options).</p>
+<h3 id="nested-logit">Nested logit</h3>
+<p>Many alternative discrete choice models have been introduced to account for context effects. One is the <em>nested logit</em> (NL) model, which is designed to account for the type of cannibalization described above. In a nested logit model, the items are the leaves of a tree whose internal nodes represent categories of items. Every node in the tree has an associated utility. For example:</p>
+<div class="mermaid">graph TD
+	A(Start) --> R(Moderate, 2)
+	A --> L(Liberal, 3)
+	R --> C(Arthur, 1)
+ 	R --> D(Tricia, 5)
+ 	L --> E(Zaphod, 10)
+ 	L --> F(Ford, 3)
+</div>
+<p>To choose in the NL model, you start at the root and repeatedly choose from the children of the current node according to an MNL model until reaching a leaf. In the NL instance above, the probability that I would vote for Zaphod is $$\frac{e^3}{e^2 + e^3} \cdot \frac{e^{10}}{e^{10} + e^3} \approx 73\%.$$ Like MNL, nested logit utilities can be efficiently inferred from choice data (inferring the correct tree structure is an open problem&mdash;people typically design possible trees by hand and use hypothesis testing).</p>
+<h3 id="cdm">CDM</h3>
+<p>Another interesting discrete choice model is the <em>context-dependent random utility model</em> (CDM) recently introduced by Seshadri, Peysakhovich, and Ugander<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>. This model is based on the idea that context effects can be approximated by pairwise interactions. That is, the utility of item $x$ in choice set $C$ depends on an intrinsic value term plus the effect of every other item in $C$ on $x$. In principle, the context effects exerted by the pair of items $\{w, y\}$ could be unrelated to the effects of $w$ and $y$ individually, but this approximation seems to be pretty good in practice.</p>
+<p>In the CDM, each item still has a utility $u_x$. In addition, every pair of distinct items $x, y$ has an associated <em>pull</em> $p_{xy}$, which decribes the pull of $x$ on $y$&rsquo;s utility (this notation differs slightly from the CDM paper). The choice probabilities are then:</p>
+<p>$$\Pr(x \mid C) = \frac{\exp\left(u_x + \sum_{z\in C \setminus x} p_{zx}\right)}{\sum_{y \in C} \exp \left(u_y + \sum_{z\in C \setminus x} p_{zy}\right)}$$</p>
+<p>Although it is considerably more complex, the CDM can still be efficiently learned from data! It also outperforms the MNL model in describing real-world choice datasets. I&rsquo;ve found it very applicable as a powerful general choice model accounting for context effects that can be learned from data.</p>
+<h3 id="vector-parametrization">Vector parametrization</h3>
+<p>All of these choice models can be augmented by replacing fixed utilities with (possibly latent) feature and preference vectors. This has several advatanges, including learning relationships between similar items and between people with similar preferences. Suppose we want to model the choices of many individuals. We&rsquo;ll denote the probability that person $a$ picks item $x$ given choice set $C$ using $\Pr(a \gets x \mid C)$. For MNL, suppose we have embedding vectors $\alpha_a$ for each person and vectors $\beta_x$ for each item. Then we can say the utility of an item to an agent is the inner product of their vectors:</p>
+<p>$$\Pr(a\gets x \mid C) = \frac{e^{\alpha_a^T \beta_x}}{\sum_{y\in C} e^{ \alpha_a^T\beta_y }}.$$</p>
+<p>Learning parameters from choice data then gives us low-dimensional embeddings of people and items. For the CDM, even the single-individual case is interesting. If you think about the placing the parameters $p_{zx}$ in a utility-adjusted matrix $P_{zx} = p_{zx}-u_x$ (with zeros on the diagonal), then we can find a low-rank approximation where each entry $P_{zx}$ is approximated by the inner product of two low-dimensional vectors $c_z$ and $t_z$. This is exactly the low-rank CDM:</p>
+<p>$$\Pr(x \mid C) = \frac{\exp\left(\left(\sum_{z \in C \setminus x} c_z\right)^T t_x \right)}{\sum_{y \in C}\exp\left(\left(\sum_{z \in C \setminus y} c_z\right)^T t_y \right)}.$$</p>
+<h3 id="my-recent-work">My recent work</h3>
+<p>I&rsquo;ll now give a quick teaser for my <a href="https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/">recent paper with Austin</a>. If a group of people are choosing between a set of options, one natural quantity is the amount of <em>disagreement</em> in the group, or the sum of differences in choice probabilities:</p>
+<p>$$\sum_{a, b} \sum_{x \in C} \left| \Pr(a\gets x \mid C) - \Pr(b\gets x \mid C) \right|.$$</p>
+<p>One simple intervention we can make is to introduce additional items to the choice set, and we might wish to shrink the initial disagreement (to encourage consensus or to help the group reach a final decision). Thus, one of the problems we study is finding the set of items $Z$ that minimizes</p>
+<p>$$D(Z) = \sum_{a, b} \sum_{x \in C} \left| \Pr(a\gets x \mid C \cup Z) - \Pr(b\gets x \mid C \cup Z) \right|.$$</p>
+<p>This problem turns out to be quite hard: NP-hard, in fact, under all of the choice models discussed above. Another problem we consider is optimizing for the number of individuals whose favorite item is some target $x^*.$ This also turns out to be NP-hard when context effects are present, but it appears to be an easier problem than minimmizing disagreement in the sense that restricting these choice models can make promotion easy while leaving agreement hard.</p>
+<p>In addition to showing these problems hard, our paper also provides a general-purpose approximation algorithm for choice set optimization problems in the MNL model (with extensions for the CDM and NL models). If you&rsquo;re interested, more details are available in the paper linked above.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>McFadden, D. Conditional logit analysis of qualitative choice behavior. In Zarembka, P. (ed.), <em>Frontiers in Econometrics</em>, pp. 105–142. Academic Press, 1974.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>McFadden, D. Modeling the choice of residential location. <em>Transportation Research Record</em>, (673), 1978.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Tversky, A. Elimination by aspects: A theory of choice. <em>Psychological Review</em>, 79(4):281, 1972.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>Luce, R. D. Individual choice behavior. 1959.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>Tversky, A. and Kahneman, D. The framing of decisions and the psychology of choice. <em>Science</em>, 211(4481):453– 458, 1981.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p>Tversky, A. and Simonson, I. Context-dependent preferences. Management Science, 39(10):1179–1189, 1993.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p>Seshadri, A., Peysakhovich, A., and Ugander, J. Discovering context effects from raw choice data. In <em>International Conference on Machine Learning</em>, pp. 5660–5669, 2019.&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hudfd0f946cd2d2a8a3a4c22ee23cbcb95_337672_270x270_fill_lanczos_center_3.png" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
+      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kt@cs.cornell.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.3/dist/mermaid.min.js" integrity="sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg=" crossorigin="anonymous" title="mermaid"></script>
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

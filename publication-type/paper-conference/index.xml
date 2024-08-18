@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>paper-conference | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/publication-type/paper-conference/</link>
+      <atom:link href="https://www.kirantomlinson.com/publication-type/paper-conference/index.xml" rel="self" type="application/rss+xml" />
+    <description>paper-conference</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 20 Feb 2024 10:20:34 -0500</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>paper-conference</title>
+      <link>https://www.kirantomlinson.com/publication-type/paper-conference/</link>
+    </image>
+    
+    <item>
+      <title>The Moderating Effect of Instant Runoff Voting</title>
+      <link>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</link>
+      <pubDate>Tue, 20 Feb 2024 10:20:34 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Workplace Recommendation with Temporal Network Objectives</title>
+      <link>https://www.kirantomlinson.com/publication/2023-tomlinson-workplace-recommendation/</link>
+      <pubDate>Wed, 09 Aug 2023 12:27:24 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-workplace-recommendation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ballot Length in Instant Runoff Voting</title>
+      <link>https://www.kirantomlinson.com/publication/2023-tomlinson-ballot-length/</link>
+      <pubDate>Tue, 07 Feb 2023 00:00:00 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-ballot-length/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Learning Interpretable Feature Context Effects in Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/publication/2020-tomlinson-feature-context-effects/</link>
+      <pubDate>Sat, 14 Aug 2021 06:00:00 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-tomlinson-feature-context-effects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Choice Set Confounding in Discrete Choice</title>
+      <link>https://www.kirantomlinson.com/publication/2021-tomlinson-choice-set-confounding/</link>
+      <pubDate>Wed, 26 May 2021 00:44:36 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2021-tomlinson-choice-set-confounding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Choice Set Optimization Under Discrete Choice Models of Group Decisions</title>
+      <link>https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/</link>
+      <pubDate>Sun, 12 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-tomlinson-optimizing-choice-sets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Summarizing Diverging String Sequences, with Applications to Chain-Letter Petitions</title>
+      <link>https://www.kirantomlinson.com/publication/2020-commins-diverging-string-sequences/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2020-commins-diverging-string-sequences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Phase Lengths in the Cyclic Cellular Automaton</title>
+      <link>https://www.kirantomlinson.com/publication/2019-tomlinson-cyclic-cellular-automaton/</link>
+      <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2019-tomlinson-cyclic-cellular-automaton/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Examining Tumor Phylogeny Inference in Noisy Sequencing Data</title>
+      <link>https://www.kirantomlinson.com/publication/2018-tomlinson-examining-phylogeny-inference/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2018-tomlinson-examining-phylogeny-inference/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

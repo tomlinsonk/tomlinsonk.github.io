@@ -1,0 +1,1393 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>6502 | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/category/6502/</link>
+      <atom:link href="https://www.kirantomlinson.com/category/6502/index.xml" rel="self" type="application/rss+xml" />
+    <description>6502</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sun, 19 May 2024 16:47:36 -0400</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>6502</title>
+      <link>https://www.kirantomlinson.com/category/6502/</link>
+    </image>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 7: Emulator</title>
+      <link>https://www.kirantomlinson.com/post/6502-7/</link>
+      <pubDate>Sun, 19 May 2024 16:47:36 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-7/</guid>
+      <description>&lt;p&gt;Ok, I&amp;rsquo;m a bit behind on these posts&amp;hellip;. I actually started writing this emulator in December 2022, in preparation for teaching a class in Java at Carleton. Since then, it&amp;rsquo;s become a nearly full replica of the KiT 2 (with the exception of the sound card&amp;ndash;to be discussed in a future post). I would call it &lt;a href=&#34;https://emulation.gametechwiki.com/index.php/Emulation_accuracy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;partially cycle-accurate&lt;/a&gt;; the emulator tracks how many cycles each instruction takes, but doesn&amp;rsquo;t resolve within-cycle timings. It supports almost every 65C02 instruction, with the exceptions of STP, WAI, TSB, and TRB (which I&amp;rsquo;ve never used, although it would be easy to add support for them). I referred to &lt;a href=&#34;https://www.masswerk.at/6502/6502_instruction_set.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this great resource&lt;/a&gt; on the 6502 instruction set very often while writing the emulator, as well as &lt;a href=&#34;http://www.6502.org/tutorials/65c02opcodes.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this page&lt;/a&gt; on the 65C02 instruction set (which adds a few instructions and has slightly different cycle counts).&lt;/p&gt;
+&lt;p&gt;The major components I&amp;rsquo;m emulating are the CPU, RAM, ROM, SSD, graphics card, PS2 keyboard interface, UART, and VIAs. The components talk to each other through a &lt;code&gt;Bus&lt;/code&gt; class, which they can write data to and read data from. Here&amp;rsquo;s the core of the emulation loop, omitting some details:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;doReset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// reset everything&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;currTime&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;nanoTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Execute next instruction&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cpu&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;step&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// Simulate execution time&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycleCount&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cpu&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getCycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newCycles&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycleCount&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prevCycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nsElapsed&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;480&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newCycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;nanoTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;currTime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nsElapsed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;continue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prevCycleCount&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// VIA timers need to know how many cycles have elapsed&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;via1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;updateCycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newCycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;via2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;updateCycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newCycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The &lt;code&gt;CPU&lt;/code&gt; class looks roughly as follows:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// registers&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;CPU&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Instruction&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opcode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mnemonic&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AddressingMode&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addrMode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;exec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// ...&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// all the instructions&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// registers&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// flags&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;C&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;V&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;boolean&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Bus&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Instruction&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instructions&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycleCount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// ...&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;step&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getIRQ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;doIRQ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opcode&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;read&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Instruction&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;instructions&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opcode&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycleCount&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;cycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;exec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here&amp;rsquo;s what a typical instruction looks like. I usually have an abstract class for a collection of instructions (to maximize code reuse), with concrete subclasses for each addressing mode (which each have their own opcodes and cycle counts):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;LDA&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Instruction&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LDA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mnemonic&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CPU&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;AddressingMode&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addrMode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opcode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mnemonic&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addrMode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opcode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cycles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;exec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;getLoadVal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;addrMode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// getLoadVal reads from the bus according to the addressing mode (and increments the PC accordingly)&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;updateNZ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// updates the N and Z flags according to the newly loaded value&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;incPC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// increment the program counter&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;LDAImmediate&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LDA&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LDAImmediate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lda&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AddressingMode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;IMMEDIATE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0xA9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// all the other addressing modes for LDA ...&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;It was pretty amazing to go from coding up the effects of each instruction on each register and flag to a running computer. Here&amp;rsquo;s what the emulator currently looks like:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT Emu&#34; srcset=&#34;
+               /post/6502-7/images/kit-emu_hu1e07cc0c10111df03bd5c293fbab28fb_34376_0faf5714c86809774adfb651aac6f214.webp 400w,
+               /post/6502-7/images/kit-emu_hu1e07cc0c10111df03bd5c293fbab28fb_34376_8c09eed9e5a1d7a9ec6c59edaf3fa2c7.webp 760w,
+               /post/6502-7/images/kit-emu_hu1e07cc0c10111df03bd5c293fbab28fb_34376_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-7/images/kit-emu_hu1e07cc0c10111df03bd5c293fbab28fb_34376_0faf5714c86809774adfb651aac6f214.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;556&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The emulator will run all the programs I&amp;rsquo;ve written for the KiT, including the Mandelbrot generator:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT Emu Mandelbrot&#34; srcset=&#34;
+               /post/6502-7/images/mandelbrot_hu7ccfa7d8d2c47327308ec7609ddfc21a_36187_8d823ea7bf80fb40d75a1e24e49415ed.webp 400w,
+               /post/6502-7/images/mandelbrot_hu7ccfa7d8d2c47327308ec7609ddfc21a_36187_f2152a8e3b2896ba0e402e6337464f4e.webp 760w,
+               /post/6502-7/images/mandelbrot_hu7ccfa7d8d2c47327308ec7609ddfc21a_36187_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-7/images/mandelbrot_hu7ccfa7d8d2c47327308ec7609ddfc21a_36187_8d823ea7bf80fb40d75a1e24e49415ed.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;555&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;It also supports several of the graphics modes my graphics card uses (although not all of them&amp;ndash;I haven&amp;rsquo;t bothered implementing the modes I don&amp;rsquo;t use). Here&amp;rsquo;s the high resolution two-color mode:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT Emu Neil&#34; srcset=&#34;
+               /post/6502-7/images/neil_hu8a7cb9207bdc3ae7e6a9d3889553ffff_63330_465d78e4818f332d1f06291a964bf00a.webp 400w,
+               /post/6502-7/images/neil_hu8a7cb9207bdc3ae7e6a9d3889553ffff_63330_f3d68dda648a958f70c9f725937ce377.webp 760w,
+               /post/6502-7/images/neil_hu8a7cb9207bdc3ae7e6a9d3889553ffff_63330_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-7/images/neil_hu8a7cb9207bdc3ae7e6a9d3889553ffff_63330_465d78e4818f332d1f06291a964bf00a.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;548&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve been using the emulator to help speed up iterative development, which was really helpful in implementing Tetris:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT Emu Tetris&#34; srcset=&#34;
+               /post/6502-7/images/tetris_hu2aa2e434773cea45c54bf2bed01b6caa_34927_61330dabe889b1fd487c07dc9be09d06.webp 400w,
+               /post/6502-7/images/tetris_hu2aa2e434773cea45c54bf2bed01b6caa_34927_10a38b430d3f21b94fa729821b6d2aa4.webp 760w,
+               /post/6502-7/images/tetris_hu2aa2e434773cea45c54bf2bed01b6caa_34927_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-7/images/tetris_hu2aa2e434773cea45c54bf2bed01b6caa_34927_61330dabe889b1fd487c07dc9be09d06.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;569&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;As you can see in the screenshots, the emulator supports &amp;ldquo;Turbo&amp;rdquo; mode, which skips the busy-waiting loop for maximum speed. It usually reaches 30-35 MHz in Turbo mode on my 2018 MacBook Pro, meaning my emulator is efficient enough to run at nearly 20x native speed!&lt;/p&gt;
+&lt;p&gt;If you want to run the KiT yourself or even write some 6502 code for it, now you can! The emulator is publicly available at &lt;a href=&#34;https://github.com/tomlinsonk/kit-emu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/tomlinsonk/kit-emu&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode22s0hbhb----span-stylefloatrightnext-post-part-8span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 8]()&lt;/span&gt; --&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 6: KiT 2</title>
+      <link>https://www.kirantomlinson.com/post/6502-6/</link>
+      <pubDate>Wed, 31 May 2023 10:43:17 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-6/</guid>
+      <description>&lt;p&gt;In the &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;last post&lt;/a&gt;, I described adding serial I/O to the KiT 1; that was the last major hardware addition I made to the breadboard-based version. The next step was a big one: going from breadboard to printed circuit board (PCB). After seeing &lt;a href=&#34;https://www.youtube.com/channel/UCeRXQ_B5WZD3yjPly45myvg&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;James Sharman&lt;/a&gt;&amp;rsquo;s incredible success with his pipelined 8-bit CPU, I decided to use &lt;a href=&#34;https://easyeda.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;EasyEDA&lt;/a&gt; as my PCB design tool. I settled on a modular design, where the core functionality would be included in the main board (CPU, RAM, ROM, UART, VIAs) and additional features would be provided trough 5 expansion slots (graphics, sound, storage, etc). After a lot of time spent fiddling around with positioning and tons of manual wiring, here&amp;rsquo;s what my main board design ended up looking like:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Main PCB&#34; srcset=&#34;
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_ad431696c144bd0836e6db6d356f3b51.webp 400w,
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_25a2140758b1568c7d92648e1a1f0029.webp 760w,
+               /post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/main-pcb_hu27e79cead8713b31558a254d0e04ba26_757176_ad431696c144bd0836e6db6d356f3b51.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;757&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The main board of the new KiT 2 is overall quite similar to the breadboard KiT 1, with few exceptions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I removed the LCD and graphics card, since these would be handled by expansion cards (in fact, I haven&amp;rsquo;t bothered with an LCD now that I have a good graphics card).&lt;/li&gt;
+&lt;li&gt;There is one more VIA on the KiT 2 (I call the extra two ports C and D). On the KiT 1, VIA port A was used for keyboard input and port B was used for the LCD. On the KiT 2, port A is still used for keyboard input, but port B is simply exposed with a pin header for versatility (like GPIO pins on a Raspberry Pi). Ports C and D are tied into the expansion slots: C is wired to slot 1, while D wired to slots 2-5. The idea is to use slot 1 for cards that need continuous access to a dedicated port, while slots 2-5 can share a single port for intermittent use. I&amp;rsquo;m using slot 1 for the graphics card, where port C controls the graphics mode. It would be possible to just use port D for this, but that would require some additional latching and dedicated address space. This solution makes controlling graphics modes very simple!&lt;/li&gt;
+&lt;li&gt;I replaced the address control logic chips with two programmable &lt;a href=&#34;https://en.wikipedia.org/wiki/Generic_Array_Logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GAL&lt;/a&gt; chips (nice blog post about GALs &lt;a href=&#34;https://justanotherelectronicsblog.com/?p=458&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;), one to control all of the chip select lines for the main board (the Main GAL) and one to control the slot select lines (the Slot GAL). The really nice feature of GALs is that I can reprogram them using my EEPROM programmer to rearrange the address space on the fly. You just specify the pin logic in a &lt;code&gt;.pld&lt;/code&gt; file, assemble it into a &lt;code&gt;.jed&lt;/code&gt; file using &lt;a href=&#34;https://github.com/simon-frankau/galette&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Galette&lt;/a&gt;, and flash that to the GAL chip using &lt;a href=&#34;https://gitlab.com/DavidGriffith/minipro/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;minipro&lt;/a&gt;. Here&amp;rsquo;s a snippet of my Main GAL &lt;code&gt;.pld&lt;/code&gt; file showing the syntax for specifying I/O logic (note: &lt;code&gt;*&lt;/code&gt; is &lt;code&gt;and&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt; is &lt;code&gt;or&lt;/code&gt;, and &lt;code&gt;/&lt;/code&gt; is &lt;code&gt;not&lt;/code&gt;; the &lt;code&gt;.pld&lt;/code&gt; file also lets you name the pins, which I&amp;rsquo;ve done here):
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ROM  = a15 * a14 + a15 * a13 + a15 * a12
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;RAM  = PHI2 * /a15 * /a14 + PHI2 * /a15 * /a13
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;VIA1 = /a15 * a14 * a13 * a12 * a11 * /a10 * /a9 * /a8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;VIA2 = /a15 * a14 * a13 * a12 * a11 * /a10 * /a9 * a8
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UART = /a15 * a14 * a13 * a12 * a11 * /a10 * a9 * /a8
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;I decided to use surface-mount components (except the main chips, which are all DIP). Since I was expecting to hand-solder everything, I picked one of the larger standard component sizes: 1206. This ended up working out well enough&amp;ndash;they were small enough to make layout possible, but also big enough to hand-solder without too much hassle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The board layout itself was pretty challenging, especially the routing (which is &lt;a href=&#34;https://dl.acm.org/doi/abs/10.1145/800139.804562&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NP-hard&lt;/a&gt;, after all). Since I knew nothing about PCB design, I did a bunch of internet digging and tried to follow these basic guidelines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;four layers: power and ground planes in the middle and two signal layers on the outside&lt;/li&gt;
+&lt;li&gt;thin signal traces, thick power traces&lt;/li&gt;
+&lt;li&gt;minimize number of vias&lt;/li&gt;
+&lt;li&gt;only 45-degree angles for traces (no right angles)&lt;/li&gt;
+&lt;li&gt;top layer has mostly horizontal traces, bottom layer has mostly vertical traces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;m not sure exactly how long all the routing took, but it was definitely many hours. In parallel, I was also working on the graphics card, since that would be my primary output from the KiT 2. I used the same basic design as the KiT 1&amp;rsquo;s graphics card, but designed it to fit into expansion slot 1, added two more DPRAM chips (6K total!) so I&amp;rsquo;d be able to use all video modes supported by the MC6847, and tied in the video mode lines into port C in the expansion slot so that I could control video modes programmatically rather than with DIP switches as in the KiT 1. Here&amp;rsquo;s the final PCB layout for the graphics card:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Graphics Card PCB&#34; srcset=&#34;
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_164b17acbb874e0969fb086330754008.webp 400w,
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_9ad4a34beef4823e4277b1db71d79173.webp 760w,
+               /post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/graphics-pcb_hu36df23544854aab5fdc71652992d1a71_558950_164b17acbb874e0969fb086330754008.webp&#34;
+               width=&#34;726&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Finally, I made a prototyping card that would let me develop other expansion cards without needing to get a new PCB manufactured each time:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Prototyping Card PCB&#34; srcset=&#34;
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_58265c4c228f42e3298104806931ceb9.webp 400w,
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_3549c0e30549b6cf4594d956cd3d282a.webp 760w,
+               /post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/proto-pcb_hu92f7acff9e7db1b3c3d041d94f44c985_282457_58265c4c228f42e3298104806931ceb9.webp&#34;
+               width=&#34;743&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Once the designs were done, I placed an order with &lt;a href=&#34;https://jlcpcb.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;JLCPCB&lt;/a&gt; and ordered all the components (mostly from &lt;a href=&#34;https://www.mouser.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mouser&lt;/a&gt; and &lt;a href=&#34;https://www.jameco.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jameco&lt;/a&gt;), although I got some of the obsolete components from random sellers on eBay (like the GALs). The boards turned out looking great! Here are some pictures at various stages of soldering and fit-testing:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Blank Main PCB&#34; srcset=&#34;
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_e931e2953b96dd476923173a5c8ecdf7.webp 400w,
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_7bdbc368d240b225ecffdf74c8c2ec06.webp 760w,
+               /post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/blank-board_hu0dfab569d43f275e23699208560ec53f_3231352_e931e2953b96dd476923173a5c8ecdf7.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;642&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Populated Main PCB&#34; srcset=&#34;
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_54e0423ac920c45c51312a8c9852d605.webp 400w,
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_5dde7e1b840531f84fa97ff44c810652.webp 760w,
+               /post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/populated_hu59de14ce24cb332822009e2ac2281f0b_3807468_54e0423ac920c45c51312a8c9852d605.webp&#34;
+               width=&#34;742&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Fit Test&#34; srcset=&#34;
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_34d510ba115c21d5c75b23ec69d7742d.webp 400w,
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_1db0adb559493120ad1ab73118b206a9.webp 760w,
+               /post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/fit-test_hu4802174e81e7ce12ec9f7df6250d7248_4195252_34d510ba115c21d5c75b23ec69d7742d.webp&#34;
+               width=&#34;650&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;After installing of the chips, I wrote a simple program to blink an LED hooked up to port B. It was alive!&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Signs of Life&#34; srcset=&#34;
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_beeb2792d1243c37a6df2e3b3f9cdb2f.webp 400w,
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_80447482949c9e4d944fb44d97d4d903.webp 760w,
+               /post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/signs-of-life_hu6decb8f5e9a5cf180db8561877f37409_4514642_beeb2792d1243c37a6df2e3b3f9cdb2f.webp&#34;
+               width=&#34;580&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I eventually got around to soldering up the graphics card too:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT 2 with Graphics&#34; srcset=&#34;
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_6ef8c361afbba368b644ec1acf45b7cc.webp 400w,
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_ac87543020c58f074bd5910a7576dc84.webp 760w,
+               /post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/kit-with-graphics_huc72ea4d79c74a03a0592d45ebc79c490_4241550_6ef8c361afbba368b644ec1acf45b7cc.webp&#34;
+               width=&#34;661&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;After debugging a bunch of issues listed below, I was able to get it working and take advantage of the newly available 6K graphics modes:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Neil B/W&#34; srcset=&#34;
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_9179b3b6ef9159f7bcce77e79b910518.webp 400w,
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_776637ee797e1e25f9b46c7f305347af.webp 760w,
+               /post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-6/neil_hu5ace99abdef4eed21896c259e8a6d89f_4475528_9179b3b6ef9159f7bcce77e79b910518.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;470&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Of course, my first-try designs had a bunch of issues, although I&amp;rsquo;ve been able to work around them reasonably well. Here are the hardware bugs I know of in the KiT 2:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Known bugs&lt;/th&gt;
+&lt;th&gt;Current patch&lt;/th&gt;
+&lt;th&gt;Eventual fix&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RX and TX are the wrong way around for the UART header&lt;/td&gt;
+&lt;td&gt;Made an adapter&lt;/td&gt;
+&lt;td&gt;Swap RX and TX&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UART LEDs are on when they should be off&lt;/td&gt;
+&lt;td&gt;Ignore the LEDs&lt;/td&gt;
+&lt;td&gt;Remove UART LEDs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The PS/2 connector is wired backwards/upside-down&lt;/td&gt;
+&lt;td&gt;Made an adapter&lt;/td&gt;
+&lt;td&gt;Fix the wiring&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The power jack ground is wired wrong&lt;/td&gt;
+&lt;td&gt;Soldered a jumper&lt;/td&gt;
+&lt;td&gt;Fix the wiring&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The UART write signal is wrong  (some writes fail; see &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/#footnote-1&#34;&gt;this footnote&lt;/a&gt;)&lt;/td&gt;
+&lt;td&gt;Avoid UART writes&lt;/td&gt;
+&lt;td&gt;Add R/!W as an input to Main GAL and gate the UART write signal based on it&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Graphics card: !BUSY pins on all 3 DPRAMs are missing pull-up resistors&lt;/td&gt;
+&lt;td&gt;Soldered resistors to the pins of chip U9&lt;/td&gt;
+&lt;td&gt;Add SMD pull-up resistors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If you want to check out the full schematic for the main board, &lt;a href=&#34;kit-2-schematic.svg&#34;&gt;here it is&lt;/a&gt;, but beware that it includes the bugs listed above.&lt;/p&gt;
+&lt;p&gt;Since getting the KiT 2 working, I&amp;rsquo;ve made two more expansion cards: a 256KB flash drive for persistent storage and a sound card using an &lt;a href=&#34;https://retrocomp.cz/produkt?id=2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ARMSID&lt;/a&gt;. I&amp;rsquo;ve also written an emulator for the KiT 2! More on these developments in future posts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;previous-post-part-5hahahugoshortcode21s2hbhb-span-stylefloatrightnext-post-part-7hahahugoshortcode21s3hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;Part 7&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 5: UART</title>
+      <link>https://www.kirantomlinson.com/post/6502-5/</link>
+      <pubDate>Wed, 05 Apr 2023 22:57:56 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-5/</guid>
+      <description>&lt;p&gt;After adding a &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-4/&#34;&gt;graphics card&lt;/a&gt; to my 6502-based computer, the next step was to make programming it easier. Up to this point in the build, I had to remove the ROM chip and manually flash it with my &lt;a href=&#34;https://www.jameco.com/z/TL866II-Plus-Jameco-ValuePro-USB-High-Performance-Programmer_2297823.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TL866II Plus Programmer&lt;/a&gt; each time I wanted to run a new program. This made debugging quite tedious. The solution: a serial input/output port that would allow me to connect my laptop to the 6502 and send data back and forth. That way, the 6502 could load a program over the serial port directly into RAM and execute it. I already had a USB to UART adapter, so I did some research and selected the &lt;a href=&#34;https://www.ti.com/lit/ds/symlink/tl16c550c.pdf?ts=1680754339129&amp;amp;ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FTL16C550C&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;16C550&lt;/a&gt; as a good option for a &lt;a href=&#34;https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UART&lt;/a&gt; chip available in DIP form.&lt;/p&gt;
+&lt;p&gt;Just recently, Ben Eater actually released a &lt;a href=&#34;https://youtu.be/oLYLnb7kpLg&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;few&lt;/a&gt; &lt;a href=&#34;https://youtu.be/zsERDRM1oy8&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;videos&lt;/a&gt; and a &lt;a href=&#34;https://eater.net/6502&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kit&lt;/a&gt; for adding an RS-232 serial port to his 6502 kit. I might have gone this route had it been released 6 months earlier, but it&amp;rsquo;s probably good that I got the experience designing and testing my own approach. Ben&amp;rsquo;s version uses the &lt;a href=&#34;https://www.westerndesigncenter.com/wdc/documentation/w65c51s.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;W65C51 ACIA&lt;/a&gt; chip, which  unfortunately has a &lt;a href=&#34;http://forum.6502.org/viewtopic.php?f=4&amp;amp;t=2543&amp;amp;start=30&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;known bug&lt;/a&gt;. It&amp;rsquo;s possible to work around it, but this dissuaded me from the 65C51.&lt;/p&gt;
+&lt;p&gt;The 16C550 has a bunch of neat features, including a software-selectable baud rate and 16-byte receive and transmit queues. It can either generate interrupts when data arrives or operate in polled mode where the CPU repeatedly checks whether data is available.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how the chip fits in with my build:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Schematic&#34; srcset=&#34;
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_71c29b7fc14e067723363d42def24726.webp 400w,
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_a5b4f88fa02dd4fb9830a84408a8b689.webp 760w,
+               /post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-5/schematic_hub1d324e0761253caade07212c2346540_197230_71c29b7fc14e067723363d42def24726.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;586&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The data and address lines are driven directly by the data and address bus. I allocated addresses 7820-782F for the UART and added address decode logic to send the !UART signal low when any of these addresses are accessed. This allows reads and writes&lt;sup&gt;&lt;a href=&#34;#footnote-1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; to the UART registers (including mode configuration registers and the receive/transmit buffers). Using the 1MHz system clock (signal PHI2 in the diagram above), I found a way to get a standard baud rate, 4800 (480 bytes/s with the serial port in &lt;a href=&#34;https://en.wikipedia.org/wiki/Serial_port#Conventional_notation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;8N1&lt;/a&gt; mode): the 16C550 allows you to set a divisor of the clock rate to set 16 times the desired baud rate. So, with 1,000,000 clock cycles per second, a divisor of 13 gives a baud rate of 1,000,000 / (13 * 16) = 4808&amp;ndash;definitely close enough to 4800 to work! 480 bytes/s is incredibly slow by today&amp;rsquo;s standards, but good enough for uploading programs to the breadboard computer!&lt;/p&gt;
+&lt;p&gt;I wrote a Python script to transmit a program from my laptop to the UART, which starts out by sending the file size, a &lt;a href=&#34;https://en.wikipedia.org/wiki/Fletcher%27s_checksum&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;simple checksum&lt;/a&gt;, and the start address of the program. It then sends the actual program bytes, which a loading program on the breadboard computer copies into RAM starting at the start address. It can then verify that the checksum matches and run the program in RAM after it has received the declared number of bytes! Here&amp;rsquo;s some of the 6502-side code that reads in the program into &lt;code&gt;target_addr&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stz&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stz&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// initialize checksum&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ldx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                     &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// store num bytes copied low byte in X&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stz&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                   &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// store num pages copied in zp.B&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ldy&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                     &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// store 0 in y for indirect addressing               &lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mov2&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target_addr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;C&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// store the target address in zp.C,D&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;loop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jsr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uart&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;read_byte&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;         &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// get a byte&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sta&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;C&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;               &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// store the byte in the pointer in zp.C,D&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;adc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sta&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// update the first checksum byte&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;adc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sta&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;checksum_addr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// update the second checksum byte&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;C&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                   &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// increment the pointer&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bne&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no_carry&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;               &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// if it doesn&amp;#39;t become 0, no need to carry&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;C&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// if it does become 0, carry to high byte&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;no_carry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                        &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// increment num bytes copied&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bne&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;no_x_carry&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                   &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// if carrying, increment num pages copied&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;no_x_carry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cpx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n_addr&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bne&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loop&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                   &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// if x doesn&amp;#39;t match file size low bytes, still copying&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lda&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;B&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cmp&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n_addr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bcc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loop&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;                   &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// if pages copied &amp;lt; filesize high byte, still copying&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I added a load command (&lt;code&gt;L&lt;/code&gt;) to the monitor program that also prints out A, B, C (address, bytes, checksum) in hex:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Load&#34; srcset=&#34;
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_180f9e1b2177802b8566cf312b1b52dc.webp 400w,
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_3ee1e0f136ffbe98827445c682f4bd30.webp 760w,
+               /post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-5/load_hu4855960a084fa35c2fab516693513a2d_108521_180f9e1b2177802b8566cf312b1b52dc.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;282&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;This indicates a 0x77 (119) byte  program was loaded to address 0x1000 with checksum 0xA53 (which agrees with the transmitted checksum). Pressing R will run the program. (See a future post for why there&amp;rsquo;s a &amp;ldquo;Save&amp;rdquo; option&amp;ndash;this image is from a very recent version of the 6502 computer with some extra upgrades.) Here&amp;rsquo;s what the breadboard computer looks like with the 16C550 chip at the very top left:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Load&#34; srcset=&#34;
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_5ac460cce8b69a3439784c788bfc06bb.webp 400w,
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_e62ad4979b6fb53a0a0bf6bed7158820.webp 760w,
+               /post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-5/kit_hu262ca9a3653f7ccd2f14c90900b21d31_679360_5ac460cce8b69a3439784c788bfc06bb.webp&#34;
+               width=&#34;570&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Notice the three green address lines and eight blue data lines brought up from the VRAM chip right below. The four wires heading off the top left of the breadboard go to my USB-to-UART adapter and then into my MacBook! Adding the ability to quickly load programs without flashing the ROM chip has enabled a much faster build-test-debug development cycle, making software development way more enjoyable.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll be writing soon about a very exciting step in the project: going from breadboard to PCB!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;previous-post-part-4hahahugoshortcode20s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode20s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-4/&#34;&gt;Part 4&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;/br&gt;
+&lt;small&gt;&lt;sup id=&#34;footnote-1&#34;&gt;1&lt;/sup&gt;Unfortunately there&#39;s a subtle bug in my design that makes writes to the somewhat unreliable, caused by the fact that writes to the 16C550 are triggered only by the rising edge of the !WR1 signal. In contrast, writes to my HM62256 RAM chip can be triggered either by the rising edge of R/!W or by the rising edge of the active low chip enable signal, whichever comes first. The 65C02&#39;s R/!W signal during a write cycle goes high at roughly the same time as the address and data lines stop being valid. In order to properly clock a write, you need to make sure the write occurs at the falling edge of the PHI2 clock, which happens before R/W! goes high and while the address and data lines are both valid. The RAM works by having the RAM chip enable signal be disabled whenever PHI2 is low, so the write gets triggered at the right time. For the 16C550, you therefore shouldn&#39;t just use the CPU&#39;s R/!W signal to control a write. Instead, you need a signal that is low when R/W! is low &lt;em&gt;and&lt;/em&gt; PHI2 is high to plug into the 16C550&#39;s !WR1. My current version is still buggy: writes sometimes succeed, but it depends on what the address lines do after the write to the 16C550. I&#39;ve managed to get the small number of writes I need to load programs working consistently, but I need to fix this issue in a future version.&lt;/small&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 4: Graphics</title>
+      <link>https://www.kirantomlinson.com/post/6502-4/</link>
+      <pubDate>Wed, 28 Sep 2022 22:53:57 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-4/</guid>
+      <description>&lt;p&gt;So far in this project, I&amp;rsquo;ve &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-1/&#34;&gt;built a simple computer&lt;/a&gt;, &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;given it a keyboard&lt;/a&gt;, and &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;written a machine language monitor for it&lt;/a&gt;. However, only being able to see outputs on the small character LCD was not very fun, so it&amp;rsquo;s time for a serious upgrade. I decided to add a graphics card! This is the first major departure from &lt;a href=&#34;https://eater.net/6502&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ben Eater&amp;rsquo;s build&lt;/a&gt; that I&amp;rsquo;ve mainly been following so far.&lt;/p&gt;
+&lt;p&gt;There are a number of options for adding graphics to an 8-bit computer. Some people have used &lt;a href=&#34;https://www.skrasser.com/blog/2020/04/16/graphics-for-the-homebrew-6502-computer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;custom FPGAs&lt;/a&gt; or &lt;a href=&#34;https://hackaday.io/project/174865-configurable-video-output-for-6502-computers&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;custom TTL circuits&lt;/a&gt;. Ben Eater actually has a &lt;a href=&#34;https://eater.net/vga&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video series and kit&lt;/a&gt; for a simple VGA card. If you&amp;rsquo;re interested in seeing a full nuts-and-bolts VGA build, I would highly recommend &lt;a href=&#34;https://youtu.be/K658R321f7I&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;James Sharman&amp;rsquo;s VGA series&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To keep things simple, I decided to go with an old &lt;a href=&#34;https://en.wikipedia.org/wiki/Video_display_controller&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video display controller&lt;/a&gt;, the &lt;a href=&#34;https://en.wikipedia.org/wiki/Motorola_6847&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Motorola MC6847&lt;/a&gt;, which was most notably used in the &lt;a href=&#34;http://www.trs-80.org/color-computer-1/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TRS-80 Color Computer&lt;/a&gt; released in 1980. Other possible 8-bit video controllers include the &lt;a href=&#34;https://en.wikipedia.org/wiki/Texas_Instruments_TMS9918&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Texas Instruments TMS9918&lt;/a&gt; and its successors, the &lt;a href=&#34;https://en.wikipedia.org/wiki/Yamaha_V9938&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Yamaha V9938&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Yamaha_V9958&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Yamaha V9958&lt;/a&gt;; the &lt;a href=&#34;https://en.wikipedia.org/wiki/MOS_Technology_VIC&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MOS VIC&lt;/a&gt; used in the &lt;a href=&#34;https://youtu.be/yg04GyhS3ss&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Commodore VIC-20&lt;/a&gt;; the &lt;a href=&#34;https://en.wikipedia.org/wiki/MOS_Technology_VIC-II&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MOS VIC-II&lt;/a&gt; used in the &lt;a href=&#34;https://youtu.be/BpXFB8ZEH30&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Commodore 64&lt;/a&gt; and &lt;a href=&#34;https://youtu.be/wzMsgnnDIRE&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;128&lt;/a&gt;; and many, many more.&lt;/p&gt;
+&lt;p&gt;The problem with all of these vintage ICs is that they&amp;rsquo;re no longer made, so you have to resort to buying them used (your mileage may vary). Some of these are also quite expensive ($25-$100 on eBay for a Yamaha V9938, Yamaha V9958, VIC, or VIC-II). By far the cheapest options are the MC6847 and TMS9918, both of which can be found for under $5. I was much more willing to spend $5 than $25 on a used chip from 1980 that might not work, so I got an &lt;a href=&#34;MC6847-video.pdf&#34;&gt;MC6847&lt;/a&gt; and its companion chip, the &lt;a href=&#34;MC1372-tv.pdf&#34;&gt;MC1372&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The MC6847 generates a video signal by sweeping through memory addresses and interpreting the values stored there as characters (in text modes) or pixel groups (in graphics modes). Here&amp;rsquo;s the chip&amp;rsquo;s pinout:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_80c8f713beaca72502bd0f8a1557f43a.webp 400w,
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_e8a9e3453227b10cfbfeb9056a3a0bef.webp 760w,
+               /post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/mc6847-pinout_hu1dc25a94ca0f0312860ca45c3db3a650_112573_80c8f713beaca72502bd0f8a1557f43a.webp&#34;
+               width=&#34;362&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;DA0-DA12 are the address lines into video RAM and DD0-DD7 are the data lines where the video RAM responds with the data to display. The mode control lines (A/G, A/S, INT/EXT, INV, and GM0-GM2) are used to select the display mode, which determine how much memory is required, how bytes are interpreted, and what can be displayed. Here are the 14 modes of the MC6847:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_ae842a4b1863e4d1994f63353f7a7157.webp 400w,
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_c80139fa0a3f4fdf0b865ad3d11590c4.webp 760w,
+               /post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/mc6847-modes_hu7c4ed5c8ce054353947ac0af9f72e53c_259396_ae842a4b1863e4d1994f63353f7a7157.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;360&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The video signal is output as three signals, luminance (Y), red chrominance (ɸA), and blue chrominance (ɸB) (usually called &lt;a href=&#34;https://en.wikipedia.org/wiki/YPbPr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;YPbPr&lt;/a&gt;). These signals can be combined into a &lt;a href=&#34;https://en.wikipedia.org/wiki/Composite_video&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;composite video signal&lt;/a&gt;, which is where the MC1372 comes in. Along with an external oscillator, the MC1372 provides a clock at the correct frequency for the MC6847 and can combine the outputs of the MC6847 into a color composite signal that many monitors and TVs can display (if they aren&amp;rsquo;t too recent). It&amp;rsquo;s also possible to &lt;a href=&#34;https://youtu.be/rymjY1cT6DE&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;directly amplify the YPbPr signals&lt;/a&gt; and use &lt;a href=&#34;https://en.wikipedia.org/wiki/Component_video&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;component video&lt;/a&gt;, but I haven&amp;rsquo;t tried that yet.&lt;/p&gt;
+&lt;p&gt;In addition to the MC6847 and MC1372, the final piece of the puzzle to add video to the breadboard computer is the video RAM (VRAM). The main challenge with VRAM is that both the CPU and the video display generator need to access it, and they run at different clock rates (3.579545 MHz for the video chip and 1 MHz for the CPU). One option would be to use the video clock for the CPU and figure out some way to share the address and data lines between the CPU and video chip (for instance, running the CPU at half the clock rate and alternating control between the two chips&amp;ndash;this is more or less what the Commodore 64 did). For simplicity, Ben Eater&amp;rsquo;s &lt;a href=&#34;https://eater.net/vga&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;VGA card&lt;/a&gt; only allows the CPU to run during the blanking interval of the video signal, when the video chip doesn&amp;rsquo;t need access to VRAM&amp;ndash;but this wastes about 70% of CPU cycles.&lt;/p&gt;
+&lt;p&gt;I decided to take a different approach: &lt;a href=&#34;https://www.renesas.com/us/en/products/memory-logic/multi-port-memory/asynchronous-dual-port-rams&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;asynchronous dual-port RAM&lt;/a&gt;. These types of RAM chips have two independent sets of address and data lines and allow simultaneous access on both sets (with one caveat, explained below).The specific dual-port RAM I went with is the 2KB &lt;a href=&#34;https://www.renesas.com/us/en/document/dst/713242-datasheet&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;IDT7132&lt;/a&gt;. One port is hooked up to the 6502 CPU and the other to the MC6847&amp;ndash;you can see it in the top left:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_954d13f1678cb7beb4ce9e4d08746d9b.webp 400w,
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_096c9de79a8ee448e95789b428a24d33.webp 760w,
+               /post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/computer-with-graphics_hu7fba9da1679ce4a56c592454604cb9c1_388577_954d13f1678cb7beb4ce9e4d08746d9b.webp&#34;
+               width=&#34;626&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The small caveat: simultaneous reads to the same address are fine, but a write can fail if the other port is accessing the same address. In this case, the writing port gets a busy flag. Since only the CPU writes to VRAM, I made the busy flag pause the CPU using its RDY pin until the video chip has moved on to reading another address&amp;ndash;this has worked perfectly, and only rarely pauses the CPU for a few microseconds.&lt;/p&gt;
+&lt;p&gt;After hooking up the VRAM and the MC1372 clock to the MC6847, I needed to amplify the video signal being generated by the MC6847. To begin with, I just amplified the luminance signal to get a black and white image. Since I know nothing about analog circuitry, I followed the amplifier schematic in &lt;a href=&#34;https://pmig96.wordpress.com/2020/07/15/mc6847-test-circuit/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this blog post&lt;/a&gt;. The result was glorious:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_0cd1c0ec656b64a8e58d2e83e178ee53.webp 400w,
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_89034364c6a0b8ec626ec220af6faa32.webp 760w,
+               /post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/first-hello_hu7fba9da1679ce4a56c592454604cb9c1_192534_0cd1c0ec656b64a8e58d2e83e178ee53.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;568&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I have since wired up all of the color mixing circuitry and switched over to the color composite amplifier circuit in the &lt;a href=&#34;MC6847-video.pdf&#34;&gt;MC6847 datasheet&lt;/a&gt;. Here&amp;rsquo;s the text and semigraphics modes in all their 8-color beauty:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_0308461dd7c84b61b00c6059c3c51fac.webp 400w,
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_ec5d45020813fab28582e0ee817a51a1.webp 760w,
+               /post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/color-character-set_hu7fba9da1679ce4a56c592454604cb9c1_207835_0308461dd7c84b61b00c6059c3c51fac.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;466&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;After adding some DIP switches to let me switch between graphics modes, I&amp;rsquo;ve also worked on some graphical programs, including a &lt;a href=&#34;https://en.wikipedia.org/wiki/Mandelbrot_set&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mandelbrot Set&lt;/a&gt; visualization (in four-color 64x64 CG1 mode):&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_ae364705358c4a860f041e99b69d2559.webp 400w,
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_eff23dd92254512ee7e9f2c449c47d04.webp 760w,
+               /post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/mandelbrot_hu68514cc67a0d29cc6bcfd09ada6567e4_216113_ae364705358c4a860f041e99b69d2559.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;501&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;And the game &lt;a href=&#34;https://en.wikipedia.org/wiki/Snake_%28video_game_genre%29&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Snake&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_912d104ec083ca03ab25b20b54d016fb.webp 400w,
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_9e44b15f044cdc31225f71c2a5006b2d.webp 760w,
+               /post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/snake_hu5d4d4af13a53f9dee6df2227e73445ae_108390_912d104ec083ca03ab25b20b54d016fb.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;510&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The most useful program I&amp;rsquo;ve written using the graphics card is a more powerful machine language monitor in text mode:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_cd47cbaf6dc22bce023ffc441a8def6f.webp 400w,
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_81bfccaf96b63a303c0ea9d32358e2c0.webp 760w,
+               /post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-4/images/monitor_hu5d4d4af13a53f9dee6df2227e73445ae_103628_cd47cbaf6dc22bce023ffc441a8def6f.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;507&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The new and improved monitor even allows loading programs into RAM over a serial port&amp;ndash;more on that in the next post!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;previous-post-part-3hahahugoshortcode19s3hbhb--span-stylefloatrightnext-post--part-5hahahugoshortcode19s4hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post:  &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 3: Monitor Program</title>
+      <link>https://www.kirantomlinson.com/post/6502-3/</link>
+      <pubDate>Wed, 14 Sep 2022 17:44:41 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-3/</guid>
+      <description>&lt;p&gt;Now that the computer &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;has a keyboard&lt;/a&gt;, I thought it would be great to be able to write and run code directly on it! To do this, I wrote a very simple &lt;a href=&#34;https://en.wikipedia.org/wiki/Machine_code_monitor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;machine code monitor&lt;/a&gt; (monitor for short). The idea behind a monitor program is to give the user direct read and write access to memory, so you can look at the actual stored bytes of a program (or data). By writing directly in machine code, you can also enter programs into memory, although this is far from a pleasant programming experience. Finally, a monitor should also let you execute code starting from a particular memory address so you can run the code you painstakingly entered.&lt;/p&gt;
+&lt;p&gt;One notable historical example is the &lt;a href=&#34;https://www.sbprojects.net/projects/apple1/wozmon.php&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Woz Monitor&lt;/a&gt; that came with the Apple 1, written by Steve Wozniak. Amazingly, the Woz Monitor uses only 256 bytes of ROM! My monitor, which I&amp;rsquo;m calling LCDMon (since it is designed for the computer&amp;rsquo;s 2-row character LCD), takes almost 1KB due to more CPU-intensive keyboard and display I/O (and my lack of assembly expertise).&lt;/p&gt;
+&lt;p&gt;LCDMon supports four operations: (1) read one byte, (2) read eight bytes, (3) write bytes, and (4) run. All commands are typed on row 1 of the LCD, while outputs from the last command are displayed on row 2. To read one byte, you simply type in the hex address to read from (&lt;code&gt;0000&lt;/code&gt;-&lt;code&gt;ffff&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/read-cmd_hud5bd769e2b7979219a2843df8fc07439_414978_d6884ece55ccae19bc164f439eaed27a.webp 400w,
+               /post/6502-3/images/read-cmd_hud5bd769e2b7979219a2843df8fc07439_414978_54c398a46acb3c9a5b361cc598dce8f0.webp 760w,
+               /post/6502-3/images/read-cmd_hud5bd769e2b7979219a2843df8fc07439_414978_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/read-cmd_hud5bd769e2b7979219a2843df8fc07439_414978_d6884ece55ccae19bc164f439eaed27a.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;460&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;To read eight bytes, you follow the starting address with a hyphen (page down on the keyboard scrolls the LCD to the the rest of the eight bytes):&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/read-multiple_huf436de0f34605f8b1c3bcc4022ae7ef6_362601_8224954d7d81c47104bdd6bbe01bed4c.webp 400w,
+               /post/6502-3/images/read-multiple_huf436de0f34605f8b1c3bcc4022ae7ef6_362601_a29a934f83e1a652fe2c20bb8a93eb09.webp 760w,
+               /post/6502-3/images/read-multiple_huf436de0f34605f8b1c3bcc4022ae7ef6_362601_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/read-multiple_huf436de0f34605f8b1c3bcc4022ae7ef6_362601_8224954d7d81c47104bdd6bbe01bed4c.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;410&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The address &lt;code&gt;8000&lt;/code&gt; is the beginning of ROM, where I&amp;rsquo;ve placed a jump table: &lt;code&gt;4c&lt;/code&gt; is the jump opcode, and the first entry of the table jumps to address &lt;code&gt;8013&lt;/code&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Endianness&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;little-endian&lt;/a&gt;, so the &lt;code&gt;13&lt;/code&gt; comes first). Reading works!&lt;/p&gt;
+&lt;p&gt;To write bytes starting at an address, you write the address followed by a semicolon and then the bytes to write. To run code starting an an address, you follow the address with an &lt;code&gt;R&lt;/code&gt;. To give you a sense of how this works under the hood, here&amp;rsquo;s a small snippet of LCDMon that handles writing entered data:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;write_byte:                       ; write data to MON_ADDR, starting with the byte at
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                  ; TEXT_BUFFER+y+1 (TEXT_BUFFER+y is ;). x initialized to 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  iny
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  lda TEXT_BUFFER,y               ; load the next char into A
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  beq enter_reset                 ; if it&amp;#39;s null, done writing
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  cmp #&amp;#34; &amp;#34;                        ; check if it&amp;#39;s space
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  beq write_byte                  ; if it is, consume it and move on
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  jsr parse_hex_byte              ; otherwise, parse the next byte, incrementing y
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sta (MON_ADDR,x)                ; write the byte where mon addr is pointing (x is 0)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  inc MON_ADDR                    ; increment address to write to
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  bne write_byte                  ; check if 0 after incrementing (if 0, need to carry)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  inc MON_ADDR+1                  ; if MON_ADDR became 0 after inc, need to carry to hi byte
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  jmp write_byte                  ; loop to write next byte
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The full source code of LCDMon is available here: &lt;a href=&#34;lcd_mon.s&#34;&gt;lcd_mon.s&lt;/a&gt;. To test if LCDMon was working, I used the table of &lt;a href=&#34;https://www.masswerk.at/6502/6502_instruction_set.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;6502 opcodes&lt;/a&gt; to write a program at address &lt;code&gt;1000&lt;/code&gt; that would fill the LCD with dollar signs (ASCII hex &lt;code&gt;0x24&lt;/code&gt;):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;a9 24       lda #$24        ; load the ASCII code for a dollar sign into the A register
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;20 03 80    jsr write_lcd   ; jump to a subroutine in ROM to print A register contents
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4c 00 10    jmp $1000       ; loop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The whole program is just 8 bytes long!  Here&amp;rsquo;s what writing this code looks like (notice I previously displayed the contexts at &lt;code&gt;1000&lt;/code&gt;, which is just garbage in RAM):&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/write-code_hu6908e86830f41c49a7c3240b050ba292_368386_8c6894df6499c1c9287b5592670e1867.webp 400w,
+               /post/6502-3/images/write-code_hu6908e86830f41c49a7c3240b050ba292_368386_e6f4be6eb37815cb6f7bc4666150089c.webp 760w,
+               /post/6502-3/images/write-code_hu6908e86830f41c49a7c3240b050ba292_368386_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/write-code_hu6908e86830f41c49a7c3240b050ba292_368386_8c6894df6499c1c9287b5592670e1867.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;434&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/write-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_371981_6205c8980c51a415bd86cd0d84d26246.webp 400w,
+               /post/6502-3/images/write-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_371981_a729aa5f65c8f0e4e8dded542b865526.webp 760w,
+               /post/6502-3/images/write-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_371981_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/write-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_371981_6205c8980c51a415bd86cd0d84d26246.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;393&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;We can check that the program was written successfully by running &lt;code&gt;1000-&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/read-code_hu535661bce2c742bf7a0f6a055ac0b6d1_340757_9a8a704b6b3f8c934d213f812f8a3d83.webp 400w,
+               /post/6502-3/images/read-code_hu535661bce2c742bf7a0f6a055ac0b6d1_340757_8688fe76e35d4cfd86fd8defc9fe6ddc.webp 760w,
+               /post/6502-3/images/read-code_hu535661bce2c742bf7a0f6a055ac0b6d1_340757_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/read-code_hu535661bce2c742bf7a0f6a055ac0b6d1_340757_9a8a704b6b3f8c934d213f812f8a3d83.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;388&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;And finally run it:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/run-code_hu535661bce2c742bf7a0f6a055ac0b6d1_345175_f2eec6120e2948e6f32dfe849bbcfbf0.webp 400w,
+               /post/6502-3/images/run-code_hu535661bce2c742bf7a0f6a055ac0b6d1_345175_78aeb457596e5ccab5a8c3f81365cb5e.webp 760w,
+               /post/6502-3/images/run-code_hu535661bce2c742bf7a0f6a055ac0b6d1_345175_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/run-code_hu535661bce2c742bf7a0f6a055ac0b6d1_345175_f2eec6120e2948e6f32dfe849bbcfbf0.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;400&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-3/images/run-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_346253_cd693a2b9cf851278587b0ed9cacd144.webp 400w,
+               /post/6502-3/images/run-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_346253_2cc0514c92fb0c907742e199b93f057e.webp 760w,
+               /post/6502-3/images/run-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_346253_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-3/images/run-code-2_hu535661bce2c742bf7a0f6a055ac0b6d1_346253_cd693a2b9cf851278587b0ed9cacd144.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;409&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Woooo! In theory, any code could be entered by hand like this, but in practice it&amp;rsquo;s extremely tedious and prone to errors. Since writing LCDMon, I&amp;rsquo;ve been working on a number of hardware upgrades, most notably a graphics card! More on that soon.&lt;/p&gt;
+&lt;h3 id=&#34;previous-post-part-2hahahugoshortcode18s1hbhb-span-stylefloatrightnext-post-part-4hahahugoshortcode18s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 4&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 2: Keyboard Input</title>
+      <link>https://www.kirantomlinson.com/post/6502-2/</link>
+      <pubDate>Wed, 31 Aug 2022 17:04:57 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-2/</guid>
+      <description>&lt;p&gt;Since posting &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-1/&#34;&gt;Part 1&lt;/a&gt; of my 6502 build, I&amp;rsquo;ve gotten a keyboard hooked up! I&amp;rsquo;m using an old-school &lt;a href=&#34;https://wiki.osdev.org/PS/2_Keyboard&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PS/2 keyboard&lt;/a&gt;, a connector and keyboard protocol which originated with the &lt;a href=&#34;https://en.wikipedia.org/wiki/IBM_PS/2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;IBM Personal System/2&lt;/a&gt; in 1987 and was still in use through the 2000s, although USB has largely replaced it. One great thing about PS/2 is that the protocol is very simple and easy to manually interface with (USB would require considerably more work, but &lt;a href=&#34;http://6502.org/users/andre/hwinfo/usb/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;is feasible&lt;/a&gt;). Ben Eater has &lt;a href=&#34;https://youtu.be/7aXbh9VUB3U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;three&lt;/a&gt; &lt;a href=&#34;https://youtu.be/w1SB9Ry8_Jg&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;great&lt;/a&gt; &lt;a href=&#34;https://youtu.be/dL0GO9SeBh0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;videos&lt;/a&gt; on the PS/2 protocol and hooking up a PS/2 keyboard to a 6502 through the &lt;a href=&#34;https://en.wikipedia.org/wiki/WDC_65C22&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;65C22 Versatile Interface Adapter&lt;/a&gt; (VIA).&lt;/p&gt;
+&lt;p&gt;The specific keyboard I&amp;rsquo;m using is a &lt;a href=&#34;https://deskthority.net/wiki/Dell_QuietKey&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dell QuietKey SK-1000REW&lt;/a&gt; from 1997, but it doesn&amp;rsquo;t really matter. The PS/2 connector just uses four pins: ground, 5V, clock, and data. Data is sent from the keyboard in 11-bit packets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 start bit (always 0)&lt;/li&gt;
+&lt;li&gt;8 data bits (least significant first)&lt;/li&gt;
+&lt;li&gt;1 parity bit&lt;/li&gt;
+&lt;li&gt;1 stop bit (always 1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For simplicity, I&amp;rsquo;m ignoring the parity bit and only looking at the 8 data bits. Bits are sent on the falling edge of the clock, which is usually held high. The keyboard can also receive commands, but I&amp;rsquo;m not worrying about that either.&lt;/p&gt;
+&lt;p&gt;I hooked up the clock and data to two chained 8-bit shift registers (I used the &lt;a href=&#34;https://www.ti.com/lit/ds/symlink/sn74hc164.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;74HC164&lt;/a&gt; instead of the &lt;a href=&#34;https://www.ti.com/lit/ds/symlink/sn74hc595.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;74HC595&lt;/a&gt; Ben used). The clock signal has to be inverted to feed into the shift registers. Luckily, I had three leftover inverters in the address control logic! The other two also came in handy for Ben&amp;rsquo;s interrupt generating circuit:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-2/images/ca1-circuit_hu1c7188934c83355c0feb8ffe7eb84fc4_129434_f7d6b1f23b6afe093016d2d0cb20da3f.webp 400w,
+               /post/6502-2/images/ca1-circuit_hu1c7188934c83355c0feb8ffe7eb84fc4_129434_f582833dfba43c6aadc71da5393d0a78.webp 760w,
+               /post/6502-2/images/ca1-circuit_hu1c7188934c83355c0feb8ffe7eb84fc4_129434_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-2/images/ca1-circuit_hu1c7188934c83355c0feb8ffe7eb84fc4_129434_f7d6b1f23b6afe093016d2d0cb20da3f.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;298&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The idea behind this circuit is to generate a single rising edge for each data packet using an &lt;a href=&#34;https://web.pa.msu.edu/courses/2000fall/phy232/lectures/rccircuits/rc.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RC circuit&lt;/a&gt; with fast charge. The clock low pulses charge up the capacitor through the diode (after being inverted to high pulses), but the capacitor discharges slowly through the resistor. The values of the resistor and capacitor are just right to keep the output high during the clock pulses and then go low a bit after the packet ends. Conveniently, the &lt;a href=&#34;https://www.ti.com/lit/ds/symlink/sn74hc14.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;74HC14&lt;/a&gt; has  &lt;a href=&#34;https://en.wikipedia.org/wiki/Schmitt_trigger&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Schmitt trigger&lt;/a&gt; inputs that convert the analog discharge of the capacitor into a clean digital edge. This is then fed into the CA1 line of the VIA, which is configured to trigger an interrupt, alerting the CPU that a key has been pressed! Here&amp;rsquo;s what the circuit looks like on the breadboard, highlighted:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-2/images/keyboard-circuit_hu10cf73591b92b289fa0a641234892be5_1924587_1a557f5ed52051d8ecf3a505608aba36.webp 400w,
+               /post/6502-2/images/keyboard-circuit_hu10cf73591b92b289fa0a641234892be5_1924587_12166965ec7f3e1a0133f808441b3d0b.webp 760w,
+               /post/6502-2/images/keyboard-circuit_hu10cf73591b92b289fa0a641234892be5_1924587_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-2/images/keyboard-circuit_hu10cf73591b92b289fa0a641234892be5_1924587_1a557f5ed52051d8ecf3a505608aba36.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;656&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The keyboard clock line is in green, with the keyboard data line in white. Notice my very weird looking 33k resistor&amp;ndash;I didn&amp;rsquo;t have one, so I soldered three 100k resistors in parallel to a 2-prong header! I have some 33k resistors on the way to replace this monstrosity, but it&amp;rsquo;s worked great. In this picture, the data output from the shift registers is being ignored. I was just counting interrupts, and the three on the LCD screen shows it worked! Most full keypresses generate three data packets: the key&amp;rsquo;s scan code, then the release scan code, and then the released key&amp;rsquo;s scan code (the scan code table can be found &lt;a href=&#34;https://webdocs.cs.ualberta.ca/~amaral/courses/329/labs/scancodes.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;). Next, I connected the data lines to Port A of the VIA and printed out all of the scancodes received, after mapping them to ASCII using the table &lt;a href=&#34;https://eater.net/downloads/keyboard.s&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;provided by Ben&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-2/images/hello_hu9f13d6efe6a6c439d7265cb940c65250_2981941_e0ff25ca680142b3a9f0bd371d4646ea.webp 400w,
+               /post/6502-2/images/hello_hu9f13d6efe6a6c439d7265cb940c65250_2981941_4eaf65dbc067ad65cba44419b3f53a52.webp 760w,
+               /post/6502-2/images/hello_hu9f13d6efe6a6c439d7265cb940c65250_2981941_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-2/images/hello_hu9f13d6efe6a6c439d7265cb940c65250_2981941_e0ff25ca680142b3a9f0bd371d4646ea.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;412&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Notice the three codes generated by each keypress, e.g., key &lt;code&gt;h&lt;/code&gt;, release &lt;code&gt;?&lt;/code&gt;, key &lt;code&gt;h&lt;/code&gt;. It was then fairly easy to store a few flags indicating whether the shift keys were down and whether the last byte received was a release code. I also added handling of a few special keys like enter, arrows keys, and backspace to move the cursor around. Very pleased with the final product:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-2/images/working_hu37e160e35721f7cf2cae3078d909ec43_1651597_84fbfad5f73aed201197ede5d16b7cff.webp 400w,
+               /post/6502-2/images/working_hu37e160e35721f7cf2cae3078d909ec43_1651597_396fdfb018610c61fdf77cbeb82e93f2.webp 760w,
+               /post/6502-2/images/working_hu37e160e35721f7cf2cae3078d909ec43_1651597_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-2/images/working_hu37e160e35721f7cf2cae3078d909ec43_1651597_84fbfad5f73aed201197ede5d16b7cff.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;393&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s my 6502 assembly for typing on the LCD, which also includes some subroutines for displaying numbers in hex and in decimal: &lt;a href=&#34;lcd_type.s&#34;&gt;lcd_type.s&lt;/a&gt;. I&amp;rsquo;m currently working on a rudimentary monitor program inspired by the &lt;a href=&#34;https://www.sbprojects.net/projects/apple1/wozmon.php&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Woz Monitor&lt;/a&gt; that came with the &lt;a href=&#34;https://en.wikipedia.org/wiki/Apple_I&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Apple I&lt;/a&gt;&amp;ndash;more on that in a future post!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;previous-post-part-1hahahugoshortcode17s1hbhb-span-stylefloatrightnext-post-part-3hahahugoshortcode17s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-1/&#34;&gt;Part 1&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 1: Origins of the KiT 1</title>
+      <link>https://www.kirantomlinson.com/post/6502-1/</link>
+      <pubDate>Sat, 27 Aug 2022 16:49:24 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-1/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been watching a lot of &lt;a href=&#34;https://www.youtube.com/c/BenEater&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ben Eater&amp;rsquo;s&lt;/a&gt; videos on electronics and computer architecture lately&amp;ndash;I&amp;rsquo;d highly recommend them. I was inspired to try building his &lt;a href=&#34;https://eater.net/6502&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;6502-based breadboard computer&lt;/a&gt;. This will be the first of a series of posts where I go over my design choices and track my progress with the build. Here&amp;rsquo;s what Ben&amp;rsquo;s version looks like on the left, with mine in its current state on the right:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;&#34; srcset=&#34;
+               /post/6502-1/images/6502-be-kt_hudd8c3231d0f6e9ffeff24f2ea178606a_178625_25ace787948b066c4bb71ef966810d6f.webp 400w,
+               /post/6502-1/images/6502-be-kt_hudd8c3231d0f6e9ffeff24f2ea178606a_178625_95a2be5224bf7abe6e1157bd835e262f.webp 760w,
+               /post/6502-1/images/6502-be-kt_hudd8c3231d0f6e9ffeff24f2ea178606a_178625_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-1/images/6502-be-kt_hudd8c3231d0f6e9ffeff24f2ea178606a_178625_25ace787948b066c4bb71ef966810d6f.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;370&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;For a bit of background, the &lt;a href=&#34;https://en.wikipedia.org/wiki/MOS_Technology_6502&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;6502&lt;/a&gt; is an 8-bit microprocessor that saw use in a huge number of computers and game consoles in the late &amp;rsquo;70s and early &amp;rsquo;80s: the Apple II, NES, BBC Micro, Commodore 64, and Atari 2600 all used the 6502! Technically, the version Ben Eater used is the &lt;a href=&#34;https://www.westerndesigncenter.com/wdc/w65c02s-chip.php&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;W65C02S&lt;/a&gt; (or 65C02, for short), an updated version that&amp;rsquo;s still in production. The 65C02 can run higher clock speeds, uses less power, supports some additional instructions, and is fully static. I&amp;rsquo;ll just call it a 6502, since it&amp;rsquo;s very similar in spirit to the original and has (almost) the same opcodes and pinout.&lt;/p&gt;
+&lt;p&gt;The 6502 has a 16-bit address space (&lt;code&gt;0000&lt;/code&gt; to &lt;code&gt;ffff&lt;/code&gt; in hex), allowing it to natively address 64KB of memory. Ben&amp;rsquo;s design has 16KB of RAM, 32KB of programmable ROM, and uses the remaining address space for the &lt;a href=&#34;https://en.wikipedia.org/wiki/WDC_65C22&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;65C22 Versatile Interface Adapter&lt;/a&gt; (VIA), which is used for input and output devices. In his build above, the VIA is used to output to the LCD and take input from the pushbuttons below (mine is only hooked up to the LCD for now). He used a 1 MHz clock, but I think it should be possible to push it up to 3 MHz and maybe even higher (although this might require some upgrades).&lt;/p&gt;
+&lt;p&gt;I got Ben&amp;rsquo;s &lt;a href=&#34;https://eater.net/shop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;kit&lt;/a&gt;, but wanted to make a few changes. My goal is to eventually connect a keyboard and monitor to the computer, and maybe even write a basic operating system and text editor for it. The first thing I changed was the memory map. Ben&amp;rsquo;s used the following memory map, which has the advantage of extremely simple address decode logic:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;0000-3fff: RAM (16KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4000-5fff: unused
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6000-600f: VIA (2B)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6010-7fff: unused
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;8000-ffff: ROM (32KB)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I wanted to expand the RAM and also add in 2KB of video RAM that could eventually be used for a simple graphics card. I settled on the following memory map:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;0000-6fff: RAM (28KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7000-77ff: VRAM (2KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7800-780f: VIA (2B)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7810-7fff: unused
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;8000-ffff: ROM (32KB)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The unused space could eventually be used for extra I/O devices (additional VIAs or maybe a &lt;a href=&#34;https://en.wikipedia.org/wiki/WDC_65C51&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;65C51 ACIA&lt;/a&gt;) if the need arises&amp;ndash;but I think this setup will be enough for keyboard input, VGA output to a monitor, and LCD output. The price I paid for the more complex memory map was more complex address decode logic, although I tried to keep it as simple as possible. I found the following configuration, where there are no more than two gates between an input and a chip select signal:&lt;/p&gt;
+&lt;img src=&#34;images/addr-decode.png&#34; width=&#34;250&#34;&gt;
+&lt;p&gt;Keeping the depth small minimizes the amount of delay between an address change and a chip select, which is especially important for the RAM, which is only enabled when the clock (&lt;code&gt;phi2&lt;/code&gt;) is high. Note that all of the chip select signals are active low, denoted by &lt;code&gt;!&lt;/code&gt;. Here&amp;rsquo;s a labeled picture of the computer above with the address decode logic highlighted:&lt;/p&gt;
+&lt;img src=&#34;images/labeled-6502.jpg&#34; width=&#34;400&#34;&gt;
+&lt;p&gt;Since I don&amp;rsquo;t yet have the VRAM set up, the 8-input NAND is unused. I had actually ordered a 3-input OR chip for the VIA control line, but realized I could implement OR with &lt;a href=&#34;https://en.wikipedia.org/wiki/Diode_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;diodes&lt;/a&gt; instead to save some space. The two chips next to the clock on the bottom breadboard are shift registers that I plan to use for the keyboard input&amp;ndash;more on that in a later post. I also made some minor layout changes compared to Ben&amp;rsquo;s build: swapping the RAM and the ROM to make the ROM easier to access for programming, and moving the LCD to the bottom board to make room for the larger address decode logic. In order to support both the LCD and keyboard input, I also decided to use the LCD&amp;rsquo;s 4-bit mode instead of the 8-bit mode Ben used, using only 7 I/O lines in total for the LCD. The keyboard input only needs 8 bits, so it should just about work with one VIA!&lt;/p&gt;
+&lt;p&gt;During the build, I used a &lt;a href=&#34;https://eater.net/8bit/clock&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;slower clock&lt;/a&gt; that could be stopped and single-stepped. In his videos, Ben used an Arduino to monitor the address and data bus for debugging and verification. Since I didn&amp;rsquo;t get an Arduino, I just used a board of LEDs. Here&amp;rsquo;s an in-progress picture with the debug clock, LEDs, and a mess of jumper wires:&lt;/p&gt;
+&lt;img src=&#34;images/debug.jpg&#34; width=&#34;400&#34;&gt;
+&lt;p&gt;The project has been a ton of fun and I can&amp;rsquo;t wait to see how far it will go! In the next posts, I&amp;rsquo;ll write more about my plans for the VGA display, the keyboard input, and the (very basic) software I&amp;rsquo;ve written. If you want some additional sources for building a 6502-based computer, I found Garth Wilson&amp;rsquo;s &lt;a href=&#34;http://wilsonminesco.com/6502primer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;6502 Primer&lt;/a&gt; a very useful resource in addition to Ben&amp;rsquo;s videos.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update: the computer needed a name (calling it &amp;ldquo;the breadboard computer&amp;rdquo; or &amp;ldquo;my 6502-based computer&amp;rdquo; got tiring). I ended up settling on the name KiT, since it all started with Bean Eater&amp;rsquo;s kit and because I like putting my name on things. Since developing a new and improved version, this original breadboard version is retroactively the KiT 1, hence the updated title. It also has a nice parallel to the &lt;a href=&#34;https://en.wikipedia.org/wiki/KIM-1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;KIM-1&lt;/a&gt;, a 6502 computer from 1976.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;next-post-part-2hahahugoshortcode16s0hbhb&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt;&lt;/h3&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

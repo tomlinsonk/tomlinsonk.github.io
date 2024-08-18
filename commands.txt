@@ -1,2 +1,0 @@
-hugo new --kind post post/post-name
-hugo new --kind publication publication/paper-name

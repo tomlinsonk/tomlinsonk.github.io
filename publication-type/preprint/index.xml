@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>preprint | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/publication-type/preprint/</link>
+      <atom:link href="https://www.kirantomlinson.com/publication-type/preprint/index.xml" rel="self" type="application/rss+xml" />
+    <description>preprint</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 14 May 2024 17:51:31 -0400</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>preprint</title>
+      <link>https://www.kirantomlinson.com/publication-type/preprint/</link>
+    </image>
+    
+    <item>
+      <title>Replicating Electoral Success</title>
+      <link>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</link>
+      <pubDate>Tue, 14 May 2024 17:51:31 -0400</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models</title>
+      <link>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</link>
+      <pubDate>Fri, 19 Jan 2024 15:58:48 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
