@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 /Users/tomlinsonk/projects/web/site-graph/site_graph.py --visit-external --only-404 https://www.cs.cornell.edu/~kt/ --options /Users/tomlinsonk/projects/web/site-graph/options.txt && python3 update_site_graph.py
