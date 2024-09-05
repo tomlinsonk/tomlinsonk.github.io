@@ -231,7 +231,7 @@
 &lt;/p&gt;
 &lt;p&gt;As you can see in the screenshots, the emulator supports &amp;ldquo;Turbo&amp;rdquo; mode, which skips the busy-waiting loop for maximum speed. It usually reaches 30-35 MHz in Turbo mode on my 2018 MacBook Pro, meaning my emulator is efficient enough to run at nearly 20x native speed!&lt;/p&gt;
 &lt;p&gt;If you want to run the KiT yourself or even write some 6502 code for it, now you can! The emulator is publicly available at &lt;a href=&#34;https://github.com/tomlinsonk/kit-emu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/tomlinsonk/kit-emu&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode22s0hbhb----span-stylefloatrightnext-post-part-8span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 8]()&lt;/span&gt; --&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode21s0hbhb----span-stylefloatrightnext-post-part-8span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 8]()&lt;/span&gt; --&gt;&lt;/h3&gt;
 </description>
     </item>
     
@@ -565,7 +565,7 @@
 &lt;p&gt;If you want to check out the full schematic for the main board, &lt;a href=&#34;kit-2-schematic.svg&#34;&gt;here it is&lt;/a&gt;, but beware that it includes the bugs listed above.&lt;/p&gt;
 &lt;p&gt;Since getting the KiT 2 working, I&amp;rsquo;ve made two more expansion cards: a 256KB flash drive for persistent storage and a sound card using an &lt;a href=&#34;https://retrocomp.cz/produkt?id=2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ARMSID&lt;/a&gt;. I&amp;rsquo;ve also written an emulator for the KiT 2! More on these developments in future posts.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;previous-post-part-5hahahugoshortcode21s2hbhb-span-stylefloatrightnext-post-part-7hahahugoshortcode21s3hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;Part 7&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-5hahahugoshortcode20s2hbhb-span-stylefloatrightnext-post-part-7hahahugoshortcode20s3hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;Part 7&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     
@@ -703,7 +703,7 @@
 &lt;p&gt;Notice the three green address lines and eight blue data lines brought up from the VRAM chip right below. The four wires heading off the top left of the breadboard go to my USB-to-UART adapter and then into my MacBook! Adding the ability to quickly load programs without flashing the ROM chip has enabled a much faster build-test-debug development cycle, making software development way more enjoyable.&lt;/p&gt;
 &lt;p&gt;I&amp;rsquo;ll be writing soon about a very exciting step in the project: going from breadboard to PCB!&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;previous-post-part-4hahahugoshortcode20s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode20s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-4/&#34;&gt;Part 4&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-4hahahugoshortcode19s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode19s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-4/&#34;&gt;Part 4&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 &lt;/br&gt;
 &lt;small&gt;&lt;sup id=&#34;footnote-1&#34;&gt;1&lt;/sup&gt;Unfortunately there&#39;s a subtle bug in my design that makes writes to the somewhat unreliable, caused by the fact that writes to the 16C550 are triggered only by the rising edge of the !WR1 signal. In contrast, writes to my HM62256 RAM chip can be triggered either by the rising edge of R/!W or by the rising edge of the active low chip enable signal, whichever comes first. The 65C02&#39;s R/!W signal during a write cycle goes high at roughly the same time as the address and data lines stop being valid. In order to properly clock a write, you need to make sure the write occurs at the falling edge of the PHI2 clock, which happens before R/W! goes high and while the address and data lines are both valid. The RAM works by having the RAM chip enable signal be disabled whenever PHI2 is low, so the write gets triggered at the right time. For the 16C550, you therefore shouldn&#39;t just use the CPU&#39;s R/!W signal to control a write. Instead, you need a signal that is low when R/W! is low &lt;em&gt;and&lt;/em&gt; PHI2 is high to plug into the 16C550&#39;s !WR1. My current version is still buggy: writes sometimes succeed, but it depends on what the address lines do after the write to the 16C550. I&#39;ve managed to get the small number of writes I need to load programs working consistently, but I need to fix this issue in a future version.&lt;/small&gt;
 </description>
@@ -955,7 +955,7 @@
 &lt;/p&gt;
 &lt;p&gt;The new and improved monitor even allows loading programs into RAM over a serial port&amp;ndash;more on that in the next post!&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;previous-post-part-3hahahugoshortcode19s3hbhb--span-stylefloatrightnext-post--part-5hahahugoshortcode19s4hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post:  &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-3hahahugoshortcode18s3hbhb--span-stylefloatrightnext-post--part-5hahahugoshortcode18s4hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;  &lt;span style=&#34;float:right&#34;&gt;Next post:  &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-5/&#34;&gt;Part 5&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     
@@ -1187,7 +1187,7 @@
   &lt;/div&gt;&lt;/figure&gt;
 &lt;/p&gt;
 &lt;p&gt;Woooo! In theory, any code could be entered by hand like this, but in practice it&amp;rsquo;s extremely tedious and prone to errors. Since writing LCDMon, I&amp;rsquo;ve been working on a number of hardware upgrades, most notably a graphics card! More on that soon.&lt;/p&gt;
-&lt;h3 id=&#34;previous-post-part-2hahahugoshortcode18s1hbhb-span-stylefloatrightnext-post-part-4hahahugoshortcode18s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 4&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-2hahahugoshortcode17s1hbhb-span-stylefloatrightnext-post-part-4hahahugoshortcode17s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 4&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     
@@ -1323,7 +1323,7 @@
 &lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s my 6502 assembly for typing on the LCD, which also includes some subroutines for displaying numbers in hex and in decimal: &lt;a href=&#34;lcd_type.s&#34;&gt;lcd_type.s&lt;/a&gt;. I&amp;rsquo;m currently working on a rudimentary monitor program inspired by the &lt;a href=&#34;https://www.sbprojects.net/projects/apple1/wozmon.php&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Woz Monitor&lt;/a&gt; that came with the &lt;a href=&#34;https://en.wikipedia.org/wiki/Apple_I&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Apple I&lt;/a&gt;&amp;ndash;more on that in a future post!&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;previous-post-part-1hahahugoshortcode17s1hbhb-span-stylefloatrightnext-post-part-3hahahugoshortcode17s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-1/&#34;&gt;Part 1&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-1hahahugoshortcode16s1hbhb-span-stylefloatrightnext-post-part-3hahahugoshortcode16s2hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-1/&#34;&gt;Part 1&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-3/&#34;&gt;Part 3&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     
@@ -1385,7 +1385,7 @@
 &lt;p&gt;The project has been a ton of fun and I can&amp;rsquo;t wait to see how far it will go! In the next posts, I&amp;rsquo;ll write more about my plans for the VGA display, the keyboard input, and the (very basic) software I&amp;rsquo;ve written. If you want some additional sources for building a 6502-based computer, I found Garth Wilson&amp;rsquo;s &lt;a href=&#34;http://wilsonminesco.com/6502primer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;6502 Primer&lt;/a&gt; a very useful resource in addition to Ben&amp;rsquo;s videos.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Update: the computer needed a name (calling it &amp;ldquo;the breadboard computer&amp;rdquo; or &amp;ldquo;my 6502-based computer&amp;rdquo; got tiring). I ended up settling on the name KiT, since it all started with Bean Eater&amp;rsquo;s kit and because I like putting my name on things. Since developing a new and improved version, this original breadboard version is retroactively the KiT 1, hence the updated title. It also has a nice parallel to the &lt;a href=&#34;https://en.wikipedia.org/wiki/KIM-1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;KIM-1&lt;/a&gt;, a 6502 computer from 1976.&lt;/em&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;next-post-part-2hahahugoshortcode16s0hbhb&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;next-post-part-2hahahugoshortcode15s0hbhb&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-2/&#34;&gt;Part 2&lt;/a&gt;&lt;/h3&gt;
 </description>
     </item>
     

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: August 19, 2024 --><html lang="en-us" >
+<!-- Last Published: September 4, 2024 --><html lang="en-us" >
 
 
 <head>
@@ -1004,7 +1004,7 @@
 <p>Notice the three green address lines and eight blue data lines brought up from the VRAM chip right below. The four wires heading off the top left of the breadboard go to my USB-to-UART adapter and then into my MacBook! Adding the ability to quickly load programs without flashing the ROM chip has enabled a much faster build-test-debug development cycle, making software development way more enjoyable.</p>
 <p>I&rsquo;ll be writing soon about a very exciting step in the project: going from breadboard to PCB!</p>
 <hr>
-<h3 id="previous-post-part-4hahahugoshortcode20s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode20s2hbhbspan">Previous post: <a href="/post/6502-4/">Part 4</a>  <span style="float:right">Next post: <a href="/post/6502-6/">Part 6</a></span></h3>
+<h3 id="previous-post-part-4hahahugoshortcode19s1hbhb--span-stylefloatrightnext-post-part-6hahahugoshortcode19s2hbhbspan">Previous post: <a href="/post/6502-4/">Part 4</a>  <span style="float:right">Next post: <a href="/post/6502-6/">Part 6</a></span></h3>
 </br>
 <small><sup id="footnote-1">1</sup>Unfortunately there's a subtle bug in my design that makes writes to the somewhat unreliable, caused by the fact that writes to the 16C550 are triggered only by the rising edge of the !WR1 signal. In contrast, writes to my HM62256 RAM chip can be triggered either by the rising edge of R/!W or by the rising edge of the active low chip enable signal, whichever comes first. The 65C02's R/!W signal during a write cycle goes high at roughly the same time as the address and data lines stop being valid. In order to properly clock a write, you need to make sure the write occurs at the falling edge of the PHI2 clock, which happens before R/W! goes high and while the address and data lines are both valid. The RAM works by having the RAM chip enable signal be disabled whenever PHI2 is low, so the write gets triggered at the right time. For the 16C550, you therefore shouldn't just use the CPU's R/!W signal to control a write. Instead, you need a signal that is low when R/W! is low <em>and</em> PHI2 is high to plug into the 16C550's !WR1. My current version is still buggy: writes sometimes succeed, but it depends on what the address lines do after the write to the 16C550. I've managed to get the small number of writes I need to load programs working consistently, but I need to fix this issue in a future version.</small>
 
@@ -1054,8 +1054,8 @@
 
     <div class="media-body">
       <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
-      <h6 class="card-subtitle">PhD Candidate, Computer Science</h6>
-      <p class="card-text">I&rsquo;m a Computer Science PhD candidate at Cornell University advised by <a href="https://www.cs.cornell.edu/home/kleinber/" target="_blank" rel="noopener">Jon Kleinberg</a>, researching social choice and preference learning.</p>
+      <h6 class="card-subtitle">Senior Researcher</h6>
+      <p class="card-text">I&rsquo;m a recent PhD graduate from Cornell University, starting this fall as a Senior Researcher at Microsoft Research.</p>
       <ul class="network-icon" aria-hidden="true">
   
     
