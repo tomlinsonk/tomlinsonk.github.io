@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.kirantomlinson.com/categories/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/publication/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/publication-type/preprint/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/publication_types/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/category/voting/</loc>
+    <lastmod>2025-02-25T17:51:31-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>https://www.kirantomlinson.com/category/6502/</loc>
     <lastmod>2024-05-19T16:47:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -10,36 +38,8 @@
     <lastmod>2024-05-19T16:47:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://www.kirantomlinson.com/categories/</loc>
-    <lastmod>2024-05-19T16:47:36-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/</loc>
-    <lastmod>2024-05-19T16:47:36-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://www.kirantomlinson.com/post/</loc>
     <lastmod>2024-05-19T16:47:36-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/publication/</loc>
-    <lastmod>2024-05-14T17:51:31-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/publication-type/preprint/</loc>
-    <lastmod>2024-05-14T17:51:31-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/publication_types/</loc>
-    <lastmod>2024-05-14T17:51:31-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/</loc>
-    <lastmod>2024-05-14T17:51:31-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/category/voting/</loc>
-    <lastmod>2024-05-14T17:51:31-04:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://www.kirantomlinson.com/publication-type/paper-conference/</loc>
@@ -176,6 +176,9 @@
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2018-tomlinson-examining-phylogeny-inference/</loc>
     <lastmod>2018-12-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/newslist/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://www.kirantomlinson.com/graph/</loc>
