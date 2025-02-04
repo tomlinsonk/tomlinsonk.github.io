@@ -5,12 +5,20 @@
     <link>https://www.kirantomlinson.com/publication/</link>
       <atom:link href="https://www.kirantomlinson.com/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Papers</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 25 Feb 2025 17:51:31 -0400</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 03 May 2025 15:58:48 -0500</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Papers</title>
       <link>https://www.kirantomlinson.com/publication/</link>
     </image>
+    
+    <item>
+      <title>When the Universe is Too Big: Bounding Consideration Probabilities for Plackett-Luce Rankings</title>
+      <link>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</link>
+      <pubDate>Sat, 03 May 2025 15:58:48 -0500</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Replicating Electoral Success</title>
@@ -25,14 +33,6 @@
       <link>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</link>
       <pubDate>Tue, 20 Feb 2024 10:20:34 -0500</pubDate>
       <guid>https://www.kirantomlinson.com/publication/2023-tomlinson-moderation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models</title>
-      <link>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</link>
-      <pubDate>Fri, 19 Jan 2024 15:58:48 -0500</pubDate>
-      <guid>https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/</guid>
       <description></description>
     </item>
     

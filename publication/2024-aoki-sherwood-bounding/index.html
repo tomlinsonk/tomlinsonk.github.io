@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: January 11, 2025 --><html lang="en-us" >
+<!-- Last Published: February 3, 2025 --><html lang="en-us" >
 
 
 <head>
@@ -279,7 +279,7 @@
 
   
 
-<meta name="description" content="  A common theory of choice posits that individuals make choices in a two-step process, first selecting some subset of the alternatives to consider before making a selection from the resulting consideration set. However, inferring unobserved consideration sets (or item consideration probabilities) in this &#34;consider then choose&#34; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We consider a natural extension of consider-then-choose models to a top-k ranking setting, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that knowledge of item utilities allows us to infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. " />
+<meta name="description" content="The widely used Plackett-Luce ranking model assumes that individuals rank items by making repeated choices from a universe of items. But in many cases the universe is too big for people to plausibly consider all options. In the choice literature, this issue has been addressed by supposing that individuals first sample a small consideration set and then choose among the considered items. However, inferring unobserved consideration sets (or item consideration probabilities) in this &#34;consider then choose&#34; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We apply the consider-then-choose framework to top-$k$ rankings, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that we can infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size and known item utilities, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. " />
 
 
 
@@ -323,8 +323,8 @@
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Kiran Tomlinson" />
 <meta property="og:url" content="https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/" />
-<meta property="og:title" content="Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models | Kiran Tomlinson" />
-<meta property="og:description" content="  A common theory of choice posits that individuals make choices in a two-step process, first selecting some subset of the alternatives to consider before making a selection from the resulting consideration set. However, inferring unobserved consideration sets (or item consideration probabilities) in this &#34;consider then choose&#34; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We consider a natural extension of consider-then-choose models to a top-k ranking setting, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that knowledge of item utilities allows us to infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. " /><meta property="og:image" content="https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/featured.png" /><meta property="og:locale" content="en-us" />
+<meta property="og:title" content="When the Universe is Too Big: Bounding Consideration Probabilities for Plackett-Luce Rankings | Kiran Tomlinson" />
+<meta property="og:description" content="The widely used Plackett-Luce ranking model assumes that individuals rank items by making repeated choices from a universe of items. But in many cases the universe is too big for people to plausibly consider all options. In the choice literature, this issue has been addressed by supposing that individuals first sample a small consideration set and then choose among the considered items. However, inferring unobserved consideration sets (or item consideration probabilities) in this &#34;consider then choose&#34; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We apply the consider-then-choose framework to top-$k$ rankings, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that we can infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size and known item utilities, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. " /><meta property="og:image" content="https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/featured.png" /><meta property="og:locale" content="en-us" />
 
   
     <meta
@@ -333,7 +333,7 @@
     />
   
   
-    <meta property="article:modified_time" content="2024-01-19T15:58:48-05:00">
+    <meta property="article:modified_time" content="2025-05-03T15:58:48-05:00">
   
 
 
@@ -359,14 +359,14 @@
     "@type": "WebPage",
     "@id": "https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/"
   },
-  "headline": "Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models",
+  "headline": "When the Universe is Too Big: Bounding Consideration Probabilities for Plackett-Luce Rankings",
   
   "image": [
     "https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/featured.png"
   ],
   
   "datePublished": "2024-02-12T15:58:48-05:00",
-  "dateModified": "2024-01-19T15:58:48-05:00",
+  "dateModified": "2025-05-03T15:58:48-05:00",
   
   "author": {
     "@type": "Person",
@@ -381,7 +381,7 @@
       "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "  A common theory of choice posits that individuals make choices in a two-step process, first selecting some subset of the alternatives to consider before making a selection from the resulting consideration set. However, inferring unobserved consideration sets (or item consideration probabilities) in this \"consider then choose\" setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We consider a natural extension of consider-then-choose models to a top-k ranking setting, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that knowledge of item utilities allows us to infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. "
+  "description": "The widely used Plackett-Luce ranking model assumes that individuals rank items by making repeated choices from a universe of items. But in many cases the universe is too big for people to plausibly consider all options. In the choice literature, this issue has been addressed by supposing that individuals first sample a small consideration set and then choose among the considered items. However, inferring unobserved consideration sets (or item consideration probabilities) in this \"consider then choose\" setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We apply the consider-then-choose framework to top-$k$ rankings, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that we can infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size and known item utilities, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds. "
 }
 </script>
 
@@ -403,7 +403,7 @@
 
 
   
-  <title>Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models | Kiran Tomlinson</title>
+  <title>When the Universe is Too Big: Bounding Consideration Probabilities for Plackett-Luce Rankings | Kiran Tomlinson</title>
 
   
   
@@ -814,7 +814,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>Bounding Consideration Probabilities in Consider-Then-Choose Ranking Models</h1>
+  <h1>When the Universe is Too Big: Bounding Consideration Probabilities for Plackett-Luce Rankings</h1>
 
   
 
@@ -846,7 +846,7 @@
     
       
     
-    January, 2024
+    May, 2025
   </span>
   
 
@@ -942,7 +942,7 @@
 
     
     <h3>Abstract</h3>
-    <p class="pub-abstract">A common theory of choice posits that individuals make choices in a two-step process, first selecting some subset of the alternatives to consider before making a selection from the resulting consideration set. However, inferring unobserved consideration sets (or item consideration probabilities) in this &ldquo;consider then choose&rdquo; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We consider a natural extension of consider-then-choose models to a top-k ranking setting, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that knowledge of item utilities allows us to infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds.</p>
+    <p class="pub-abstract">The widely used Plackett-Luce ranking model assumes that individuals rank items by making repeated choices from a universe of items. But in many cases the universe is too big for people to plausibly consider all options. In the choice literature, this issue has been addressed by supposing that individuals first sample a small consideration set and then choose among the considered items. However, inferring unobserved consideration sets (or item consideration probabilities) in this &ldquo;consider then choose&rdquo; setting poses significant challenges, because even simple models of consideration with strong independence assumptions are not identifiable, even if item utilities are known. We apply the consider-then-choose framework to top-$k$ rankings, where we assume rankings are constructed according to a Plackett-Luce model after sampling a consideration set. While item consideration probabilities remain non-identified in this setting, we prove that we can infer bounds on the relative sizes of consideration probabilities. Additionally, given a condition on the expected consideration set size and known item utilities, we derive absolute upper and lower bounds on item consideration probabilities. We also provide algorithms to tighten those bounds on consideration probabilities by propagating inferred constraints. Thus, we show that we can learn useful information about consideration probabilities despite not being able to identify them precisely. We demonstrate our methods on a ranking dataset from a psychology experiment with two different ranking tasks (one with fixed consideration sets and one with unknown consideration sets). This combination of data allows us to estimate utilities and then learn about unknown consideration probabilities using our bounds.</p>
     
 
     
@@ -953,8 +953,8 @@
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">Type</div>
           <div class="col-12 col-md-9">
-            <a href="/publication/#preprint">
-              Preprint
+            <a href="/publication/#paper-conference">
+              Conference paper
             </a>
           </div>
         </div>
@@ -970,7 +970,7 @@
       <div class="col-md-10">
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">Publication</div>
-          <div class="col-12 col-md-9">arXiv (extended abstract at AAMAS &lsquo;24)</div>
+          <div class="col-12 col-md-9">28th International Conference on Artificial Intelligence and Statistics (extended abstract at AAMAS &lsquo;24)</div>
         </div>
       </div>
       <div class="col-md-1"></div>
