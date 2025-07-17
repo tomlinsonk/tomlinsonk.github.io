@@ -5,12 +5,20 @@
     <link>https://www.kirantomlinson.com/</link>
       <atom:link href="https://www.kirantomlinson.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kiran Tomlinson</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 May 2025 18:44:21 -0700</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 17 Jul 2025 16:28:23 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Kiran Tomlinson</title>
       <link>https://www.kirantomlinson.com/</link>
     </image>
+    
+    <item>
+      <title>Working with AI: Measuring the Occupational Implications of Generative AI</title>
+      <link>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</link>
+      <pubDate>Thu, 17 Jul 2025 16:28:23 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Lost in Transmission: When and Why LLMs Fail to Reason Globally</title>
@@ -2511,6 +2519,7 @@ I&amp;rsquo;m so happy with the final result. After some additional fretwork and
 
 
 
+&lt;p&gt;🛠 &lt;em&gt;Jul &amp;lsquo;25&lt;/em&gt; Our workshop &lt;a href=&#34;https://transformerstheory.github.io&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;What Can(&amp;rsquo;t) Transformers Do?&lt;/a&gt; was accepted to &lt;a href=&#34;https://neurips.cc/Conferences/2025&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NeurIPS &amp;lsquo;25&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;🗣 &lt;em&gt;Feb &amp;lsquo;25&lt;/em&gt; Gave a talk on our &lt;a href=&#34;https://www.kirantomlinson.com/publication/2024-tomlinson-replicating/&#34;&gt;replicator dynamics model of candidate positioning&lt;/a&gt; at &lt;a href=&#34;https://aaai.org/conference/aaai/aaai-25/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AAAI &amp;lsquo;25&lt;/a&gt; in Philadelphia, PA.&lt;/p&gt;
 &lt;p&gt;📝 &lt;em&gt;Jan &amp;lsquo;25&lt;/em&gt; Our &lt;a href=&#34;https://www.kirantomlinson.com/publication/2024-aoki-sherwood-bounding/&#34;&gt;paper on Plackett-Luce with consideration&lt;/a&gt; was accepted to &lt;a href=&#34;https://aistats.org/aistats2025/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AISTATS &amp;lsquo;25&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;🗣 &lt;em&gt;Jan &amp;lsquo;25&lt;/em&gt; Gave a talk on instant runoff voting at the &lt;a href=&#34;https://jointmathematicsmeetings.org/meetings/national/jmm2025/2314_program_ss71.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Joint Mathematics Meetings&lt;/a&gt; in Seattle, WA.&lt;/p&gt;
@@ -3091,7 +3100,8 @@ The last one is the &lt;a href=&#34;https://www.carleton.edu/math/&#34; target=&
       <link>https://www.kirantomlinson.com/newslist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://www.kirantomlinson.com/newslist/</guid>
-      <description>🗣 *Feb &#39;25* Gave a talk on our [replicator dynamics model of candidate positioning](/publication/2024-tomlinson-replicating/) at [AAAI &#39;25](https://aaai.org/conference/aaai/aaai-25/) in Philadelphia, PA.
+      <description>🛠 *Jul &#39;25* Our workshop [What Can(&#39;t) Transformers Do?](https://transformerstheory.github.io) was accepted to [NeurIPS &#39;25](https://neurips.cc/Conferences/2025)!
+🗣 *Feb &#39;25* Gave a talk on our [replicator dynamics model of candidate positioning](/publication/2024-tomlinson-replicating/) at [AAAI &#39;25](https://aaai.org/conference/aaai/aaai-25/) in Philadelphia, PA.
 📝 *Jan &#39;25* Our [paper on Plackett-Luce with consideration](/publication/2024-aoki-sherwood-bounding/) was accepted to [AISTATS &#39;25](https://aistats.org/aistats2025/)!
 🗣 *Jan &#39;25* Gave a talk on instant runoff voting at the [Joint Mathematics Meetings](https://jointmathematicsmeetings.org/meetings/national/jmm2025/2314_program_ss71.html) in Seattle, WA. 
 📝 *Dec &#39;24* Our [paper on replicator dynamics for candidate positioning](/publication/2024-tomlinson-replicating/) was accepted to [AAAI &#39;25](https://aaai.org/conference/aaai/aaai-25/)!

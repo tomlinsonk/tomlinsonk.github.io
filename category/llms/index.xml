@@ -5,12 +5,20 @@
     <link>https://www.kirantomlinson.com/category/llms/</link>
       <atom:link href="https://www.kirantomlinson.com/category/llms/index.xml" rel="self" type="application/rss+xml" />
     <description>LLMs</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 May 2025 18:44:21 -0700</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 17 Jul 2025 16:28:23 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>LLMs</title>
       <link>https://www.kirantomlinson.com/category/llms/</link>
     </image>
+    
+    <item>
+      <title>Working with AI: Measuring the Occupational Implications of Generative AI</title>
+      <link>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</link>
+      <pubDate>Thu, 17 Jul 2025 16:28:23 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Lost in Transmission: When and Why LLMs Fail to Reason Globally</title>
