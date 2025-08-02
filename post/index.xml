@@ -231,7 +231,7 @@
 &lt;/p&gt;
 &lt;p&gt;As you can see in the screenshots, the emulator supports &amp;ldquo;Turbo&amp;rdquo; mode, which skips the busy-waiting loop for maximum speed. It usually reaches 30-35 MHz in Turbo mode on my 2018 MacBook Pro, meaning my emulator is efficient enough to run at nearly 20x native speed!&lt;/p&gt;
 &lt;p&gt;If you want to run the KiT yourself or even write some 6502 code for it, now you can! The emulator is publicly available at &lt;a href=&#34;https://github.com/tomlinsonk/kit-emu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/tomlinsonk/kit-emu&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode23s0hbhb----span-stylefloatrightnext-post-part-8span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 8]()&lt;/span&gt; --&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode23s0hbhb-span-stylefloatrightnext-post-part-8hahahugoshortcode23s1hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;&#34;&gt;Part 8&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     
