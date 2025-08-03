@@ -5,12 +5,281 @@
     <link>https://www.kirantomlinson.com/category/6502/</link>
       <atom:link href="https://www.kirantomlinson.com/category/6502/index.xml" rel="self" type="application/rss+xml" />
     <description>6502</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sun, 19 May 2024 16:47:36 -0400</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sun, 20 Jul 2025 20:17:48 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>6502</title>
       <link>https://www.kirantomlinson.com/category/6502/</link>
     </image>
+    
+    <item>
+      <title>Building a 6502 Computer, Part 8: Flash Drive</title>
+      <link>https://www.kirantomlinson.com/post/6502-8/</link>
+      <pubDate>Sun, 20 Jul 2025 20:17:48 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/post/6502-8/</guid>
+      <description>&lt;p&gt;I attended &lt;a href=&#34;https://opensauce.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Sauce&lt;/a&gt; at San Francisco recently, which was such a blast and inspired me to get back into these posts. I was primarily there to support the &lt;a href=&#34;https://www.instagram.com/novoloom/?hl=en&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Novoloom&lt;/a&gt; booth&amp;mdash;but I did bring the KiT and was able to to thank &lt;a href=&#34;https://eater.net&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ben Eater&lt;/a&gt; for starting this project off! I have four upcoming posts planned to catch up to the current state of the KiT, covering the flash drive, sound card, (partial) C compiler, and the current software library.&lt;/p&gt;
+&lt;p&gt;So, the flash drive. If you&amp;rsquo;ve followed the project this far, you might know that I&amp;rsquo;ve described two ways to get a program onto the KiT: flash the EEPROM and include the program there, or load it over the UART. But this means there isn&amp;rsquo;t a nice way to quickly switch between different programs (say, if I want to show someone all the software I&amp;rsquo;ve written), since not everything can fit on the ROM and flashing it is a bit annoying. The solution? Persistent writable storage! In 1980, this would have likely taken the form of a &lt;a href=&#34;https://en.wikipedia.org/wiki/Commodore_1541&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;floppy drive&lt;/a&gt; or a &lt;a href=&#34;https://en.wikipedia.org/wiki/Commodore_Datasette&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tape drive&lt;/a&gt;. But these are pretty bulky, slow, and inconvenient options (and my desire to experience 1980s computing only extends so far). So, I decided to go with something a bit more convenient: a flash drive.&lt;/p&gt;
+&lt;p&gt;I picked the &lt;a href=&#34;https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/SST39SF010A-SST39SF020A-SST39SF040-Data-Sheet-DS20005022.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SST39SF020A&lt;/a&gt; 256KB flash chip, as it comes in a DIP package and would provide plenty of storage for my needs. I had to tweak the address space a bit to fit in enough space for accessing the flash storage and settled on the following layout where I&amp;rsquo;d be able to access to flash chip (aka the &lt;a href=&#34;https://en.wikipedia.org/wiki/Solid-state_drive#Development_and_history&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SSD&lt;/a&gt;) 4KB at a time:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Memory map:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;0000-5FFF: RAM (24KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6000-77FF: VRAM (6KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7800-7FFF: I/O (2KB)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    7800-78FF: VIA 1 (256B)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    7900-79FF: VIA 2 (256B)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    7A00-7AFF: UART (256B)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;8000-8FFF: SSD (4KB, banked)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;9000-FFFF: ROM (28KB)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is especially convenient as the flash chip is organized into 4KB sectors. To write data to the flash memory, you first need to wipe the sector you want to write to and then write one byte at a time to the wiped sector. By using a very simple filesystem that allows each sector to hold only one file, this makes managing storage easy: I can store up to 64 4KB files, one per sector. This is enough to store most programs I&amp;rsquo;ve worked on, and I can always have a file span multiple sectors if needed. Here&amp;rsquo;s the very simple spec for the file system, which allows storing a file type, file name, and checksum, among other metadata:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;KiT Simple Filesystem (KSF)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;64 file slots, one in each of the 64 4Kb sectors of the 256 Kb SSD.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Each file can be up to 3842 bytes (4Kb minus one 256-byte header page)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Page $80 is the header page; a file is stored in pages $81-$8F.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Header page spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Bytes | Contents
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;-----------------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;00    | Always $00 to indicate this sector is occupied
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;01    | File type ($00 = program, $10  = image)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;02-03 | Start address (lo, hi)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;04-05 | File size in bytes 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;06-07 | Fletcher checksum of file (lo, hi)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;08.   | Next sector (for multi-sector files; $ff if no next sector)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;09.   | Video mode (for images, $ff for programs)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;10-1F | Filename (up to 16 ASCII chars, null terminated)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;20    | Always $00
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;File types:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$00: program
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$10: image
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$20: data
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To control which sector is accessed, I&amp;rsquo;m using VIA 2 port B (aka port D), which is connected to the KiT 2 expansion slots 2-5. I picked slot 2 for the SSD and updated the GAL that sends slot select signals to activate slot 2 when the address range &lt;code&gt;$8000-$8FFF&lt;/code&gt; is accessed, but only when the clock (&lt;code&gt;PHI2&lt;/code&gt;) is high, which ensures the write timing is correct. (See the &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;KiT 2 post&lt;/a&gt; for more details about VIA 2 and the slot GAL). Here&amp;rsquo;s what the circuit diagram looks like for the SSD expansion card:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;SSD circuit diagram&#34; srcset=&#34;
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_bd27da85285f6327bd067893a8b7a43e.webp 400w,
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_d9204279ce2ed39c9b6df9820bc2d10b.webp 760w,
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_bd27da85285f6327bd067893a8b7a43e.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;648&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;By hooking up port D to address bits 12-17 of the flash chip, this selects one of the 64 sectors, while the KiT address bus lines 0-11 select the address within the sector. Address bus lines 12-15 are the ones that the slot GAL uses to select slot 2, which activates the chip enable line on the flash chip. That&amp;rsquo;s all there is to it! The only slightly annoying complication is that the flash chip has separate active-low write enable (&lt;code&gt;WE#&lt;/code&gt;) and output enable (&lt;code&gt;OE#&lt;/code&gt;) pins, so I needed to add a not gate to invert the read/write line (&lt;code&gt;R/W!&lt;/code&gt;). Here&amp;rsquo;s what the SSD looks like on a prototyping expansion card:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Front&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Back&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;SSD proto front&#34; srcset=&#34;
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_4c96d71078fec9dcf67d278e351ae1f0.webp 400w,
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_21fcbd8f169e83f2aaff3bc86d8cd672.webp 760w,
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_4c96d71078fec9dcf67d278e351ae1f0.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;738&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;SSD proto back&#34; srcset=&#34;
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_f108071bf215e95148554b5d995821e2.webp 400w,
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_2460b2548cfc086a38a80c38f5cd0f17.webp 760w,
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_f108071bf215e95148554b5d995821e2.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;738&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;And installed in the KiT 2:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;KiT 2 with SSD&#34; srcset=&#34;
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_932a05ba00c635dd5d26eb3d71d248ff.webp 400w,
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_77c664660ada2f1a7babac88f04f6353.webp 760w,
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_932a05ba00c635dd5d26eb3d71d248ff.webp&#34;
+               width=&#34;645&#34;
+               height=&#34;760&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I added some commands to the KiT operating system to interact with the SSD:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Dxx: Directory. Displays a list of files saved to the SSD, starting at sector xx (default: 00).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Cxx: seCtor. Set the active sector to xx.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Exx: Erase. Erases sector xx.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Fxx: File. Opens the file in sector xx. 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The File command behaves differently depending on the file type stored in the header. For programs, it copies the program to RAM at the stored start address and jumps to the start address, running the program. For images, it loads them into VRAM and sets the video mode as specified in the header, displaying the image. In addition, I modified the UART Load command to provide an option to save the loaded program or image onto the SSD at a specified sector with a specified file name. Here&amp;rsquo;s the output of Directory running on my &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;KiT emulator&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Dir output&#34; srcset=&#34;
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_357a4bc66952fdcd2e91fba5223dce06.webp 400w,
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_2a859e9b89ac1d6b8752320635d3051f.webp 760w,
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_357a4bc66952fdcd2e91fba5223dce06.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;568&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;You can see the sector number, file type (Program, Empty, Image), and file name. And here&amp;rsquo;s the real thing!&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;Dir output&#34; srcset=&#34;
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_4b9a8a297ef02853ca50080e26558864.webp 400w,
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_6bec83e5e3a4f1b9081ea93da2736ffd.webp 760w,
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_1200x1200_fit_q75_h2_lanczos.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_4b9a8a297ef02853ca50080e26558864.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;570&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve also designed a little PCB for the SSD, but the prototype works so well that I don&amp;rsquo;t know if I&amp;rsquo;ll bother to get it manufactured. Perhaps someday.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img alt=&#34;SSD PCB layout&#34; srcset=&#34;
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_34b61746595a0ca47f1173eface9de5a.webp 400w,
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_63d2125f244e4f3908255234f1d7beb2.webp 760w,
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_1200x1200_fit_q75_h2_lanczos_3.webp 1200w&#34;
+               src=&#34;https://www.kirantomlinson.com/post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_34b61746595a0ca47f1173eface9de5a.webp&#34;
+               width=&#34;760&#34;
+               height=&#34;478&#34;
+               loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The SSD is a simple little expansion card, but it makes the KiT 2 &lt;em&gt;so&lt;/em&gt; much more usable.
+If you&amp;rsquo;re curious to see how the flash chip commands are handled in assembly, here&amp;rsquo;s my code: &lt;a href=&#34;ssd.lib&#34;&gt;ssd.lib&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In the next post (whenever I get around to it): the sound card!&lt;/p&gt;
+&lt;h3 id=&#34;previous-post-part-7hahahugoshortcode24s2hbhb----span-stylefloatrightnext-post-part-9span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;Part 7&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 9]()&lt;/span&gt; --&gt;&lt;/h3&gt;
+</description>
+    </item>
     
     <item>
       <title>Building a 6502 Computer, Part 7: Emulator</title>
@@ -231,7 +500,7 @@
 &lt;/p&gt;
 &lt;p&gt;As you can see in the screenshots, the emulator supports &amp;ldquo;Turbo&amp;rdquo; mode, which skips the busy-waiting loop for maximum speed. It usually reaches 30-35 MHz in Turbo mode on my 2018 MacBook Pro, meaning my emulator is efficient enough to run at nearly 20x native speed!&lt;/p&gt;
 &lt;p&gt;If you want to run the KiT yourself or even write some 6502 code for it, now you can! The emulator is publicly available at &lt;a href=&#34;https://github.com/tomlinsonk/kit-emu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/tomlinsonk/kit-emu&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode23s0hbhb-span-stylefloatrightnext-post-part-8hahahugoshortcode23s1hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;&#34;&gt;Part 8&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;previous-post-part-6hahahugoshortcode23s0hbhb-span-stylefloatrightnext-post-part-8hahahugoshortcode23s1hbhbspan&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-6/&#34;&gt;Part 6&lt;/a&gt; &lt;span style=&#34;float:right&#34;&gt;Next post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-8/&#34;&gt;Part 8&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;
 </description>
     </item>
     

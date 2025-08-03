@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: August 3, 2025 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.6" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.047268c6dd09ad74ba54a0ba71837064.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.a6d746e8d09a931ff4856310a9224de3.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Kiran Tomlinson" />
+
+
+
+
+
+  
+
+<meta name="description" content="Rather than having to re-flash the EEPROM or load a program over UART, now it&#39;s possible to save and load programs to persistent storage." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://www.kirantomlinson.com/post/6502-8/" />
+<link rel="canonical" href="https://www.kirantomlinson.com/post/6502-8/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#b31b1b" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.kirantomlinson.com/post/6502-8/featured.jpg" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Kiran Tomlinson" />
+<meta property="og:url" content="https://www.kirantomlinson.com/post/6502-8/" />
+<meta property="og:title" content="Building a 6502 Computer, Part 8: Flash Drive | Kiran Tomlinson" />
+<meta property="og:description" content="Rather than having to re-flash the EEPROM or load a program over UART, now it&#39;s possible to save and load programs to persistent storage." /><meta property="og:image" content="https://www.kirantomlinson.com/post/6502-8/featured.jpg" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2025-07-20T20:17:48-07:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2025-07-20T20:17:48-07:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kirantomlinson.com/post/6502-8/"
+  },
+  "headline": "Building a 6502 Computer, Part 8: Flash Drive",
+  
+  "image": [
+    "https://www.kirantomlinson.com/post/6502-8/featured.jpg"
+  ],
+  
+  "datePublished": "2025-07-20T20:17:48-07:00",
+  "dateModified": "2025-07-20T20:17:48-07:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kiran Tomlinson"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kiran Tomlinson",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "Rather than having to re-flash the EEPROM or load a program over UART, now it's possible to save and load programs to persistent storage."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>Building a 6502 Computer, Part 8: Flash Drive | Kiran Tomlinson</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="f7e19a3da12ca6b30ab2b89804a3d354" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.d66af272089c6c0601f1a57edc3bf6ab.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Kiran Tomlinson</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/publication/"><span>Papers</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/news/"><span>News</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link  active" href="/post/"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/uploads/cv.pdf"><span>CV</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/graph/"><span><i class="fas fa-project-diagram"></i></span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/guitar/"><span><i class="fas fa-guitar"></i></span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>Building a 6502 Computer, Part 8: Flash Drive</h1>
+
+  
+  <p class="page-subtitle">Storage for the KiT: 256 whole kilobytes!</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 20, 2025
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/6502/">6502</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 116px;">
+  <div style="position: relative">
+    <img src="/post/6502-8/featured_hu723bd9fd3d2f1948f265606fb1762b94_98015_17bce08662a508790f5d8cea281bd05e.webp" width="720" height="116" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>I attended <a href="https://opensauce.com" target="_blank" rel="noopener">Open Sauce</a> at San Francisco recently, which was such a blast and inspired me to get back into these posts. I was primarily there to support the <a href="https://www.instagram.com/novoloom/?hl=en" target="_blank" rel="noopener">Novoloom</a> booth&mdash;but I did bring the KiT and was able to to thank <a href="https://eater.net" target="_blank" rel="noopener">Ben Eater</a> for starting this project off! I have four upcoming posts planned to catch up to the current state of the KiT, covering the flash drive, sound card, (partial) C compiler, and the current software library.</p>
+<p>So, the flash drive. If you&rsquo;ve followed the project this far, you might know that I&rsquo;ve described two ways to get a program onto the KiT: flash the EEPROM and include the program there, or load it over the UART. But this means there isn&rsquo;t a nice way to quickly switch between different programs (say, if I want to show someone all the software I&rsquo;ve written), since not everything can fit on the ROM and flashing it is a bit annoying. The solution? Persistent writable storage! In 1980, this would have likely taken the form of a <a href="https://en.wikipedia.org/wiki/Commodore_1541" target="_blank" rel="noopener">floppy drive</a> or a <a href="https://en.wikipedia.org/wiki/Commodore_Datasette" target="_blank" rel="noopener">tape drive</a>. But these are pretty bulky, slow, and inconvenient options (and my desire to experience 1980s computing only extends so far). So, I decided to go with something a bit more convenient: a flash drive.</p>
+<p>I picked the <a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MPD/ProductDocuments/DataSheets/SST39SF010A-SST39SF020A-SST39SF040-Data-Sheet-DS20005022.pdf" target="_blank" rel="noopener">SST39SF020A</a> 256KB flash chip, as it comes in a DIP package and would provide plenty of storage for my needs. I had to tweak the address space a bit to fit in enough space for accessing the flash storage and settled on the following layout where I&rsquo;d be able to access to flash chip (aka the <a href="https://en.wikipedia.org/wiki/Solid-state_drive#Development_and_history" target="_blank" rel="noopener">SSD</a>) 4KB at a time:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Memory map:
+</span></span><span class="line"><span class="cl">0000-5FFF: RAM (24KB)
+</span></span><span class="line"><span class="cl">6000-77FF: VRAM (6KB)
+</span></span><span class="line"><span class="cl">7800-7FFF: I/O (2KB)
+</span></span><span class="line"><span class="cl">    7800-78FF: VIA 1 (256B)
+</span></span><span class="line"><span class="cl">    7900-79FF: VIA 2 (256B)
+</span></span><span class="line"><span class="cl">    7A00-7AFF: UART (256B)
+</span></span><span class="line"><span class="cl">8000-8FFF: SSD (4KB, banked)
+</span></span><span class="line"><span class="cl">9000-FFFF: ROM (28KB)
+</span></span></code></pre></div><p>This is especially convenient as the flash chip is organized into 4KB sectors. To write data to the flash memory, you first need to wipe the sector you want to write to and then write one byte at a time to the wiped sector. By using a very simple filesystem that allows each sector to hold only one file, this makes managing storage easy: I can store up to 64 4KB files, one per sector. This is enough to store most programs I&rsquo;ve worked on, and I can always have a file span multiple sectors if needed. Here&rsquo;s the very simple spec for the file system, which allows storing a file type, file name, and checksum, among other metadata:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">KiT Simple Filesystem (KSF)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">64 file slots, one in each of the 64 4Kb sectors of the 256 Kb SSD.
+</span></span><span class="line"><span class="cl">Each file can be up to 3842 bytes (4Kb minus one 256-byte header page)
+</span></span><span class="line"><span class="cl">Page $80 is the header page; a file is stored in pages $81-$8F.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Header page spec:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Bytes | Contents
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------
+</span></span><span class="line"><span class="cl">00    | Always $00 to indicate this sector is occupied
+</span></span><span class="line"><span class="cl">01    | File type ($00 = program, $10  = image)
+</span></span><span class="line"><span class="cl">02-03 | Start address (lo, hi)
+</span></span><span class="line"><span class="cl">04-05 | File size in bytes 
+</span></span><span class="line"><span class="cl">06-07 | Fletcher checksum of file (lo, hi)
+</span></span><span class="line"><span class="cl">08.   | Next sector (for multi-sector files; $ff if no next sector)
+</span></span><span class="line"><span class="cl">09.   | Video mode (for images, $ff for programs)
+</span></span><span class="line"><span class="cl">10-1F | Filename (up to 16 ASCII chars, null terminated)
+</span></span><span class="line"><span class="cl">20    | Always $00
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">File types:
+</span></span><span class="line"><span class="cl">$00: program
+</span></span><span class="line"><span class="cl">$10: image
+</span></span><span class="line"><span class="cl">$20: data
+</span></span></code></pre></div><p>To control which sector is accessed, I&rsquo;m using VIA 2 port B (aka port D), which is connected to the KiT 2 expansion slots 2-5. I picked slot 2 for the SSD and updated the GAL that sends slot select signals to activate slot 2 when the address range <code>$8000-$8FFF</code> is accessed, but only when the clock (<code>PHI2</code>) is high, which ensures the write timing is correct. (See the <a href="/post/6502-6/">KiT 2 post</a> for more details about VIA 2 and the slot GAL). Here&rsquo;s what the circuit diagram looks like for the SSD expansion card:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="SSD circuit diagram" srcset="
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_bd27da85285f6327bd067893a8b7a43e.webp 400w,
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_d9204279ce2ed39c9b6df9820bc2d10b.webp 760w,
+               /post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-8/images/ssd-diagram_hueaabcea9f2532af61e19ee0652870d73_390870_bd27da85285f6327bd067893a8b7a43e.webp"
+               width="760"
+               height="648"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>By hooking up port D to address bits 12-17 of the flash chip, this selects one of the 64 sectors, while the KiT address bus lines 0-11 select the address within the sector. Address bus lines 12-15 are the ones that the slot GAL uses to select slot 2, which activates the chip enable line on the flash chip. That&rsquo;s all there is to it! The only slightly annoying complication is that the flash chip has separate active-low write enable (<code>WE#</code>) and output enable (<code>OE#</code>) pins, so I needed to add a not gate to invert the read/write line (<code>R/W!</code>). Here&rsquo;s what the SSD looks like on a prototyping expansion card:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Front</th>
+<th style="text-align:center">Back</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="SSD proto front" srcset="
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_4c96d71078fec9dcf67d278e351ae1f0.webp 400w,
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_21fcbd8f169e83f2aaff3bc86d8cd672.webp 760w,
+               /post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-8/images/proto-ssd-front_huabf6ad4f2d996932cea525af014a13d4_1209437_4c96d71078fec9dcf67d278e351ae1f0.webp"
+               width="760"
+               height="738"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</td>
+<td style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="SSD proto back" srcset="
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_f108071bf215e95148554b5d995821e2.webp 400w,
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_2460b2548cfc086a38a80c38f5cd0f17.webp 760w,
+               /post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-8/images/proto-ssd-back_hua837c6a4eeae4368d5d6d0698a4f9ff0_1244602_f108071bf215e95148554b5d995821e2.webp"
+               width="760"
+               height="738"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</td>
+</tr>
+</tbody>
+</table>
+<p>And installed in the KiT 2:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="KiT 2 with SSD" srcset="
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_932a05ba00c635dd5d26eb3d71d248ff.webp 400w,
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_77c664660ada2f1a7babac88f04f6353.webp 760w,
+               /post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-8/images/kit-2-ssd_hu3bec17f2f6ce1c56cfcea5f77768c420_1100375_932a05ba00c635dd5d26eb3d71d248ff.webp"
+               width="645"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>I added some commands to the KiT operating system to interact with the SSD:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Dxx: Directory. Displays a list of files saved to the SSD, starting at sector xx (default: 00).
+</span></span><span class="line"><span class="cl">Cxx: seCtor. Set the active sector to xx.
+</span></span><span class="line"><span class="cl">Exx: Erase. Erases sector xx.
+</span></span><span class="line"><span class="cl">Fxx: File. Opens the file in sector xx. 
+</span></span></code></pre></div><p>The File command behaves differently depending on the file type stored in the header. For programs, it copies the program to RAM at the stored start address and jumps to the start address, running the program. For images, it loads them into VRAM and sets the video mode as specified in the header, displaying the image. In addition, I modified the UART Load command to provide an option to save the loaded program or image onto the SSD at a specified sector with a specified file name. Here&rsquo;s the output of Directory running on my <a href="/post/6502-7/">KiT emulator</a>:</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Dir output" srcset="
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_357a4bc66952fdcd2e91fba5223dce06.webp 400w,
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_2a859e9b89ac1d6b8752320635d3051f.webp 760w,
+               /post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-8/images/dir_hu39f30c256df6fc712980f13b9cf60b4b_40448_357a4bc66952fdcd2e91fba5223dce06.webp"
+               width="760"
+               height="568"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>You can see the sector number, file type (Program, Empty, Image), and file name. And here&rsquo;s the real thing!</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="Dir output" srcset="
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_4b9a8a297ef02853ca50080e26558864.webp 400w,
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_6bec83e5e3a4f1b9081ea93da2736ffd.webp 760w,
+               /post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_1200x1200_fit_q75_h2_lanczos.webp 1200w"
+               src="/post/6502-8/images/dir-real_hu18ce95c8b39f302e9a5bd08cc0b599c5_950211_4b9a8a297ef02853ca50080e26558864.webp"
+               width="760"
+               height="570"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>I&rsquo;ve also designed a little PCB for the SSD, but the prototype works so well that I don&rsquo;t know if I&rsquo;ll bother to get it manufactured. Perhaps someday.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="SSD PCB layout" srcset="
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_34b61746595a0ca47f1173eface9de5a.webp 400w,
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_63d2125f244e4f3908255234f1d7beb2.webp 760w,
+               /post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_1200x1200_fit_q75_h2_lanczos_3.webp 1200w"
+               src="/post/6502-8/images/ssd-pcb_hu0d8fb1df188a7f7312cfe5d146879ba8_159191_34b61746595a0ca47f1173eface9de5a.webp"
+               width="760"
+               height="478"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The SSD is a simple little expansion card, but it makes the KiT 2 <em>so</em> much more usable.
+If you&rsquo;re curious to see how the flash chip commands are handled in assembly, here&rsquo;s my code: <a href="ssd.lib">ssd.lib</a>.</p>
+<p>In the next post (whenever I get around to it): the sound card!</p>
+<h3 id="previous-post-part-7hahahugoshortcode24s2hbhb----span-stylefloatrightnext-post-part-9span---">Previous post: <a href="/post/6502-7/">Part 7</a> <!-- <span style="float:right">Next post: [Part 9]()</span> --></h3>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://www.kirantomlinson.com"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hue566c3dbecec831b3f0ac831c745a872_919195_270x270_fill_q75_lanczos_center.jpg" alt="Kiran Tomlinson"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kirantomlinson.com">Kiran Tomlinson</a></h5>
+      <h6 class="card-subtitle">Senior Researcher</h6>
+      <p class="card-text">I&rsquo;m a Senior Researcher at Microsoft Research in the AI Interaction and Learning group.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:kitomlinson@microsoft.com" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=7faaZ1cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/tomlinsonk" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2025 Kiran Tomlinson.
+  </p>
+  
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.62586ca65ca61821fe707eb9fa6268b7.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
