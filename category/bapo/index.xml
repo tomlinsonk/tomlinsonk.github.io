@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BAPO | Kiran Tomlinson</title>
+    <link>https://www.kirantomlinson.com/category/bapo/</link>
+      <atom:link href="https://www.kirantomlinson.com/category/bapo/index.xml" rel="self" type="application/rss+xml" />
+    <description>BAPO</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 02 Feb 2026 11:49:11 -0800</lastBuildDate>
+    <image>
+      <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>BAPO</title>
+      <link>https://www.kirantomlinson.com/category/bapo/</link>
+    </image>
+    
+    <item>
+      <title>Reasoning about Reasoning: BAPO Bounds on Chain-of-Thought Token Complexity in LLMs</title>
+      <link>https://www.kirantomlinson.com/publication/2026-tomlinson-reasoning/</link>
+      <pubDate>Mon, 02 Feb 2026 11:49:11 -0800</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-tomlinson-reasoning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lost in Transmission: When and Why LLMs Fail to Reason Globally</title>
+      <link>https://www.kirantomlinson.com/publication/2025-schnabel-lost-in-transmission/</link>
+      <pubDate>Tue, 13 May 2025 18:44:21 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2025-schnabel-lost-in-transmission/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
