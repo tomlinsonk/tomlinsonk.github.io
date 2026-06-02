@@ -5,12 +5,36 @@
     <link>https://www.kirantomlinson.com/publication/</link>
       <atom:link href="https://www.kirantomlinson.com/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Papers</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 02 Feb 2026 11:49:11 -0800</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 27 May 2026 20:35:28 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Papers</title>
       <link>https://www.kirantomlinson.com/publication/</link>
     </image>
+    
+    <item>
+      <title>AI and the Democratization of Knowledge Work</title>
+      <link>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</link>
+      <pubDate>Wed, 27 May 2026 20:35:28 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Adopt ≠ Adapt: Longitudinal Analyses of LLM Conversations in the Wild</title>
+      <link>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</link>
+      <pubDate>Sun, 17 May 2026 20:45:02 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AI in the Enterprise: How People Use M365 Copilot Chat</title>
+      <link>https://www.kirantomlinson.com/publication/2026-counts-enterprise/</link>
+      <pubDate>Mon, 11 May 2026 20:51:56 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-counts-enterprise/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Reasoning about Reasoning: BAPO Bounds on Chain-of-Thought Token Complexity in LLMs</title>

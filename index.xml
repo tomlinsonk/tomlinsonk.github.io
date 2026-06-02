@@ -5,12 +5,36 @@
     <link>https://www.kirantomlinson.com/</link>
       <atom:link href="https://www.kirantomlinson.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kiran Tomlinson</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 02 Feb 2026 11:49:11 -0800</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 27 May 2026 20:35:28 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Kiran Tomlinson</title>
       <link>https://www.kirantomlinson.com/</link>
     </image>
+    
+    <item>
+      <title>AI and the Democratization of Knowledge Work</title>
+      <link>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</link>
+      <pubDate>Wed, 27 May 2026 20:35:28 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Adopt ≠ Adapt: Longitudinal Analyses of LLM Conversations in the Wild</title>
+      <link>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</link>
+      <pubDate>Sun, 17 May 2026 20:45:02 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AI in the Enterprise: How People Use M365 Copilot Chat</title>
+      <link>https://www.kirantomlinson.com/publication/2026-counts-enterprise/</link>
+      <pubDate>Mon, 11 May 2026 20:51:56 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-counts-enterprise/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Reasoning about Reasoning: BAPO Bounds on Chain-of-Thought Token Complexity in LLMs</title>
@@ -2796,6 +2820,7 @@ I&amp;rsquo;m so happy with the final result. After some additional fretwork and
 
 
 
+&lt;p&gt;📝 &lt;em&gt;May &amp;lsquo;26&lt;/em&gt; Our &lt;a href=&#34;https://www.nature.com/articles/s43588-026-00985-z&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;perspective on AI and knowledge work&lt;/a&gt; was published in &lt;em&gt;Nature Computational Science&lt;/em&gt;!&lt;/p&gt;
 &lt;p&gt;🗣 &lt;em&gt;May &amp;lsquo;26&lt;/em&gt; Spoke at the &lt;a href=&#34;https://www.nber.org/conferences/ai-and-economic-measurement-spring-2026&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NBER AI and Economic Measurement Workshop&lt;/a&gt; about &lt;a href=&#34;https://www.kirantomlinson.com/publication/2025-tomlinson-working/&#34;&gt;Working with AI&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;📝 &lt;em&gt;Apr &amp;lsquo;26&lt;/em&gt; Our &lt;a href=&#34;https://www.kirantomlinson.com/publication/2026-tomlinson-reasoning/&#34;&gt;paper on reasoning lower bounds for LLMs&lt;/a&gt; was accepted to &lt;a href=&#34;https://icml.cc/Conferences/2026&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ICML &amp;lsquo;26&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;👨‍✈️ &lt;em&gt;Feb &amp;lsquo;26&lt;/em&gt; Got my private pilot license!&lt;/p&gt;
@@ -3390,7 +3415,8 @@ The last one is the &lt;a href=&#34;https://www.carleton.edu/math/&#34; target=&
       <link>https://www.kirantomlinson.com/newslist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://www.kirantomlinson.com/newslist/</guid>
-      <description>🗣 *May &#39;26* Spoke at the [NBER AI and Economic Measurement Workshop](https://www.nber.org/conferences/ai-and-economic-measurement-spring-2026) about [Working with AI](/publication/2025-tomlinson-working/).
+      <description>📝 *May &#39;26* Our [perspective on AI and knowledge work](https://www.nature.com/articles/s43588-026-00985-z) was published in *Nature Computational Science*!
+🗣 *May &#39;26* Spoke at the [NBER AI and Economic Measurement Workshop](https://www.nber.org/conferences/ai-and-economic-measurement-spring-2026) about [Working with AI](/publication/2025-tomlinson-working/).
 📝 *Apr &#39;26* Our [paper on reasoning lower bounds for LLMs](/publication/2026-tomlinson-reasoning/) was accepted to [ICML &#39;26](https://icml.cc/Conferences/2026)!
 👨‍✈️ *Feb &#39;26* Got my private pilot license!
 🗣 *Feb &#39;26* Spoke at the [COMSOC Video Seminar](https://www.comsocseminar.org) about [exclusion zones of IRV](/publication/2025-tomlinson-exclusion/).
