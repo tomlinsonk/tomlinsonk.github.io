@@ -5,7 +5,7 @@
     <link>https://www.kirantomlinson.com/</link>
       <atom:link href="https://www.kirantomlinson.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kiran Tomlinson</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 27 May 2026 20:35:28 -0700</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 24 Oct 2026 20:45:02 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Kiran Tomlinson</title>
@@ -13,18 +13,18 @@
     </image>
     
     <item>
-      <title>AI and the Democratization of Knowledge Work</title>
-      <link>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</link>
-      <pubDate>Wed, 27 May 2026 20:35:28 -0700</pubDate>
-      <guid>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</guid>
+      <title>Adopt ≠ Adapt: Longitudinal Analyses of LLM Conversations in the Wild</title>
+      <link>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</link>
+      <pubDate>Sat, 24 Oct 2026 20:45:02 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Adopt ≠ Adapt: Longitudinal Analyses of LLM Conversations in the Wild</title>
-      <link>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</link>
-      <pubDate>Sun, 17 May 2026 20:45:02 -0700</pubDate>
-      <guid>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</guid>
+      <title>AI and the Democratization of Knowledge Work</title>
+      <link>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</link>
+      <pubDate>Wed, 27 May 2026 20:35:28 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2026-daepp-democratization/</guid>
       <description></description>
     </item>
     
@@ -2820,6 +2820,7 @@ I&amp;rsquo;m so happy with the final result. After some additional fretwork and
 
 
 
+&lt;p&gt;📝 &lt;em&gt;Aug &amp;lsquo;26&lt;/em&gt; My great intern &lt;a href=&#34;https://rmatouschekh.github.io&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rebecca&amp;rsquo;s&lt;/a&gt; paper on &lt;a href=&#34;https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/&#34;&gt;longitudinal analysis of LLM usage&lt;/a&gt; was accepted to &lt;a href=&#34;https://2026.emnlp.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;EMNLP &amp;lsquo;26&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;📌 &lt;em&gt;Jul &amp;lsquo;26&lt;/em&gt; Presented a poster on &lt;a href=&#34;https://www.kirantomlinson.com/publication/2026-tomlinson-reasoning/&#34;&gt;chain-of-thought lower bounds&lt;/a&gt; at &lt;a href=&#34;https://icml.cc/Conferences/2026&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ICML &amp;lsquo;26&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;📊 &lt;em&gt;Jun &amp;lsquo;26&lt;/em&gt; New &lt;a href=&#34;https://dliu18.github.io/maine-2026-primaries/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;blog post&lt;/a&gt; about polling ranked choice elections, applied to the 2026 Maine Primaries.&lt;/p&gt;
 &lt;p&gt;📝 &lt;em&gt;May &amp;lsquo;26&lt;/em&gt; Our &lt;a href=&#34;https://www.nature.com/articles/s43588-026-00985-z&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;perspective on AI and knowledge work&lt;/a&gt; was published in &lt;em&gt;Nature Computational Science&lt;/em&gt;!&lt;/p&gt;
@@ -3417,7 +3418,8 @@ The last one is the &lt;a href=&#34;https://www.carleton.edu/math/&#34; target=&
       <link>https://www.kirantomlinson.com/newslist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://www.kirantomlinson.com/newslist/</guid>
-      <description>📌 *Jul &#39;26* Presented a poster on [chain-of-thought lower bounds](/publication/2026-tomlinson-reasoning/) at [ICML &#39;26](https://icml.cc/Conferences/2026)!
+      <description>📝 *Aug &#39;26* My great intern [Rebecca&#39;s](https://rmatouschekh.github.io) paper on [longitudinal analysis of LLM usage](/publication/2026-hicke-adopt-adapt/) was accepted to [EMNLP &#39;26](https://2026.emnlp.org)!
+📌 *Jul &#39;26* Presented a poster on [chain-of-thought lower bounds](/publication/2026-tomlinson-reasoning/) at [ICML &#39;26](https://icml.cc/Conferences/2026)!
 📊 *Jun &#39;26* New [blog post](https://dliu18.github.io/maine-2026-primaries/) about polling ranked choice elections, applied to the 2026 Maine Primaries.
 📝 *May &#39;26* Our [perspective on AI and knowledge work](https://www.nature.com/articles/s43588-026-00985-z) was published in *Nature Computational Science*!
 🗣 *May &#39;26* Spoke at the [NBER AI and Economic Measurement Workshop](https://www.nber.org/conferences/ai-and-economic-measurement-spring-2026) about [Working with AI](/publication/2025-tomlinson-working/).
