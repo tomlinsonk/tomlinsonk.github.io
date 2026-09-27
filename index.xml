@@ -5,12 +5,20 @@
     <link>https://www.kirantomlinson.com/</link>
       <atom:link href="https://www.kirantomlinson.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kiran Tomlinson</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 24 Oct 2026 20:45:02 -0700</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 05 Dec 2026 16:28:23 -0700</lastBuildDate>
     <image>
       <url>https://www.kirantomlinson.com/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Kiran Tomlinson</title>
       <link>https://www.kirantomlinson.com/</link>
     </image>
+    
+    <item>
+      <title>Working with AI: Measuring the Applicability of Generative AI to Occupations</title>
+      <link>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</link>
+      <pubDate>Sat, 05 Dec 2026 16:28:23 -0700</pubDate>
+      <guid>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Adopt ≠ Adapt: Longitudinal Analyses of LLM Conversations in the Wild</title>
@@ -319,14 +327,6 @@ If you&amp;rsquo;re curious to see how the flash chip commands are handled in as
 &lt;p&gt;In the next post (whenever I get around to it): the sound card!&lt;/p&gt;
 &lt;h3 id=&#34;previous-post-part-7hahahugoshortcode25s2hbhb----span-stylefloatrightnext-post-part-9span---&#34;&gt;Previous post: &lt;a href=&#34;https://www.kirantomlinson.com/post/6502-7/&#34;&gt;Part 7&lt;/a&gt; &lt;!-- &lt;span style=&#34;float:right&#34;&gt;Next post: [Part 9]()&lt;/span&gt; --&gt;&lt;/h3&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Working with AI: Measuring the Applicability of Generative AI to Occupations</title>
-      <link>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</link>
-      <pubDate>Thu, 17 Jul 2025 16:28:23 -0700</pubDate>
-      <guid>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</guid>
-      <description></description>
     </item>
     
     <item>
