@@ -29,7 +29,7 @@
 <script src="/js/theme-toggle.min.579280d32837d0e62c3c8129a6b4fee33644fc82eb854bf9195fe411c47f6dd2.js" integrity="sha256-V5KA0yg30OYsPIEpprT&#43;4zZE/ILrhUv5GV/kEcR/bdI=" defer></script>
 <link rel="preload" href="/fonts/libertinus/serif-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="/css/site.min.7620f065ed96e64734709986b1cf13b43bd0f2795e7dc2a40ee3e8ac9a4bed99.css" integrity="sha256-diDwZe2W5kc0cJmGsc8TtDvQ8nlefcKkDuPorJpL7Zk=">
+<link rel="stylesheet" href="/css/site.min.da4a5e5f4bfa4fc8c112187a54a2b1bd0c7779652c3ebe29d526fc13611ce8a6.css" integrity="sha256-2kpeX0v6T8jBEhh6VKKxvQx3eWUsPr4p1Sb8E2Ec6KY=">
 
 
 </head>
@@ -85,11 +85,15 @@
 
   
 <div class="filters" role="group" aria-label="Filter posts by topic" data-items=".post-item" hidden>
-  Topics:
-  <button type="button" data-filter="all" aria-pressed="true">All</button>
-  <button type="button" data-filter="6502" aria-pressed="false">6502</button>
-  <button type="button" data-filter="discrete-choice" aria-pressed="false">Discrete Choice</button>
-  
+  <div>
+    Topics:
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="6502" aria-pressed="false">6502</button>
+    <button type="button" data-filter="code" aria-pressed="false">Code</button>
+    <button type="button" data-filter="research" aria-pressed="false">Research</button>
+    <button type="button" data-filter="other" aria-pressed="false">Other</button>
+    
+  </div>
 </div>
 
   <ol class="posts">
@@ -229,7 +233,7 @@
     </a>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="other">
   <div class="post-text">
     <a class="post-title" href="/post/guitar-build/">Electric Guitar Build</a>
     <div class="meta">
@@ -246,7 +250,7 @@
     </a>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="code">
   <div class="post-text">
     <a class="post-title" href="/post/quine/">Python Quine</a>
     <div class="meta">
@@ -263,7 +267,7 @@
     </a>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="other">
   <div class="post-text">
     <a class="post-title" href="/post/wines/">Wine Rating Data</a>
     <div class="meta">
@@ -280,7 +284,7 @@
     </a>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="code">
   <div class="post-text">
     <a class="post-title" href="/post/townhall-alerts/">Town Hall Alerts</a>
     <div class="meta">
@@ -289,7 +293,7 @@
   </div>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="research">
   <div class="post-text">
     <a class="post-title" href="/post/failure-cv/">CV of Failures</a>
     <div class="meta">
@@ -298,7 +302,7 @@
   </div>
   
 </li>
-<li class="post-item">
+<li class="post-item" data-tags="code">
   <div class="post-text">
     <a class="post-title" href="/post/site-graph/">Site Graph</a>
     <div class="meta">
@@ -315,7 +319,7 @@
     </a>
   
 </li>
-<li class="post-item" data-tags="discrete-choice">
+<li class="post-item" data-tags="research">
   <div class="post-text">
     <a class="post-title" href="/post/discrete-choice-models/">Discrete Choice Models</a>
     <div class="meta">

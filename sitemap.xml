@@ -2,19 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.kirantomlinson.com/categories/</loc>
-    <lastmod>2026-12-05T16:28:23-07:00</lastmod>
-  </url><url>
     <loc>https://www.kirantomlinson.com/</loc>
     <lastmod>2026-12-05T16:28:23-07:00</lastmod>
   </url><url>
-    <loc>https://www.kirantomlinson.com/category/llm-usage/</loc>
-    <lastmod>2026-12-05T16:28:23-07:00</lastmod>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/category/llms/</loc>
-    <lastmod>2026-12-05T16:28:23-07:00</lastmod>
-  </url><url>
     <loc>https://www.kirantomlinson.com/publication/</loc>
+    <lastmod>2026-12-05T16:28:23-07:00</lastmod>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/category/real-world-usage/</loc>
+    <lastmod>2026-12-05T16:28:23-07:00</lastmod>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/categories/</loc>
     <lastmod>2026-12-05T16:28:23-07:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2025-tomlinson-working/</loc>
@@ -23,11 +20,14 @@
     <loc>https://www.kirantomlinson.com/publication/2026-hicke-adopt-adapt/</loc>
     <lastmod>2026-10-24T20:45:02-07:00</lastmod>
   </url><url>
+    <loc>https://www.kirantomlinson.com/category/experiments/</loc>
+    <lastmod>2026-10-23T22:19:08-07:00</lastmod>
+  </url><url>
     <loc>https://www.kirantomlinson.com/publication/2026-altabaa-trasnformer/</loc>
     <lastmod>2026-10-23T22:19:08-07:00</lastmod>
   </url><url>
-    <loc>https://www.kirantomlinson.com/category/agents/</loc>
-    <lastmod>2026-10-07T10:03:38-07:00</lastmod>
+    <loc>https://www.kirantomlinson.com/category/theory/</loc>
+    <lastmod>2026-10-23T22:19:08-07:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2026-balepur-cabra/</loc>
     <lastmod>2026-10-07T10:03:38-07:00</lastmod>
@@ -37,9 +37,6 @@
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2026-counts-enterprise/</loc>
     <lastmod>2026-05-11T20:51:56-07:00</lastmod>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/category/bapo/</loc>
-    <lastmod>2026-02-02T11:49:11-08:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2026-tomlinson-reasoning/</loc>
     <lastmod>2026-02-02T11:49:11-08:00</lastmod>
@@ -72,15 +69,6 @@
     <lastmod>2025-02-25T17:51:31-04:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/publication/2024-tomlinson-dissertation/</loc>
-    <lastmod>2024-08-31T19:02:31-07:00</lastmod>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/tag/discrete-choice/</loc>
-    <lastmod>2024-08-31T19:02:31-07:00</lastmod>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/tags/</loc>
-    <lastmod>2024-08-31T19:02:31-07:00</lastmod>
-  </url><url>
-    <loc>https://www.kirantomlinson.com/tag/voting/</loc>
     <lastmod>2024-08-31T19:02:31-07:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/post/6502-7/</loc>
@@ -131,6 +119,12 @@
     <loc>https://www.kirantomlinson.com/post/guitar-build/</loc>
     <lastmod>2021-04-14T13:18:26-04:00</lastmod>
   </url><url>
+    <loc>https://www.kirantomlinson.com/category/other/</loc>
+    <lastmod>2021-04-14T13:18:26-04:00</lastmod>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/category/code/</loc>
+    <lastmod>2021-02-19T14:03:00-05:00</lastmod>
+  </url><url>
     <loc>https://www.kirantomlinson.com/post/quine/</loc>
     <lastmod>2021-02-19T14:03:00-05:00</lastmod>
   </url><url>
@@ -147,6 +141,9 @@
     <lastmod>2020-06-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/post/failure-cv/</loc>
+    <lastmod>2020-04-21T14:44:00-04:00</lastmod>
+  </url><url>
+    <loc>https://www.kirantomlinson.com/category/research/</loc>
     <lastmod>2020-04-21T14:44:00-04:00</lastmod>
   </url><url>
     <loc>https://www.kirantomlinson.com/category/computational-biology/</loc>
