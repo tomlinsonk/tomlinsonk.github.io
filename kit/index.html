@@ -29,7 +29,7 @@
 <script src="/js/theme-toggle.min.579280d32837d0e62c3c8129a6b4fee33644fc82eb854bf9195fe411c47f6dd2.js" integrity="sha256-V5KA0yg30OYsPIEpprT&#43;4zZE/ILrhUv5GV/kEcR/bdI=" defer></script>
 <link rel="preload" href="/fonts/libertinus/serif-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="/css/site.min.04fde5abedd29a507dbf34ea28651228f05070f40ffe99ae1d8e70809d5966a5.css" integrity="sha256-BP3lq&#43;3SmlB9vzTqKGUSKPBQcPQP/pmuHY5wgJ1ZZqU=">
+<link rel="stylesheet" href="/css/site.min.ebe771b477df8667882571dee1e890d0932ee2f5a9d2ea8f2d5c462bad6126c2.css" integrity="sha256-6&#43;dxtHffhmeIJXHe4eiQ0JMu4vWp0uqPLVxGK61hJsI=">
 
 
 </head>
@@ -125,7 +125,18 @@
 </div>
 <p>I wrote a <a href="https://github.com/tomlinsonk/kit-emu">KiT emulator</a> in Java starting in 2023, which Claude ported to JavaScript. Try it out below!</p>
 <div class="kit" data-rom="/kit/kit_os.b9afe090ee4374a9201a76f772ca6390af0eb991c3911a3a31b12f0cbda9d494.bin" data-ssd="/kit/ssd.79e2f3bf81d68b39e47c8660a79ede834a934de0af2dc67c1a704e8ed25913df.bin" data-font="/kit/character-set.c91b10fcf912a3eb0e1d6fc65af95f44be0b40d3b26f04131a0697ecff88881a.png">
-  <canvas class="kit-screen" width="256" height="192" tabindex="0" aria-label="KiT screen"></canvas>
+  <div class="kit-display">
+    <canvas class="kit-screen" width="256" height="192" role="img" aria-label="KiT screen"></canvas>
+    <input class="kit-input" type="text" aria-label="Type on the KiT" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="enter">
+  </div>
+  <div class="kit-keys">
+    <button type="button" data-code="Escape">Esc</button>
+    <button type="button" data-code="Tab">Tab</button>
+    <button type="button" data-code="ArrowLeft" aria-label="Left">←</button>
+    <button type="button" data-code="ArrowUp" aria-label="Up">↑</button>
+    <button type="button" data-code="ArrowDown" aria-label="Down">↓</button>
+    <button type="button" data-code="ArrowRight" aria-label="Right">→</button>
+  </div>
   <div class="kit-bar">
     <p class="kit-status" role="status">Starting the KiT…</p>
     <span class="kit-clock"></span>
@@ -214,7 +225,7 @@ Enter; sound needs to be on).</li>
 
   
   
-<script src="/js/kit/main.788e053b4e8f71bf8011754893674e33424284436f201e571546d26f14e3bef5.js" integrity="sha256-eI4FO06Pcb&#43;AEXVIk2dOM0JChENvIB5XFUbSbxTjvvU=" defer></script>
+<script src="/js/kit/main.a50ac6d4c9e4a1882c2968e0e587e720cdb8c07e3795e4a8af6535b904cd5b91.js" integrity="sha256-pQrG1MnkoYgsKWjg5YfnIM24wH43leSor2U1uQTNW5E=" defer></script>
   
 
 
